@@ -1,0 +1,8 @@
+test.txt
+[RIPPED]You find a dastardly crate in the middle of the space woods
+-[CASH:200] Buy the vodka [CASH:-200][BATTLE][ADD:DRUNK] you get super drunk
+-Lol you can't touch this [BATTLE] you touch this
+-Douchebag [] fuck you
+Yeah if you got here you're a fuckup
+-[CARDEROCK] shutup I like bums [] faggot
+-oops this shouldn't be here [BATTLE] the admins attack you!

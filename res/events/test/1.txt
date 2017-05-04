@@ -1,0 +1,14 @@
+test.txt
+[VIOLATION] A brightly colored spaceship has locked its targeting beams on you. "You have committed crimes against Skyrim and it's people! surrender, criminal scum!"
+-[CASH:200] Can't we work this out with the help of my friend Benjamin? [BATTLE] "Your crimes are too grave, prepare to die"
+-[CASH:2000] Alright, I'll pay the fine..[CASH:-2000] [REMOVE:VIOLATION] "Very well. But stay out of our way!"
+-We're leaving!Stop bothering us! [BATTLE] The ship powers up it's lasers. prepare to fight!
+-Bring it on, motherfuckers! I'm tired of your shit! [BATTLE][ADD:PUBLIC_ENEMY] The ship powers up it's lasers. prepare to fight!
+[WARNING] A brightly colored spaceship has locked its targeting beams on you. "You have been warned already, leave the restricted area immidiately!"
+-[CASH:200] Let's just pretend we were never here... [CASH:-200] "It appears we were mistaken. on your way, then"
+-As I said before, we're leaving! stop bothering us [ADD:VIOLATION] "Get out of here"
+-Fuck the police!Bring it, bitch! [BATTLE][ADD:VIOLATION]The ship powers up it's lasers. prepare to fight!
+A brightly colored spaceship has locked its targeting beams on you."This is a restricted area. Vacate it immidiately."
+-[CASH:200] Let's just pretend we were never here... [CASH:-200] "Everything's in order. on your way, then"
+-We're just passing through, we're already leaving [ADD:WARNING] "You've been warned. Get out of here"
+-I'll do what I want, pig. [BATTLE][ADD:WARNING] The ship powers up it's lasers. prepare to fight!
