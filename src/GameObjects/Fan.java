@@ -5,7 +5,7 @@ import org.newdawn.slick.Graphics;
 import FocusObject.InteractableObject;
 import TreeUI.UIItem;
 
-public class Fan extends GameObject{
+public class Fan extends NonPaneledGameObject{
 
 	@Override
 	public void update() {

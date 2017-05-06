@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import org.newdawn.slick.Graphics;
 
 import GameObjects.GameObject;
+import GameObjects._Enum_GameObject;
 
 //Generic Manager which runs the object update method
 class GameObjectManager{

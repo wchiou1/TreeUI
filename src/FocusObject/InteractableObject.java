@@ -6,10 +6,17 @@ import TreeUI.UIItem;
 import DataLinkNetwork.DataNetworkNode;
 
 public abstract class InteractableObject{
+	protected static int count = 0;
 	protected int x,y;
 	protected DataNetworkNode dataNode;
 	protected boolean locked=false;
 	protected boolean hover=false;
+	protected InteractableObject(){
+		count++;
+	}
+	public final int getCount(){
+		return count;
+	}
 	public void setDataLink(DataNetworkNode dataNode){
 		this.dataNode=dataNode;
 	}

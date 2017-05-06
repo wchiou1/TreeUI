@@ -4,16 +4,16 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 import DataLinkNetwork.DataNetworkNode;
+import GameLogic.GameMath;
 import TreeUI.UIItem;
 
 //This class will connect to a datanode and broadcast it's power value
 
-public class Generator extends GameObject{
+public class Generator extends PaneledGameObject{
 	private int id;
 	private DataNetworkNode node;
 	private String key;
-	public Generator(int id,int x, int y, DataNetworkNode node){
-		this.id=id;
+	public Generator(int x, int y, DataNetworkNode node){
 		this.x=x;
 		this.y=y;
 		this.node=node;
@@ -35,19 +35,9 @@ public class Generator extends GameObject{
 	}
 
 	@Override
-	public UIItem click(int x, int y, UIItem item) {
-		return item;
-	}
-
-	@Override
-	public void keyPress(int mouseX, int mouseY, int key) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public boolean isMouseOver(int x, int y) {
-		// TODO Auto-generated method stub
+		if(GameMath.dis(this.x+10, this.y+10, x, y)<=10)
+			return true;
 		return false;
 	}
 
@@ -55,6 +45,10 @@ public class Generator extends GameObject{
 	public void update() {
 		//Just broadcast power for now
 		node.changeData(key, 600);
+	}
+
+	public UIItem click(int x, int y, UIItem item) {
+		return item;
 	}
 	
 }

@@ -52,8 +52,8 @@ public class Demo extends BasicGameState{
 		height = container.getHeight();
 		dn=new DataNetwork();
 		im=new TreeUIManager(container.getInput(),keys,10);
-		im.addObject(new Window(100,100,50,50,Color.blue));
-		im.addObject(new Window(50,50,50,50,Color.red));
+		//im.addObject(new Window(100,100,50,50,Color.blue));
+		//im.addObject(new Window(50,50,50,50,Color.red));
 		Key key1=new Key(123,"key1");
 		DataNetworkNode node1=new DataNetworkNode();
 		DataNetworkNode node2=new DataNetworkNode();
@@ -79,8 +79,7 @@ public class Demo extends BasicGameState{
 		dn.add(node4);
 		dn.add(gen1node);
 		
-		Generator generate=new Generator(0,0,0,gen1node);
-		im.addGameObject(generate);
+		
 		
 		masterOO=new BasicPaneledGameObject(300,400,10,10);
 		Panel p=new Panel(-50,-100,100,100,masterOO,node1);
@@ -115,9 +114,7 @@ public class Demo extends BasicGameState{
 		p2.addObject(d1);
 		
 		p3.addObject(tb1);
-		p3.addObject(ib1);
-		p3.addObject(tb2);
-		
+		p3.addObject(ib1);		
 		p4.addObject(id1);
 		p4.addObject(s1);
 		
@@ -145,7 +142,6 @@ public class Demo extends BasicGameState{
 		p.addObject(i3);
 		p.addObject(i4);
 		p.addObject(i5);
-
 		
 		im.addObject(p);
 		im.addObject(masterOO);
@@ -154,7 +150,10 @@ public class Demo extends BasicGameState{
 		im.addObject(p3);
 		im.addObject(p4);
 		
+		Generator generate=new Generator(300,300,gen1node);
+		generate.setView(p);
 		
+		im.addGameObject(generate);
 		
 		
 	}

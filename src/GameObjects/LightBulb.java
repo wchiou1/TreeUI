@@ -5,7 +5,7 @@ import org.newdawn.slick.Graphics;
 import DataLinkNetwork.DataNetworkNode;
 import TreeUI.UIItem;
 
-public class LightBulb extends GameObject{
+public class LightBulb extends NonPaneledGameObject{
 	public LightBulb(int id,int x, int y, DataNetworkNode node){
 		
 	}

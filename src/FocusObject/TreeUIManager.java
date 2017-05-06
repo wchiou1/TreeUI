@@ -8,6 +8,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 
+import GameObjects.PaneledGameObject;
 import TreeUI.InventoryPanel;
 import TreeUI.Snappable;
 
@@ -56,6 +57,7 @@ public class TreeUIManager{
 		uiObjectList.add(io);
 	}
 	public void addGameObject(InteractableObject io){
+		if(io instanceof PaneledGameObject)
 		gameObjectList.add(io);
 	}
 	/**

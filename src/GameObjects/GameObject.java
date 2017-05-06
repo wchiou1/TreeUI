@@ -1,13 +1,14 @@
 package GameObjects;
 
-import FocusObject.InteractableObject;
+import org.newdawn.slick.Graphics;
 
-public abstract class GameObject extends InteractableObject{
-	public void update(int x, int y){
-		update();
-	}
+public interface GameObject{
 	/**
 	 * Object declared update function which will be called every step
 	 */
 	public abstract void update();
+	/**
+	 * Object declared draw function which will be called by the GameObjectManager
+	 */
+	public abstract void draw(Graphics g);
 }

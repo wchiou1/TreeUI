@@ -167,6 +167,27 @@ public class MouseManager{
 						break;
 					}
 				}
+				
+				if(lock==null)//We didn't find an object, try gameobjects
+					for(InteractableObject io:gameObjectList){//Iterate through all objects
+						if(io.hover=io.isMouseOver(mouseX,mouseY)){
+							InteractableObject temp=io;
+							if(io instanceof Panel){
+								temp=((Panel) io).getObject(mouseX, mouseY);
+								if(temp==null)
+									temp=io;
+							}
+							if(temp instanceof OriginObject)
+								moveToFront(((OriginObject)temp).getView());
+							held=temp.click(mouseX, mouseY,held);
+							if(temp.isMoveable()){
+								moveToFront(io);
+							}
+							System.out.println("Mouse locked on object "+temp.toString());
+							lock=temp;
+							break;
+						}
+					}
 				//If it's not on an object, make it the "empty" object
 				if(lock==null)
 					lock=TreeUIManager.empty;
