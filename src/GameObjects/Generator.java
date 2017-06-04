@@ -46,9 +46,5 @@ public class Generator extends PaneledGameObject{
 		//Just broadcast power for now
 		node.changeData(key, 600);
 	}
-
-	public UIItem click(int x, int y, UIItem item) {
-		return item;
-	}
 	
 }

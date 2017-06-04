@@ -1,0 +1,32 @@
+There are 3 elements that need to be saved somehow:
+-The gameobjects
+-The UIElements(buttons and shit on the panel)
+-The Datanodes and network connections
+Each gameobject always has a datanode. Does each datanode have a gameobject? (Yes, but some gameobjects have multiple datanodes)
+Store the gameobjects(Easy, [id,type,x,y])
+Store the UIElements(Panels will)
+
+
+How should I design the txt format for the Panel file saving?
+
+The coordinate system is all kinds of fucked up.
+
+I want the panel to have a save and load function.
+Panels will accept a string or whatever and create the uielements and attach them to the panel.
+BUT what about the datanodes and network connections?
+The UIElements will remember the arguments used to create them, the nodes can be created that way.
+BUT what about the network connections?
+Hmmm... network connections will be handled outside the panel. The panel doesn't any internal connections anyway
+
+
+----
+ISSUE: Could we automate the id giving?
+Would need to pass gameobject construction through a centralized class
+GameObject Manager would make sense...
+I want to force an object to run some code from it's parent, is that even possible?
+----
+Create a button which is capable of switching game states[DONE]
+Create a new game state which is an actual "main menu"[DONE]Main menu will use the TreeUI that the demo uses for the menu[DONE]
+BUG: The panel is not rendering on startup, but the bug disappears once the oo is toggled.[The panel was at -50 -100]
+Make panel active on startup[DONE]
+The new main menu should have the demo option and an option to load the editor[DONE]

@@ -153,6 +153,7 @@ public class Panel extends Snappable{
 				io.keyPress(x, y, key);
 		}
 	}
+	
 	public void setOrigin(OriginObject oo){
 		if(origin!=null){
 			System.out.println("Panel Error: Attempted to change origin object. Operation canceled.");

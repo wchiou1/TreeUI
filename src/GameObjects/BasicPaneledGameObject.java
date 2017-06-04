@@ -26,15 +26,6 @@ public class BasicPaneledGameObject extends PaneledGameObject{
 		
 	}
 	
-	@Override
-	public UIItem click(int x, int y,UIItem item) {
-		if(view==null){
-			System.out.println("ERROR: panel not set in origin object");
-			return item;
-		}
-		view.toggle();
-		return item;
-	}
 	
 	@Override
 	public void draw(Graphics g) {
