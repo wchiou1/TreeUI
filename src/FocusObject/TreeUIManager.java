@@ -54,6 +54,9 @@ public class TreeUIManager{
 		}
 	}
 	public void addObject(InteractableObject io){
+		if(io==null){
+			System.out.println("Null object, error");
+		}
 		uiObjectList.add(io);
 	}
 	public void addGameObject(InteractableObject io){

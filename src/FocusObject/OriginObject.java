@@ -77,7 +77,6 @@ public abstract class OriginObject extends UIElement{
 	}
 	@Override
 	public void update(int mouseX, int mouseY) {
-		if(!view.active)
-			unhighlight();
+
 	}
 }

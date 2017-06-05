@@ -26,7 +26,6 @@ public class BasicPaneledGameObject extends PaneledGameObject{
 		
 	}
 	
-	
 	@Override
 	public void draw(Graphics g) {
 		g.setColor(Color.black);

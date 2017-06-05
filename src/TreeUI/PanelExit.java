@@ -4,25 +4,17 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 import FocusObject.OriginObject;
+import FocusObject.Panel;
 
 public class PanelExit extends UIElement{
 	private int height, width;
-	private OriginObject oo;
-	public PanelExit(int x, int y, OriginObject oo){
+	private Panel panel;
+	public PanelExit(int x, int y,Panel panel){
 		this.x=x;
 		this.y=y;
 		height=10;
 		width=10;
-		this.oo=oo;
-	}
-	@Override
-	public void update(int mouseX, int mouseY) {
-		if(hover){
-			oo.highlight();
-		}
-		else{
-			oo.unhighlight();
-		}
+		this.panel=panel;
 	}
 
 	@Override
@@ -38,7 +30,7 @@ public class PanelExit extends UIElement{
 
 	@Override
 	public UIItem click(int x, int y, UIItem item) {
-		oo.getView().close();
+		panel.close();
 		return item;
 	}
 
@@ -54,6 +46,12 @@ public class PanelExit extends UIElement{
 			if(y>=this.y&&y<=this.y+height)
 				return true;
 		return false;
+	}
+
+	@Override
+	public void update(int mouseX, int mouseY) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

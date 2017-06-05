@@ -55,10 +55,11 @@ public class MainMenu extends BasicGameState{
 		height = container.getHeight();
 		dn=new DataNetwork();
 		im=new TreeUIManager(container.getInput(),keys,10,false);
-		DataNetworkNode node1=new DataNetworkNode();
+		
 		
 		masterOO=new BasicPaneledGameObject(300,400,10,10);
-		Panel p=new Panel(-50,-100,100,100,masterOO,node1,true);
+		Panel p=new Panel(-50,-100,100,100,true);
+		p.setOrigin(masterOO);
 		
 		p.addObject(new StaticText(40,20,"Demo"));
 		p.addObject(new StaticText(40,38,"Editor"));

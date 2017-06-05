@@ -11,12 +11,11 @@ import TreeUI.UIItem;
 
 public class Generator extends PaneledGameObject{
 	private int id;
-	private DataNetworkNode node;
 	private String key;
-	public Generator(int x, int y, DataNetworkNode node){
+	public Generator(int x, int y){
 		this.x=x;
 		this.y=y;
-		this.node=node;
+		this.dataNode=new DataNetworkNode();
 		key=":P Generator "+id;
 	}
 
@@ -44,7 +43,7 @@ public class Generator extends PaneledGameObject{
 	@Override
 	public void update() {
 		//Just broadcast power for now
-		node.changeData(key, 600);
+		dataNode.changeData(key, 600);
 	}
 	
 }

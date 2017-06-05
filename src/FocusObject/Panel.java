@@ -16,37 +16,29 @@ public class Panel extends Snappable{
 	protected boolean active;
 	protected ArrayList<UIElement> objectList;//List of objects that the panel must render
 	protected DataNetworkNode dataNode;
-	protected OriginObject origin;
 	private boolean virgin;
 	public Panel(int x, int y){
+		this(x,y,100,100,false);
+	}
+	public Panel(int x, int y, int height, int width,boolean active){
+		//x and y are relative to the origin object
+		
 		this.x=x;
 		this.y=y;
 		objectList = new ArrayList<UIElement>();
-	}
-	public Panel(boolean relative,int x, int y, int height, int width,OriginObject origin,DataNetworkNode dataNode,boolean active){
-		//x and y are relative to the origin object
-		this(x,y);
+		this.virgin=true;
 		this.height=height;
 		this.width=width;
-		this.dataNode=dataNode;
+		this.dataNode=new DataNetworkNode();
 		this.active=active;
-		this.origin=origin;
-		origin.setView(this);
-		if(relative){
-			this.x=origin.x+x;
-			this.y=origin.y+y;
-		}
-		addObject(new PanelExit(width-13,3,origin));
+		addObject(new PanelExit(width-13,3,this));
 	}
-	public Panel(int x, int y, int height, int width,OriginObject origin,DataNetworkNode dataNode,boolean active){
-		this(true,x, y,height,width,origin,dataNode,active);
-	}
-	public Panel(int x, int y, int height, int width,OriginObject origin,DataNetworkNode dataNode){
-		this(true,x, y,height,width,origin,dataNode,false);
+	public Panel(int x, int y, int height, int width){
+		this(x, y,height,width,false);
 	}
 	
-	public Panel(int x, int y,OriginObject origin,DataNetworkNode dataNode){
-		this(x,y,100,100,origin,dataNode);
+	public DataNetworkNode getNode(){
+		return dataNode;
 	}
 	/**
 	 * Adds an interactable object and uses the x and y as position delta from panel x and y
@@ -155,11 +147,11 @@ public class Panel extends Snappable{
 	}
 	
 	public void setOrigin(OriginObject oo){
-		if(origin!=null){
+		if(!virgin){
 			System.out.println("Panel Error: Attempted to change origin object. Operation canceled.");
 			return;
 		}
-		origin=oo;
+		oo.setView(this);
 		move(oo.getX()-width/2,oo.getY()-height);
 	}
 	public void dMoveTreeUI(int dx, int dy){
@@ -168,5 +160,9 @@ public class Panel extends Snappable{
 			if(e instanceof OriginObject)
 				((OriginObject)e).dMoveTreeUI(dx, dy);
 		}
+	}
+	public String getStringSave(){
+		String temp="";
+		
 	}
 }

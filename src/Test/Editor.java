@@ -57,10 +57,10 @@ public class Editor extends BasicGameState{
 		im=new TreeUIManager(container.getInput(),keys,10);
 		im.addObject(new Window(100,100,50,50,Color.blue));
 		im.addObject(new Window(50,50,50,50,Color.red));
-		DataNetworkNode node1=new DataNetworkNode();
 		
 		masterOO=new BasicPaneledGameObject(300,400,10,10);
-		Panel p=new Panel(-50,-100,100,100,masterOO,node1);
+		Panel p=new Panel(-50,-100,100,100);
+		p.setOrigin(masterOO);
 		
 		StaticText st1=new StaticText(0,20,"Demo");
 

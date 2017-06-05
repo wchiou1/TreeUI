@@ -18,6 +18,10 @@ The UIElements will remember the arguments used to create them, the nodes can be
 BUT what about the network connections?
 Hmmm... network connections will be handled outside the panel. The panel doesn't any internal connections anyway
 
+How would I save panels within panels?
+
+Should the string store the entire paneltree?
+If it doesn't then I need a way to assign the panel to the originobjects in the panel.
 
 ----
 ISSUE: Could we automate the id giving?

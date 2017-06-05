@@ -50,39 +50,24 @@ public class Demo extends BasicGameState{
 		keys.add(Input.KEY_R);
 		width = container.getWidth();
 		height = container.getHeight();
-		dn=new DataNetwork();
+		
 		im=new TreeUIManager(container.getInput(),keys,10);
 		//im.addObject(new Window(100,100,50,50,Color.blue));
 		//im.addObject(new Window(50,50,50,50,Color.red));
 		Key key1=new Key(123,"key1");
-		DataNetworkNode node1=new DataNetworkNode();
-		DataNetworkNode node2=new DataNetworkNode();
-		DataNetworkNode node3=new DataNetworkNode();
-		DataNetworkNode node4=new DataNetworkNode();
-		DataNetworkNode gen1node=new DataNetworkNode();
 		
 		
-		node1.addNeighbor(node2);
-		node1.addNeighbor(node3);
-		node1.addNeighbor(node4);
 		
-		node2.addNeighbor(node1);
-		node3.addNeighbor(node1);
-		node4.addNeighbor(node1);
 		
-		gen1node.addNeighbor(node1);//Generator node is one way, generator only gives info
-									//Power nodes must be separate from data(maybe make separate filtered DN Node?)
 		
-		dn.add(node1);
-		dn.add(node2);
-		dn.add(node3);
-		dn.add(node4);
-		dn.add(gen1node);
+		
+		
 		
 		
 		
 		masterOO=new BasicPaneledGameObject(300,400,10,10);
-		Panel p=new Panel(-50,-100,100,100,masterOO,node1);
+		Panel p=new Panel(-50,-100,100,100);
+		p.setOrigin(masterOO);
 		
 		BasicPanelButton oo2=new BasicPanelButton(10,10,10,10);
 		BasicPanelButton oo3=new BasicPanelButton(24,10,10,10);
@@ -92,9 +77,12 @@ public class Demo extends BasicGameState{
 		p.addObject(oo3);
 		p.addObject(oo4);
 		
-		Panel p2=new Panel(-50,-100,200,200,oo2,node2);
-		Panel p3=new Panel(-50,-100,150,150,oo3,node3);
-		Panel p4=new Panel(-50,-100,oo4,node4);
+		Panel p2=new Panel(-50,-100,200,200);
+		p2.setOrigin(oo2);
+		Panel p3=new Panel(-50,-100,150,150);
+		p3.setOrigin(oo3);
+		Panel p4=new Panel(-50,-100);
+		p4.setOrigin(oo4);
 		
 		Dial d1=new Dial(20,20,"dial1");
 		TextBox tb1=new TextBox(0,20,"dial1");
@@ -116,6 +104,7 @@ public class Demo extends BasicGameState{
 		p3.addObject(tb1);
 		p3.addObject(ib1);		
 		p4.addObject(id1);
+		p3.addObject(tb2);
 		p4.addObject(s1);
 		
 		Button b1=new Button(30,80,20,"data1");
@@ -150,12 +139,34 @@ public class Demo extends BasicGameState{
 		im.addObject(p3);
 		im.addObject(p4);
 		
-		Generator generate=new Generator(300,300,gen1node);
+		Generator generate=new Generator(300,300);
 		generate.setView(p);
 		
 		im.addGameObject(generate);
 		
+		dn=new DataNetwork();
+		DataNetworkNode node1=p.getNode();
+		DataNetworkNode node2=p2.getNode();
+		DataNetworkNode node3=p3.getNode();
+		DataNetworkNode node4=p4.getNode();
+		DataNetworkNode gen1node=generate.getNode();
 		
+		node1.addNeighbor(node2);
+		node1.addNeighbor(node3);
+		node1.addNeighbor(node4);
+		
+		node2.addNeighbor(node1);
+		node3.addNeighbor(node1);
+		node4.addNeighbor(node1);
+		
+		gen1node.addNeighbor(node1);//Generator node is one way, generator only gives info
+		//Power nodes must be separate from data(maybe make separate filtered DN Node?)
+
+dn.add(node1);
+dn.add(node2);
+dn.add(node3);
+dn.add(node4);
+dn.add(gen1node);
 	}
 	
 
