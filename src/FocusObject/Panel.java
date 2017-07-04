@@ -13,10 +13,11 @@ import TreeUI.UIElement;
 import TreeUI.UIItem;
 
 public class Panel extends Snappable{
-	protected boolean active;
+	protected boolean active; //Whether the panel is active(inactive panels are invisible)
 	protected ArrayList<UIElement> objectList;//List of objects that the panel must render
-	protected DataNetworkNode dataNode;
-	private boolean virgin;
+	protected DataNetworkNode dataNode;//The attached datanode which all UIELements
+										//will use to communicate with the datanetwork
+	private boolean virgin;//If The panel has ever been opened before(used to error check setting the panel's origin object)
 	public Panel(int x, int y){
 		this(x,y,100,100,false);
 	}
@@ -36,19 +37,25 @@ public class Panel extends Snappable{
 	public Panel(int x, int y, int height, int width){
 		this(x, y,height,width,false);
 	}
-	
+	/**
+	 * Getter for the Panel's network node
+	 * @return
+	 */
 	public DataNetworkNode getNode(){
 		return dataNode;
 	}
 	/**
 	 * Adds an interactable object and uses the x and y as position delta from panel x and y
-	 * @param io
+	 * @param AddedObject
 	 */
 	public void addObject(UIElement io){
 		io.setDataLink(dataNode);
 		objectList.add(io);
 		io.setScreen(this);
 	}
+	/**
+	 * Toggles the panel open and closed using the active boolean
+	 */
 	public void toggle(){
 		if(active)
 			close();
@@ -56,7 +63,7 @@ public class Panel extends Snappable{
 			open();
 	}
 	/**
-	 * Open the panel
+	 * Opens the panel
 	 */
 	public void open(){
 		active=true;
@@ -78,9 +85,16 @@ public class Panel extends Snappable{
 				((OriginObject)io).close();
 		active=false;
 	}
+	/**
+	 * Returns if the panel is currently active
+	 * @return
+	 */
 	public boolean isActive(){
 		return active;
 	}
+	/**
+	 * Draws the panel borders and all UIElement
+	 */
 	@Override
 	public void draw(Graphics g) {
 		if(!active)
