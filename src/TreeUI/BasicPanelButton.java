@@ -44,5 +44,8 @@ public class BasicPanelButton extends OriginObject{
 			g.setColor(Color.yellow);
 		g.fillRect(x, y, width, height);
 	}
-	
+	@Override
+	public String getSaveString() {
+		return "{type:BASICPANELBUTTON,x:"+x+",y:"+y+"width:"+width+",height:"+height+"view:"+view.getSaveString()+"}";
+	}
 }

@@ -64,5 +64,9 @@ public class Button extends UIElement{
 		// TODO Auto-generated method stub
 		
 	}
+	@Override
+	public String getSaveString() {
+		return null;
+	}
 	
 }

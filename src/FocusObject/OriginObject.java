@@ -66,7 +66,7 @@ public abstract class OriginObject extends UIElement{
 	
 	public Panel getView(){
 		if(view==null)
-			System.out.println("WARNING: ");
+			System.out.println("WARNING: Panel not set");
 		return view;
 	}
 	public void unhighlight(){

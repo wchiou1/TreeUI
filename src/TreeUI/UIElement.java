@@ -51,4 +51,9 @@ public abstract class UIElement extends InteractableObject{
 	public boolean isMoveable(){
 		return false;
 	}
+	/**
+	 * Returns the object type and arguments in string format for later construction
+	 * @return
+	 */
+	public abstract String getSaveString();
 }

@@ -175,8 +175,23 @@ public class Panel extends Snappable{
 				((OriginObject)e).dMoveTreeUI(dx, dy);
 		}
 	}
-	public String getStringSave(){
+	public String getSaveString(){
 		String temp="";
+		//Get the panel information
+		//All objects including panels will be contained in SBrackets
+		//We'll be using Javascript object syntax
+		temp += "{type:PANEL,x:"+x+",y:"+y+",width:"+width+",height:"+height+",objects:[";
+		//REMEMBER: WE NEED TO CAP THE SBRACKETS
+		
+		//Let's get the object strings now
+		for(UIElement io:objectList){
+			temp += io.getSaveString()+",";
+		}
+		temp = temp.substring(0, temp.length()-1);
+		temp += "]}";
+		System.out.println(temp);
+		return temp;
+		
 		
 	}
 }

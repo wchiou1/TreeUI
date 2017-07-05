@@ -29,4 +29,7 @@ public abstract class PaneledGameObject extends OriginObject implements GameObje
 	 * Object declared update function which will be called every step
 	 */
 	public abstract void update();
+	public String getSaveString(){
+		return "{type:PANELEDGAMEOBJECT}";
+	}
 }

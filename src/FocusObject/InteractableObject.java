@@ -94,4 +94,5 @@ public abstract class InteractableObject{
 		// TODO Auto-generated method stub
 		
 	}
+	
 }
