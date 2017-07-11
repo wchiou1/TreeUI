@@ -5,6 +5,8 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+import FocusObject.Panel;
+
 public class Shell extends StateBasedGame {
 
 	public static int menu = 0;
@@ -30,6 +32,7 @@ public class Shell extends StateBasedGame {
 	
 	public static void main(String Args[])
 	{
+		System.out.println(Panel.class.toString());
 		try{
 			AppGameContainer app = new AppGameContainer(new Shell("Zoom and Drag Testing"));
 			app.setIcon("res/icon1.png");

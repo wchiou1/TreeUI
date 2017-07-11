@@ -1,5 +1,7 @@
 package TreeUI;
 
+import java.util.Hashtable;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import GameLogic.GameMath;
@@ -64,8 +66,12 @@ public class Button extends UIElement{
 		// TODO Auto-generated method stub
 		
 	}
-	@Override
 	public String getSaveString() {
+		return "{type:BUTTON,x:"+x+",y:"+y+"width:"+width+",height:"+height+"view:"+view.getSaveString()+"}";
+	}
+	@Override
+	public Hashtable<String, String> getParameters() {
+		// TODO Auto-generated method stub
 		return null;
 	}
 	

@@ -1,13 +1,23 @@
 package TreeUI;
 
+import java.util.Hashtable;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 import FocusObject.OriginObject;
+import FocusObject.Panel;
 import TreeUI.UIItem;
 
+/**
+ * This class is a simple implementation of an origin object
+ * @author Wesley Chiou
+ *
+ */
 public class BasicPanelButton extends OriginObject{
-	
+	/*public BasicPanelButton(){
+		
+	}
 	public BasicPanelButton(int x, int y){
 		//This is relative to the panel they are on
 		this.x=x;
@@ -20,7 +30,7 @@ public class BasicPanelButton extends OriginObject{
 		this.y=y;
 		this.height=height;
 		this.width=width;
-	}
+	}*/
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
@@ -47,5 +57,15 @@ public class BasicPanelButton extends OriginObject{
 	@Override
 	public String getSaveString() {
 		return "{type:BASICPANELBUTTON,x:"+x+",y:"+y+"width:"+width+",height:"+height+"view:"+view.getSaveString()+"}";
+	}
+	@Override
+	public Hashtable<String, String> getParameters() {
+		Hashtable<String, String> temp = new Hashtable<String, String>();
+		temp.put("x", "int");
+		temp.put("y", "int");
+		temp.put("width", "int");
+		temp.put("height", "int");
+		temp.put("view", "panel");
+		return temp;
 	}
 }

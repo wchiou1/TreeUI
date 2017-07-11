@@ -34,6 +34,9 @@ Getter for origin object identification.
 Setter for origin object which sets the panel.
 The incubator will need to keep track of all origin objects.
 Basically, the incubator will handle all the creation of the panels and uielements. Then we will visualize it.
+All UIElements will have a method which displays it's parameters.
+
+SOLUTION: REMOVE ALL CONSTRUCTORS FROM UIELEMENTS
 
 POTENTIAL SOLUTION: Implement an object id value and recursive down, marking ALL objects(NO REPEATS)
 Then mark all panel connections. This will also fix saving the network issue.[Maybe Not]

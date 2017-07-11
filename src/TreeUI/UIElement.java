@@ -1,5 +1,7 @@
 package TreeUI;
 
+import java.util.Hashtable;
+
 import org.newdawn.slick.Graphics;
 
 import FocusObject.InteractableObject;
@@ -56,4 +58,9 @@ public abstract class UIElement extends InteractableObject{
 	 * @return
 	 */
 	public abstract String getSaveString();
+	/**
+	 * Returns a hashtable with parameter names as keys and variable types as data
+	 * @return
+	 */
+	public abstract Hashtable<String,String> getParameters();
 }
