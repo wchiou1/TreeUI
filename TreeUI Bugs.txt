@@ -46,6 +46,14 @@ Then mark all panel connections. This will also fix saving the network issue.[Ma
 Should the string store the entire paneltree?
 If it doesn't then I need a way to assign the panel to the originobjects in the panel.
 
+FINAL SOLUTION: We use Strings to call the constructors(NO CLASS EXCEPT FOR THE PANEL CLASS WILL BE HARDCODED)
+All UIElements will have a (x,y) constructor. We will use newInstance/createInstance to construct the UIElements.
+Existing UIElements will be listed in an Enum which has the raw class string.
+Once a UIElement has been created, the parameters will be accessible using a <String,Object>Hashtable
+with the string being the parameter name and the object its value.
+
+KEEP IN MIND: Should panels be modifiable? What point would that serve that UIElements couldn't do?
+
 ----
 ISSUE: Could we automate the id giving?
 Would need to pass gameobject construction through a centralized class
