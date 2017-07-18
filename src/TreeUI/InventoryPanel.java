@@ -15,7 +15,7 @@ import Test.SuperGlobal;
  */
 public class InventoryPanel extends Panel{
 	private int slotNum;
-	public InventoryPanel(int slotNum) {
+	public InventoryPanel() {
 		super(SuperGlobal.getWidth()/2-(22*slotNum+2)/2,SuperGlobal.getLength()-26);
 		this.slotNum=slotNum;
 		this.height=24;

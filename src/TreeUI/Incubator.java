@@ -100,5 +100,4 @@ public class Incubator{
 	    } while((current = current.getSuperclass()) != null);
 	    return null;
 	}
-	
 }
