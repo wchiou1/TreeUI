@@ -7,9 +7,9 @@ import org.newdawn.slick.Graphics;
 import GameLogic.GameMath;
 
 public class Button extends UIElement{
-	private int radius;
-	private String key;
-	public Button(int x, int y,String key){
+	public int radius;
+	public String key;
+	/*public Button(int x, int y,String key){
 		this.x=x;
 		this.y=y;
 		this.key=key;
@@ -20,7 +20,7 @@ public class Button extends UIElement{
 		this.y=y;
 		this.radius=radius;
 		this.key=key;
-	}
+	}*/
 	
 	@Override
 	public boolean isMoveable() {
@@ -65,14 +65,6 @@ public class Button extends UIElement{
 	public void update(int mouseX, int mouseY) {
 		// TODO Auto-generated method stub
 		
-	}
-	public String getSaveString() {
-		return "{type:BUTTON,x:"+x+",y:"+y+"width:"+width+",height:"+height+"view:"+view.getSaveString()+"}";
-	}
-	@Override
-	public Hashtable<String, String> getParameters() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 	
 }

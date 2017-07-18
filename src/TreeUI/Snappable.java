@@ -8,7 +8,7 @@ import FocusObject.InteractableObject;
  *
  */
 public abstract class Snappable extends InteractableObject{
-	protected int height,width;
+	public int height,width;
 	public int getHeight(){
 		return height;
 	}

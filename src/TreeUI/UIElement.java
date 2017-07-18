@@ -1,5 +1,6 @@
 package TreeUI;
 
+import java.lang.reflect.Field;
 import java.util.Hashtable;
 
 import org.newdawn.slick.Graphics;
@@ -53,14 +54,4 @@ public abstract class UIElement extends InteractableObject{
 	public boolean isMoveable(){
 		return false;
 	}
-	/**
-	 * Returns the object type and arguments in string format for later construction
-	 * @return
-	 */
-	public abstract String getSaveString();
-	/**
-	 * Returns a hashtable with parameter names as keys and variable types as data
-	 * @return
-	 */
-	public abstract Hashtable<String,String> getParameters();
 }

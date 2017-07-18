@@ -1,5 +1,8 @@
 package FocusObject;
 
+import java.lang.reflect.Field;
+import java.util.Hashtable;
+
 import org.newdawn.slick.Graphics;
 
 import TreeUI.UIItem;
@@ -7,7 +10,7 @@ import DataLinkNetwork.DataNetworkNode;
 
 public abstract class InteractableObject{
 	protected static int count = 0;
-	protected int x,y;
+	public int x=0,y=0;
 	protected DataNetworkNode dataNode;
 	protected boolean locked=false;
 	protected boolean hover=false;
@@ -93,6 +96,49 @@ public abstract class InteractableObject{
 	public void update() {
 		// TODO Auto-generated method stub
 		
+	}
+	/**
+	 * Returns the object type and arguments in string format for later construction
+	 * @return
+	 */
+	public String getSaveString(){
+		//Let's dynamically read the class we got
+		Class<?> ourClass = this.getClass();
+		//First let's get the class
+		String temp = "{type:"+ourClass.getName();
+		
+		//If the class we get doesn't have a getSaveString, do toString? Do we need this?
+		//We only need this for arrays and stuff, arrays won't have a getSaveString.
+		//I guess the question is does a UIElement need to have fillable arrays?
+		Field[] fields = ourClass.getFields();
+		try {
+			for(Field f:fields){
+				temp+=","+f.getName()+":"+f.get(this);
+			}
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}
+		return temp+"}";
+	}
+	/**
+	 * Returns a hashtable with parameter names as keys and variable types as data
+	 * @return
+	 */
+	public Hashtable<String,Class<?>> getParameters(){
+		Hashtable<String,Class<?>> params = new Hashtable<String,Class<?>>();
+		Class<?> ourClass = this.getClass();
+		
+		Field[] fields = ourClass.getFields();
+		try {
+			for(Field f:fields){
+				params.put(f.getName(), f.getDeclaringClass());
+			}
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		}
+		return params;
 	}
 	
 }

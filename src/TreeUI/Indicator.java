@@ -4,7 +4,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 public class Indicator extends UIElement{
-	private int width,height;
+	public int width,height;
 	private String key;
 	public Indicator(int x, int y,String key){
 		this.x=x;

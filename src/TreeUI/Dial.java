@@ -7,9 +7,9 @@ import GameLogic.GameMath;
 //	180		0
 //		90
 public class Dial extends UIElement{
-	private int radius,angle,previousAngle,mouseAngle,lowerLimit, upperLimit;
-	private String key;
-	public Dial(int x, int y,String key){
+	public int radius=20,angle=0,previousAngle=0,mouseAngle=0,lowerLimit=-90,upperLimit=90;
+	public String key="";
+	/*public Dial(int x, int y,String key){
 		this.x=x;
 		this.y=y;
 		radius=20;
@@ -19,7 +19,7 @@ public class Dial extends UIElement{
 		this.key=key;
 		lowerLimit=-90;
 		upperLimit=90;
-	}
+	}*/
 	@Override
 	public void update(int mouseX, int mouseY) {
 		//super.update(mouseX, mouseY);TODO

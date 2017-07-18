@@ -1,15 +1,12 @@
 package FocusObject;
 
-import org.newdawn.slick.Color;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 
 import TreeUI.UIElement;
-import TreeUI.UIItem;
 
 public abstract class OriginObject extends UIElement{
 	protected Panel view;
-	protected int height,width;
+	public int height,width;
 	protected boolean highlight;
 	
 	public void setView(Panel v){

@@ -37,6 +37,8 @@ Basically, the incubator will handle all the creation of the panels and uielemen
 All UIElements will have a method which displays it's parameters.
 
 SOLUTION: REMOVE ALL CONSTRUCTORS FROM UIELEMENTS
+Will need to implement dynamic class reading. TreeUI will search for the class/java file it needs using a mods folder.
+The user will NOT need to modify any enums. There will be NO enum for UIElements.
 
 POTENTIAL SOLUTION: Implement an object id value and recursive down, marking ALL objects(NO REPEATS)
 Then mark all panel connections. This will also fix saving the network issue.[Maybe Not]

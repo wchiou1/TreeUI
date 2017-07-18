@@ -63,15 +63,25 @@ public class Demo extends BasicGameState{
 		
 		
 		
-		
-		
 		masterOO=new BasicPaneledGameObject(300,400,10,10);
 		Panel p=new Panel(-50,-100,100,100);
 		p.setOrigin(masterOO);
 		
-		BasicPanelButton oo2=new BasicPanelButton(10,10,10,10);
-		BasicPanelButton oo3=new BasicPanelButton(24,10,10,10);
-		BasicPanelButton oo4=new BasicPanelButton(38,10,10,10);
+		BasicPanelButton oo2=new BasicPanelButton();
+		oo2.x=10;
+		oo2.y=10;
+		oo2.width=10;
+		oo2.height=10;
+		BasicPanelButton oo3=new BasicPanelButton();
+		oo3.x=24;
+		oo3.y=10;
+		oo3.width=10;
+		oo3.height=10;
+		BasicPanelButton oo4=new BasicPanelButton();
+		oo4.x=38;
+		oo4.y=10;
+		oo4.width=10;
+		oo4.height=10;
 		
 		p.addObject(oo2);
 		p.addObject(oo3);

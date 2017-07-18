@@ -6,7 +6,6 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 import FocusObject.OriginObject;
-import FocusObject.Panel;
 import TreeUI.UIItem;
 
 /**
@@ -15,10 +14,7 @@ import TreeUI.UIItem;
  *
  */
 public class BasicPanelButton extends OriginObject{
-	/*public BasicPanelButton(){
-		
-	}
-	public BasicPanelButton(int x, int y){
+	/*public BasicPanelButton(int x, int y){
 		//This is relative to the panel they are on
 		this.x=x;
 		this.y=y;
@@ -53,19 +49,5 @@ public class BasicPanelButton extends OriginObject{
 		if(highlight)
 			g.setColor(Color.yellow);
 		g.fillRect(x, y, width, height);
-	}
-	@Override
-	public String getSaveString() {
-		return "{type:BASICPANELBUTTON,x:"+x+",y:"+y+"width:"+width+",height:"+height+"view:"+view.getSaveString()+"}";
-	}
-	@Override
-	public Hashtable<String, String> getParameters() {
-		Hashtable<String, String> temp = new Hashtable<String, String>();
-		temp.put("x", "int");
-		temp.put("y", "int");
-		temp.put("width", "int");
-		temp.put("height", "int");
-		temp.put("view", "panel");
-		return temp;
 	}
 }
