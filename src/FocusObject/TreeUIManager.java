@@ -37,7 +37,7 @@ public class TreeUIManager{
 		keyManager = new KeyboardManager(input,uiObjectList,keys);
 		mouseManager = new MouseManager(input,gameObjectList,uiObjectList,stickiness);
 		if(inventory){
-			invPan=new InventoryPanel(3);
+			invPan=new InventoryPanel();
 			uiObjectList.add(invPan);
 			inventoryManager = new InventoryManager(invPan,4);
 		}

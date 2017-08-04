@@ -7,18 +7,9 @@ import TreeUI.UIItem;
 
 public class BasicPaneledGameObject extends PaneledGameObject{
 	
-	public BasicPaneledGameObject(int x, int y){
-		//This is relative to the panel they are on
-		this.x=x;
-		this.y=y;
+	public BasicPaneledGameObject(){
 		this.height=5;
 		this.width=5;
-	}
-	public BasicPaneledGameObject(int x, int y, int height, int width){
-		this.x=x;
-		this.y=y;
-		this.height=height;
-		this.width=width;
 	}
 	@Override
 	public void update() {

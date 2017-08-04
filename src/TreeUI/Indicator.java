@@ -4,8 +4,9 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 public class Indicator extends UIElement{
-	public int width,height;
-	private String key;
+	public int width=6,height=8;
+	public String key = "";
+	/*
 	public Indicator(int x, int y,String key){
 		this.x=x;
 		this.y=y;
@@ -13,6 +14,7 @@ public class Indicator extends UIElement{
 		height=8;
 		this.key=key;
 	}
+	*/
 
 	@Override
 	public boolean isMoveable() {

@@ -7,8 +7,8 @@ import org.newdawn.slick.Graphics;
 import GameLogic.GameMath;
 
 public class Button extends UIElement{
-	public int radius;
-	public String key;
+	public int radius = 6;
+	public String key = "";
 	/*public Button(int x, int y,String key){
 		this.x=x;
 		this.y=y;

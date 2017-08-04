@@ -4,10 +4,10 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 public class IndicatorBar extends UIElement{
-	private boolean vertical;
-	private int height,range,width;
-	private String key;
-	public IndicatorBar(int x ,int y ,int length,int range, String key){
+	public boolean vertical=true;
+	public int width=9,height=100,range=100;
+	public String key="";
+	/*public IndicatorBar(int x ,int y ,int length,int range, String key){
 		this(x,y,length,range,true,key);
 	}
 	public IndicatorBar(int x, int y, int length, int range, boolean vertical, String key){
@@ -24,7 +24,7 @@ public class IndicatorBar extends UIElement{
 		this.range=range;
 		this.key=key;
 		this.vertical=vertical;
-	}
+	}*/
 
 	@Override
 	public boolean isMoveable() {
