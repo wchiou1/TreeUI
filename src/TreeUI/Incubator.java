@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Hashtable;
 
+import DataLinkNetwork.DataNetwork;
 import FocusObject.InteractableObject;
 import FocusObject.OriginObject;
 import FocusObject.Panel;
@@ -18,15 +19,19 @@ import FocusObject.TreeUIManager;
 public class Incubator{
 	private int objectCount = 0;//Total
 	private TreeUIManager tuim;
-	public Incubator(TreeUIManager tuim){
+	private DataNetwork dn;
+	public Incubator(TreeUIManager tuim, DataNetwork dn){
 		this.tuim=tuim;
+		this.dn=dn;
 	}
 	Hashtable<Integer,Panel> panels = new Hashtable<Integer,Panel>();
 	Hashtable<Integer,InteractableObject> objects = new Hashtable<Integer,InteractableObject>();
 	public int addPanel(){
 		objectCount++;
-		panels.put(objectCount, new Panel());
+		Panel p = new Panel();
+		panels.put(objectCount,p);
 		tuim.addObject((InteractableObject)panels.get(objectCount));
+		dn.add(p.getNode());
 		return objectCount;
 	}
 	public void removePanel(int panelID){
@@ -39,10 +44,16 @@ public class Incubator{
 	public int addObject(Class<?> objectType) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
 		Object newObject = objectType.getConstructor().newInstance();
 		
-		//Check elementType is of instance UIElement
+		//Check elementType is of instance InteractableObject
 		if(!(newObject instanceof InteractableObject)){
 			System.out.println("Error in Incubator-addUIElement:Not an InteractableObject("+objectType+")");
 			return -1;
+		}
+		
+		//Check if the element is of type OriginObject
+		if(newObject instanceof OriginObject){
+			//Add the datanode to the datanodenetwork
+			dn.add(((OriginObject)newObject).getNode());
 		}
 		
 		objectCount++;
@@ -55,9 +66,6 @@ public class Incubator{
 	}
 	public String getPanelString(int panelID){
 		return "";
-	}
-	public void connectNodes(int objectID1, int objectID2){
-		
 	}
 	/**
 	 * Adds a UIElement of given type to the panel with objectID given, error checks if object is of type Panel
@@ -125,6 +133,36 @@ public class Incubator{
 			e.printStackTrace();
 		}
 			
+	}
+	/**
+	 * 
+	 */
+	public void connectNodes(int objectID1,int objectID2){
+		//Check object1
+		if(!objectExists(objectID1)){
+			System.out.println("Error in Incubator-connectDataNetworkNodes:Invalid ObjectID("+objectID1+")");
+			return;
+		}
+		
+		InteractableObject io1 = null;
+		if(objects.containsKey(objectID1))
+			io1 = objects.get(objectID1);
+		else
+			io1 = panels.get(objectID1);
+		
+		//Check object2
+		if(!objectExists(objectID2)){
+			System.out.println("Error in Incubator-connectDataNetworkNodes:Invalid ObjectID("+objectID2+")");
+			return;
+		}
+		
+		InteractableObject io2 = null;
+		if(objects.containsKey(objectID2))
+			io2 = objects.get(objectID2);
+		else
+			io2 = panels.get(objectID2);
+		
+		io1.getNode().addNeighbor(io2.getNode());
 	}
 	
 	/**

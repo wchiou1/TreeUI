@@ -10,9 +10,9 @@ public class PowerMonitor extends TextBox{
 
 	//PowerMonitor uses a keywrapper instead of a direct key
 	DNKeyWrapper powerNode;
-	public PowerMonitor(int x, int y) {
+	/*public PowerMonitor(int x, int y) {
 		super(x, y);
-	}
+	}*/
 	@Override
 	public void setDataLink(DataNetworkNode dataNode){
 		this.dataNode=dataNode;

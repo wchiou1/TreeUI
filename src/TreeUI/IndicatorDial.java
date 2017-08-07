@@ -5,14 +5,14 @@ import org.newdawn.slick.Graphics;
 import GameLogic.GameMath;
 
 public class IndicatorDial extends UIElement{
-	private int radius, range, angle;
-	private String key;
-	public IndicatorDial(int x, int y,int range, String key){
-		this.x=x;
-		this.y=y;
+	public int radius, range, angle;
+	public String key;
+	public IndicatorDial(){
+		this.x=0;
+		this.y=0;
 		radius=20;
-		this.range=range;
-		this.key=key;
+		this.range=360;
+		this.key="";
 		angle=0;
 	}
 	@Override

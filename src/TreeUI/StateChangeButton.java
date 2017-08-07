@@ -8,10 +8,10 @@ import GameLogic.GameMath;
 import Test.SuperGlobal;
 
 public class StateChangeButton extends UIElement{
-	private int radius;
-	private String targetState;
+	public int radius = 6;
+	public String targetState = "";
 	private StateBasedGame parent;
-	public StateChangeButton(StateBasedGame parent,int x, int y,String targetState){
+	/*public StateChangeButton(StateBasedGame parent,int x, int y,String targetState){
 		this(parent,x,y,6,targetState);
 	}
 	public StateChangeButton(StateBasedGame parent,int x, int y, int radius, String targetState){
@@ -20,6 +20,9 @@ public class StateChangeButton extends UIElement{
 		this.y=y;
 		this.radius=radius;
 		this.targetState=targetState;
+	}*/
+	public StateChangeButton(){
+		parent = SuperGlobal.getShell();
 	}
 	
 	@Override

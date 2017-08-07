@@ -4,8 +4,8 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 public class StaticText extends UIElement{
-	private String text;
-	public StaticText(int x, int y,String text){
+	public String text = "";
+	/*public StaticText(int x, int y,String text){
 		this.x=x;
 		this.y=y;
 		this.text=text;
@@ -13,7 +13,7 @@ public class StaticText extends UIElement{
 	StaticText(int x, int y){
 		this.x=x;
 		this.y=y;
-	}
+	}*/
 
 	@Override
 	public boolean isMoveable() {

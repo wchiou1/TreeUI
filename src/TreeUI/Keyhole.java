@@ -3,9 +3,10 @@ package TreeUI;
 import org.newdawn.slick.Graphics;
 
 public class Keyhole extends UIElement{
-	private int pattern;
-	private String key;
+	public int pattern = -1;
+	public String key = "";
 	private boolean open;
+	/*
 	public Keyhole(int x, int y,int pattern,String key){
 		this.x=x;
 		this.y=y;
@@ -13,6 +14,7 @@ public class Keyhole extends UIElement{
 		this.key=key;
 		open=false;
 	}
+	*/
 	@Override
 	public boolean isMoveable() {
 		return false;

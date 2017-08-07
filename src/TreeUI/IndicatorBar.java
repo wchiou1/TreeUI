@@ -76,7 +76,6 @@ public class IndicatorBar extends UIElement{
 	}
 	@Override
 	public void update(int mouseX, int mouseY) {
-		// TODO Auto-generated method stub
 		
 	}
 	

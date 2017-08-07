@@ -11,17 +11,17 @@ import java.util.Hashtable;
 //200 power.
 public class DNKeyWrapper{
 	private DataNetworkNode node;
-	private String key;
+	private String wrapkey;
 	public DNKeyWrapper(DataNetworkNode node,String key){
 		this.node=node;
-		this.key=key;
+		this.wrapkey=key;
 	}
 	public int getTotalValue(){
 		int total=0;
 		Enumeration<String> keys=node.dataLink.keys();
 		while(keys.hasMoreElements()){
 			String key=keys.nextElement();
-			if(key.startsWith(key))
+			if(key.startsWith(wrapkey))
 				total=+node.dataLink.get(key).value;
 		}
 		return total;

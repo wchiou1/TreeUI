@@ -10,14 +10,13 @@ import TreeUI.UIItem;
 //This class will connect to a datanode and broadcast it's power value
 
 public class Generator extends PaneledGameObject{
-	private int id;
-	private String key;
-	public Generator(int x, int y){
+	public String key;
+	/*public Generator(int x, int y){
 		this.x=x;
 		this.y=y;
 		this.dataNode=new DataNetworkNode();
 		key=":P Generator "+id;
-	}
+	}*/
 
 	@Override
 	public boolean isMoveable() {

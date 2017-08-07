@@ -4,10 +4,11 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 public class Slider extends UIElement{
-	private int width,height,range,current,length;
-	private boolean vertical;
-	private String key;
-	public Slider(int x, int y, int length, int range,String key){
+	private int length;
+	public int width=50,height=10,range=100,current=0;
+	public boolean vertical=true;
+	public String key = "";
+	/*public Slider(int x, int y, int length, int range,String key){
 		this.x=x;
 		this.y=y;
 		this.width=length;
@@ -35,15 +36,21 @@ public class Slider extends UIElement{
 		this.range=range;
 		current=length/2;
 		this.key=key;
-	}
+	}*/
 
 	
 	@Override
 	public void update(int mouseX, int mouseY) {
 		//super.update(mouseX, mouseY);TODO
+		
 		//Update the location of the slider using mouse info
 		if(!locked)
 			return;
+		//If length is null, set the length using the vertical variable
+		if(vertical)
+			length = height;
+		else
+			length = width;
 		changeSlider(mouseX,mouseY);
 		dataNode.changeData(key, (int)(1.0*current/length*range));
 		

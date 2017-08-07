@@ -21,6 +21,7 @@ import GameObjects.BasicPaneledGameObject;
 import GameObjects.Generator;
 import TreeUI.Button;
 import TreeUI.Dial;
+import TreeUI.Incubator;
 import TreeUI.Indicator;
 import TreeUI.IndicatorBar;
 import TreeUI.IndicatorDial;
@@ -40,7 +41,7 @@ public class MainMenu extends BasicGameState{
 	int height;
 	TreeUIManager im;
 	DataNetwork dn;
-	BasicPaneledGameObject masterOO;
+	Incubator inc;
 	StateBasedGame parent;
 	public MainMenu(Shell parent){
 		super();
@@ -48,31 +49,64 @@ public class MainMenu extends BasicGameState{
 	}
 	public void init(GameContainer container, StateBasedGame arg1)
 			throws SlickException {
-		ArrayList<Integer> keys=new ArrayList<Integer>();
-		keys.add(Input.KEY_E);
-		keys.add(Input.KEY_R);
-		width = container.getWidth();
-		height = container.getHeight();
-		dn=new DataNetwork();
-		im=new TreeUIManager(container.getInput(),keys,10,false);
+		try{
+			ArrayList<Integer> keys=new ArrayList<Integer>();
+			keys.add(Input.KEY_E);
+			keys.add(Input.KEY_R);
+			width = container.getWidth();
+			height = container.getHeight();
+			dn=new DataNetwork();
+			im=new TreeUIManager(container.getInput(),keys,10,false);
+			inc = new Incubator(im,dn);
+			
+			
+			//masterOO=new BasicPaneledGameObject(300,400,10,10);
+			int masterOO = inc.addObject(BasicPaneledGameObject.class);
+			inc.writeParam(masterOO, "x", 300);
+			inc.writeParam(masterOO, "y", 400);
+			inc.writeParam(masterOO, "width", 10);
+			inc.writeParam(masterOO, "height", 10);
+			
+			//Panel p=new Panel(-50,-100,100,100,true);
+			//im.addObject(p);
+			int p = inc.addPanel();
+			inc.writeParam(p, "x", -50);
+			inc.writeParam(p, "y", -100);
+			inc.writeParam(p, "width", 100);
+			inc.writeParam(p, "height", 100);
+			
+			//p.setOrigin(masterOO);
+			//im.addObject(masterOO);
+			inc.setOrigin(p, masterOO);
 		
-		
-		masterOO=new BasicPaneledGameObject(300,400,10,10);
-		Panel p=new Panel(-50,-100,100,100,true);
-		p.setOrigin(masterOO);
-		
-		p.addObject(new StaticText(40,20,"Demo"));
-		p.addObject(new StaticText(40,38,"Editor"));
-		
-		p.addObject(new StateChangeButton(parent,0,20,20,"Demo"));
-		p.addObject(new StateChangeButton(parent,0,38,20,"Editor"));
-
-		
-		im.addObject(p);
-		im.addObject(masterOO);
-		
-		
-		
+			//p.addObject(new StaticText(40,20,"Demo"));
+			int st1 = inc.addUIElement(p, StaticText.class);
+			inc.writeParam(st1, "x", 40);
+			inc.writeParam(st1, "y", 20);
+			inc.writeParam(st1, "text", "Demo");
+			
+			//p.addObject(new StaticText(40,38,"Editor"));
+			int st2 = inc.addUIElement(p, StaticText.class);
+			inc.writeParam(st2, "x", 40);
+			inc.writeParam(st2, "y", 38);
+			inc.writeParam(st2, "text", "Editor");
+			
+			//p.addObject(new StateChangeButton(parent,0,20,20,"Demo"));
+			int scb1 = inc.addUIElement(p, StateChangeButton.class);
+			inc.writeParam(scb1, "x", 0);
+			inc.writeParam(scb1, "y", 20);
+			inc.writeParam(scb1, "radius", 20);
+			inc.writeParam(scb1, "targetState", "Demo");
+			
+			//p.addObject(new StateChangeButton(parent,0,38,20,"Editor"));
+			int scb2 = inc.addUIElement(p, StateChangeButton.class);
+			inc.writeParam(scb2, "x", 0);
+			inc.writeParam(scb2, "y", 38);
+			inc.writeParam(scb2, "radius", 20);
+			inc.writeParam(scb2, "targetState", "Editor");
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		
 	}
 	
@@ -90,9 +124,6 @@ public class MainMenu extends BasicGameState{
 			throws SlickException {
 		im.update();
 		dn.update();
-		if(container.getInput().isKeyDown(Input.KEY_UP)){
-			masterOO.dMoveTreeUI(0, -1);
-		}
 		
 	}
 

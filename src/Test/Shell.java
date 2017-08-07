@@ -13,6 +13,7 @@ public class Shell extends StateBasedGame {
 
 	public Shell(String name) {
 		super(name);
+		SuperGlobal.setShell(this);
 		SuperGlobal.setGameState("MainMenu", new MainMenu(this));
 		SuperGlobal.setGameState("Demo", new Demo(this));
 		SuperGlobal.setGameState("Editor", new Editor(this));

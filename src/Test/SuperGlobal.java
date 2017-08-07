@@ -3,6 +3,7 @@ package Test;
 import java.util.Hashtable;
 
 import org.newdawn.slick.state.BasicGameState;
+import org.newdawn.slick.state.StateBasedGame;
 
 public class SuperGlobal{
 	private static int width,length;
@@ -13,10 +14,16 @@ public class SuperGlobal{
 		gameStates.put(name, state);
 	}
 	public static BasicGameState getGameState(String string){
+		if(!gameStates.containsKey(string)){
+			System.out.println("Error, does not contain gamestate of "+string);
+		}
 		return gameStates.get(string);
 	}
 	public static void setShell(Shell runner){
 		shell=runner;
+	}
+	public static Shell getShell(){
+		return shell;
 	}
 	public static void setWindowSize(int w,int l){
 		if(set){

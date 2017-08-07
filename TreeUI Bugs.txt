@@ -44,7 +44,7 @@ POTENTIAL SOLUTION: Implement an object id value and recursive down, marking ALL
 Then mark all panel connections. This will also fix saving the network issue.[Maybe Not]
 
 Should the string store the entire paneltree?
-If it doesn't then I need a way to assign the panel to the originobjects in the panel.
+If it doesn't then I need a way to assign the panel to the originobjects in the panel.[DONE]
 
 FINAL SOLUTION: We use Strings to call the constructors(NO CLASS EXCEPT FOR THE PANEL CLASS WILL BE HARDCODED)
 All UIElements will have a (x,y) constructor. We will use newInstance/createInstance to construct the UIElements.
@@ -53,6 +53,8 @@ Once a UIElement has been created, the parameters will be accessible using a <St
 with the string being the parameter name and the object its value.
 
 KEEP IN MIND: Should panels be modifiable? What point would that serve that UIElements couldn't do?
+
+MAJOR ERROR: The panel depends on the uielement xy to be set to correctly position it.
 
 ----
 ISSUE: Could we automate the id giving?

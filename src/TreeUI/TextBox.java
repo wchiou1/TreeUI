@@ -4,8 +4,8 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 public class TextBox extends UIElement{
-	private String key;
-	public TextBox(int x, int y,String key){
+	public String key;
+	/*public TextBox(int x, int y,String key){
 		this.x=x;
 		this.y=y;
 		this.key=key;
@@ -13,7 +13,7 @@ public class TextBox extends UIElement{
 	TextBox(int x, int y){
 		this.x=x;
 		this.y=y;
-	}
+	}*/
 
 	@Override
 	public boolean isMoveable() {

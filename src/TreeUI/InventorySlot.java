@@ -10,8 +10,15 @@ import org.newdawn.slick.Graphics;
  *
  */
 public class InventorySlot extends UIElement{
-	private int width,height;
+	public int width,height;
 	protected UIItem stored;
+	public InventorySlot(){
+		this.x=0;
+		this.y=0;
+		stored=null;
+		width=20;
+		height=20;
+	}
 	public InventorySlot(int x, int y){
 		this.x=x;
 		this.y=y;

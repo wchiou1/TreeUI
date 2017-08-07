@@ -15,18 +15,12 @@ import TreeUI.UIItem;
 public class Panel extends Snappable{
 	public boolean active = false; //Whether the panel is active(inactive panels are invisible)
 	protected ArrayList<UIElement> objectList = new ArrayList<UIElement>();//List of objects that the panel must render
-	protected DataNetworkNode dataNode;//The attached datanode which all UIELements
+	//The attached datanode which all UIELements
 										//will use to communicate with the datanetwork
 	private boolean virgin = true;//If The panel has ever been opened before(used to error check setting the panel's origin object)
 	public Panel(){
 		addObject(new PanelExit(width-13,3,this));
-	}
-	/**
-	 * Getter for the Panel's network node
-	 * @return
-	 */
-	public DataNetworkNode getNode(){
-		return dataNode;
+		dataNode = new DataNetworkNode();
 	}
 	/**
 	 * Adds an interactable object and uses the x and y as position delta from panel x and y

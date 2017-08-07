@@ -6,9 +6,9 @@ import TreeUI.UIItem;
 
 public abstract class PaneledGameObject extends OriginObject implements GameObject{
 	protected int id;
-	protected DataNetworkNode dataNode;
 	protected PaneledGameObject(){
 		this.id=count;
+		dataNode = new DataNetworkNode();
 		System.out.println(":"+id+" "+this.getClass());
 	}
 	public DataNetworkNode getNode(){

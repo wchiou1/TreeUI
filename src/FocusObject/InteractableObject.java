@@ -17,12 +17,19 @@ public abstract class InteractableObject{
 	protected InteractableObject(){
 		count++;
 	}
-	public final int getCount(){
+	public static final int getCount(){
 		return count;
 	}
 	public void setDataLink(DataNetworkNode dataNode){
 		this.dataNode=dataNode;
 	}
+	/**
+	 * Getter for the datanode
+	 */
+	public DataNetworkNode getNode(){
+		return dataNode;
+	}
+	
 	/**
 	 * Allows for animation updates and includes mouse coords
 	 * This can be left empty if the object does not have an animation

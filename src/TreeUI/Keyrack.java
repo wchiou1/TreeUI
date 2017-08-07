@@ -12,11 +12,11 @@ import org.newdawn.slick.Graphics;
  */
 public class Keyrack extends UIElement{
 	public Key key;
-	public Keyrack(int x, int y,Key key){
+	/*public Keyrack(int x, int y,Key key){
 		this.x=x;
 		this.y=y;
 		this.key=key;
-	}
+	}*/
 	@Override
 	public boolean isMoveable() {
 		return false;
