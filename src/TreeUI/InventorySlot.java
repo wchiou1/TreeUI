@@ -20,8 +20,8 @@ public class InventorySlot extends UIElement{
 		height=20;
 	}
 	public InventorySlot(int x, int y){
-		this.x=x;
-		this.y=y;
+		this.rx=x;
+		this.ry=y;
 		stored=null;
 		width=20;
 		height=20;

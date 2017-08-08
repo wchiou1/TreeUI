@@ -81,27 +81,27 @@ public class MainMenu extends BasicGameState{
 		
 			//p.addObject(new StaticText(40,20,"Demo"));
 			int st1 = inc.addUIElement(p, StaticText.class);
-			inc.writeParam(st1, "x", 40);
-			inc.writeParam(st1, "y", 20);
+			inc.writeParam(st1, "rx", 40);
+			inc.writeParam(st1, "ry", 20);
 			inc.writeParam(st1, "text", "Demo");
 			
 			//p.addObject(new StaticText(40,38,"Editor"));
 			int st2 = inc.addUIElement(p, StaticText.class);
-			inc.writeParam(st2, "x", 40);
-			inc.writeParam(st2, "y", 38);
+			inc.writeParam(st2, "rx", 40);
+			inc.writeParam(st2, "ry", 38);
 			inc.writeParam(st2, "text", "Editor");
 			
 			//p.addObject(new StateChangeButton(parent,0,20,20,"Demo"));
 			int scb1 = inc.addUIElement(p, StateChangeButton.class);
-			inc.writeParam(scb1, "x", 0);
-			inc.writeParam(scb1, "y", 20);
+			inc.writeParam(scb1, "rx", 0);
+			inc.writeParam(scb1, "ry", 20);
 			inc.writeParam(scb1, "radius", 20);
 			inc.writeParam(scb1, "targetState", "Demo");
 			
 			//p.addObject(new StateChangeButton(parent,0,38,20,"Editor"));
 			int scb2 = inc.addUIElement(p, StateChangeButton.class);
-			inc.writeParam(scb2, "x", 0);
-			inc.writeParam(scb2, "y", 38);
+			inc.writeParam(scb2, "rx", 0);
+			inc.writeParam(scb2, "ry", 38);
 			inc.writeParam(scb2, "radius", 20);
 			inc.writeParam(scb2, "targetState", "Editor");
 		}catch(Exception e){

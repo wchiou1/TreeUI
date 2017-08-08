@@ -18,8 +18,8 @@ import FocusObject.Panel;
  *
  */
 public abstract class UIElement extends InteractableObject{
-	private Panel screen;
-	private int rx,ry;
+	protected Panel screen;
+	public int rx=0,ry=0;
 	/**
 	 * Sets the parent panel and thus uses relative x and y instead of hard x and y
 	 * NOTE: If this is not called, then the object will use the hard x and y for calculations
@@ -27,13 +27,11 @@ public abstract class UIElement extends InteractableObject{
 	 */
 	public void setScreen(Panel screen){
 		if(this.screen!=null){
-			System.out.println("UIElement Error: Attempted to change screen, operation canceled.");
+			System.out.println(""+this.getClass()+"UIElement Error: Attempted to change screen, operation canceled.");
 			return;
 		}
 		this.screen=screen;
-		rx=x;
 		x=this.screen.getX()+x;
-		ry=y;
 		y=this.screen.getY()+y;
 		
 	}

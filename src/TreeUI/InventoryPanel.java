@@ -17,6 +17,8 @@ public class InventoryPanel extends Panel{
 	private int slotNum;
 	public InventoryPanel() {
 		super();
+		this.x=SuperGlobal.getWidth()/2-(22*slotNum+2)/2;
+		this.y=SuperGlobal.getLength()-26;
 		this.slotNum=3;
 		this.height=24;
 		this.width=22*slotNum+2;

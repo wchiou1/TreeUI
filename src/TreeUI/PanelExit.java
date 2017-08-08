@@ -8,13 +8,9 @@ import FocusObject.Panel;
 
 public class PanelExit extends UIElement{
 	private int height, width;
-	private Panel panel;
-	public PanelExit(int x, int y,Panel panel){
-		this.x=x;
-		this.y=y;
+	public PanelExit(){
 		height=10;
 		width=10;
-		this.panel=panel;
 	}
 
 	@Override
@@ -30,7 +26,7 @@ public class PanelExit extends UIElement{
 
 	@Override
 	public UIItem click(int x, int y, UIItem item) {
-		panel.close();
+		screen.close();
 		return item;
 	}
 

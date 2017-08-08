@@ -82,15 +82,15 @@ public class Editor extends BasicGameState{
 			//StaticText st1=new StaticText(0,20,"Demo");
 			//p.addObject(st1);
 			int st1 = inc.addUIElement(p, StaticText.class);
-			inc.writeParam(st1, "x", -50);
-			inc.writeParam(st1, "y", -100);
+			inc.writeParam(st1, "rx", -50);
+			inc.writeParam(st1, "ry", -100);
 			inc.writeParam(st1, "text", "Demo");
 	
 			//StateChangeButton scb1=new StateChangeButton(parent,30,80,20,"Demo");
 			//p.addObject(scb1);
 			int scb1 = inc.addUIElement(p, StateChangeButton.class);
-			inc.writeParam(scb1, "x", 30);
-			inc.writeParam(scb1, "y", 80);
+			inc.writeParam(scb1, "rx", 30);
+			inc.writeParam(scb1, "ry", 80);
 			inc.writeParam(scb1, "radius", 20);
 			inc.writeParam(scb1, "targetState", "Demo");
 		}catch(Exception e){

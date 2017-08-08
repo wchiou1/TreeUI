@@ -19,7 +19,6 @@ public class Panel extends Snappable{
 										//will use to communicate with the datanetwork
 	private boolean virgin = true;//If The panel has ever been opened before(used to error check setting the panel's origin object)
 	public Panel(){
-		addObject(new PanelExit(width-13,3,this));
 		dataNode = new DataNetworkNode();
 	}
 	/**
