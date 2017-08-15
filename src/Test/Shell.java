@@ -1,11 +1,14 @@
 package Test;
 
+import java.util.List;
+
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 import FocusObject.Panel;
+import Imported.ClassFinder;
 
 public class Shell extends StateBasedGame {
 
@@ -24,6 +27,10 @@ public class Shell extends StateBasedGame {
 		this.addState((MainMenu)SuperGlobal.getGameState("MainMenu"));
 		this.addState((Demo)SuperGlobal.getGameState("Demo"));
 		this.addState((Editor)SuperGlobal.getGameState("Editor"));
+		
+		List<Class<?>> cls=ClassFinder.find(Shell.class.getPackage().getName());
+		System.out.println(cls);
+		
 	}
 
 	@Override

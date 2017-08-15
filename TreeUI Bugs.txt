@@ -6,36 +6,6 @@ Each gameobject always has a datanode. Does each datanode have a gameobject? (Ye
 Store the gameobjects(Easy, [id,type,x,y])
 Store the UIElements(Panels will)
 
-
-How should I design the txt format for the Panel file saving?
-
-The coordinate system is all kinds of fucked up.
-
-I want the panel to have a save and load function.
-Panels will accept a string or whatever and create the uielements and attach them to the panel.
-BUT what about the datanodes and network connections?
-The UIElements will remember the arguments used to create them, the nodes can be created that way.
-BUT what about the network connections?
-Hmmm... network connections will be handled outside the panel. The panel doesn't any internal connections anyway
-
-How would I save panels within panels?
-Additional problem, self-referencing panels
-Maybe use a map? How would I find all the panels?
-Maybe just scrap the idea of a recursive save string.
-POTENTIAL SOLUTION: Only save down ONE level. All panels need to be assigned then.
-This would allow users to save individual panels, I like this solution.
-How would we assign the panels to the origin objects?
-The TreeUI Manager will handle loading of the panels.
-It will take in an array of panels maybe?(This would mean that we would need to create the leaf panels first)
-Make an incubator class which will store the lower panels.
-How would it ask for the panels for the origin objects?
-Give it a getter which will get the number of origin objects.
-Getter for origin object identification.
-Setter for origin object which sets the panel.
-The incubator will need to keep track of all origin objects.
-Basically, the incubator will handle all the creation of the panels and uielements. Then we will visualize it.
-All UIElements will have a method which displays it's parameters.
-
 SOLUTION: REMOVE ALL CONSTRUCTORS FROM UIELEMENTS
 Will need to implement dynamic class reading. TreeUI will search for the class/java file it needs using a mods folder.
 The user will NOT need to modify any enums. There will be NO enum for UIElements.
@@ -55,12 +25,30 @@ with the string being the parameter name and the object its value.
 KEEP IN MIND: Should panels be modifiable? What point would that serve that UIElements couldn't do?
 
 MAJOR ERROR: The panel depends on the uielement xy to be set to correctly position it.
+SOLUTION: Use rx and ry instead.
+---TIME TO IMPLEMENT THE EDITOR---
+All interactable objects will have a wrapper class which responds to a right-click
+This wrapper class will accept a constructor class on creation.
+There will be a wrapper class for the incubator.(constructor class)
+There will be a hardcoded panel which will display variables.
 
-----
-ISSUE: Could we automate the id giving?
-Would need to pass gameobject construction through a centralized class
-GameObject Manager would make sense...
-I want to force an object to run some code from it's parent, is that even possible?
+How will we make new uielements?
+	Maybe we right-click on a panel?
+		Right-click with create a placeholder object at click location, placeholder obj will have a panel attached which allows user to select what the placeholder should morph into
+How will we make new panels?
+	So hacky solution:
+		We have a hardcoded panel which covers the ENTIRE canvas. Right-click on this panel will create an origin_object with a built in panel.
+How will we modify the variables?
+	We will have a hardcoded panel.
+How will we form datanode connections?
+	I will create a connector UIItem.
+How will we disconnect datanode connections?
+	I will create a disconnector UIItem.
+ISSUE: Need to figure out how to select an element for variable modifying
+PROBLEM: Need to add in right-click functionality for mouse manager
+Solution-kinda: Maybe don't have right-click?
+
+PROBLEM: Need to have a way to 
 ----
 Create a button which is capable of switching game states[DONE]
 Create a new game state which is an actual "main menu"[DONE]Main menu will use the TreeUI that the demo uses for the menu[DONE]

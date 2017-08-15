@@ -10,6 +10,7 @@ public class BasicPaneledGameObject extends PaneledGameObject{
 	public BasicPaneledGameObject(){
 		this.height=5;
 		this.width=5;
+		System.out.println();
 	}
 	@Override
 	public void update() {

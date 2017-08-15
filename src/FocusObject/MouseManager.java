@@ -149,7 +149,7 @@ public class MouseManager{
 		if(input.isMouseButtonDown(0)){//If the mouse is down, check if it needs to lock an object
 			if(lock==null){//There's no current lock yet, get a lock
 				for(InteractableObject io:uiObjectList){//Iterate through all objects
-					if(io.hover=io.isMouseOver(mouseX,mouseY)){
+					if(io.isMouseOver(mouseX,mouseY)){
 						InteractableObject temp=io;
 						if(io instanceof Panel){
 							temp=((Panel) io).getObject(mouseX, mouseY);
@@ -170,7 +170,7 @@ public class MouseManager{
 				
 				if(lock==null)//We didn't find an object, try gameobjects
 					for(InteractableObject io:gameObjectList){//Iterate through all objects
-						if(io.hover=io.isMouseOver(mouseX,mouseY)){
+						if(io.isMouseOver(mouseX,mouseY)){
 							InteractableObject temp=io;
 							if(io instanceof Panel){
 								temp=((Panel) io).getObject(mouseX, mouseY);
@@ -209,6 +209,9 @@ public class MouseManager{
 			}
 			lock=null;
 		}
+		//Process right click
+		
+
 		
 		previousX=mouseX;
 		previousY=mouseY;
