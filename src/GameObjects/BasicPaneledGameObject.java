@@ -3,8 +3,6 @@ package GameObjects;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
-import TreeUI.UIItem;
-
 public class BasicPaneledGameObject extends PaneledGameObject{
 	
 	public BasicPaneledGameObject(){

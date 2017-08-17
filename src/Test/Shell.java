@@ -24,9 +24,9 @@ public class Shell extends StateBasedGame {
 		//int shipID=Integer.parseInt(JOptionPane.showInputDialog("Enter your shipID:"));
 		//this.addState(new SBLobby());
 		//this.addState(new SBBuild(shipID));
-		this.addState((MainMenu)SuperGlobal.getGameState("MainMenu"));
-		this.addState((Demo)SuperGlobal.getGameState("Demo"));
-		this.addState((Editor)SuperGlobal.getGameState("Editor"));
+		this.addState(SuperGlobal.getGameState("MainMenu"));
+		this.addState(SuperGlobal.getGameState("Demo"));
+		this.addState(SuperGlobal.getGameState("Editor"));
 		
 		List<Class<?>> cls=ClassFinder.find(Shell.class.getPackage().getName());
 		System.out.println(cls);

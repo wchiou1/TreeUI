@@ -6,6 +6,8 @@ import java.util.LinkedList;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 
+import Editor.EditorBasePanel;
+import Editor.EditorFunctional;
 import TreeUI.UIItem;
 
 //This class will contain all interactable objects and will take in mouse input
@@ -18,7 +20,8 @@ public class MouseManager{
 	LinkedList<InteractableObject> uiObjectList;
 	LinkedList<InteractableObject> gameObjectList;
 	Input input;
-	InteractableObject lock;
+	InteractableObject llock;
+	InteractableObject rlock;
 	int stickiness;
 	protected MouseManager(Input input,LinkedList<InteractableObject>gameObjectList,LinkedList<InteractableObject> uiObjectList,int stickiness){
 		this.input=input;
@@ -69,9 +72,9 @@ public class MouseManager{
 	 */
 	private void checkSnap(){
 		//TODO Change to support Snappable objects and not just Panels
-		if(!(lock instanceof Panel))
+		if(!(llock instanceof Panel))
 			return;
-		Panel temp = (Panel)lock;
+		Panel temp = (Panel)llock;
 		
 		//Find all active panels
 		ArrayList<Panel> activePanels = new ArrayList<Panel>();
@@ -147,28 +150,32 @@ public class MouseManager{
 		int mouseX=input.getMouseX();
 		int mouseY=input.getMouseY();
 		if(input.isMouseButtonDown(0)){//If the mouse is down, check if it needs to lock an object
-			if(lock==null){//There's no current lock yet, get a lock
+			if(llock==null){//There's no current lock yet, get a lock
 				for(InteractableObject io:uiObjectList){//Iterate through all objects
 					if(io.isMouseOver(mouseX,mouseY)){
 						InteractableObject temp=io;
+						//If it's a panel, check inside the panel for click logic
+						//move to the front is handled by general object handling
 						if(io instanceof Panel){
 							temp=((Panel) io).getObject(mouseX, mouseY);
 							if(temp==null)
 								temp=io;
 						}
+						//If it's an origin object, ensure that the panel is on top
 						if(temp instanceof OriginObject)
 							moveToFront(((OriginObject)temp).getView());
 						held=temp.click(mouseX, mouseY,held);
+						//If it's movable, move it infront(Panels are movable)
 						if(temp.isMoveable()){
 							moveToFront(io);
 						}
-						System.out.println("Mouse locked on object "+temp.toString());
-						lock=temp;
+						System.out.println("LMouse locked on object "+temp.toString());
+						llock=temp;
 						break;
 					}
 				}
 				
-				if(lock==null)//We didn't find an object, try gameobjects
+				if(llock==null)//We didn't find an object, try gameobjects
 					for(InteractableObject io:gameObjectList){//Iterate through all objects
 						if(io.isMouseOver(mouseX,mouseY)){
 							InteractableObject temp=io;
@@ -183,35 +190,74 @@ public class MouseManager{
 							if(temp.isMoveable()){
 								moveToFront(io);
 							}
-							System.out.println("Mouse locked on object "+temp.toString());
-							lock=temp;
+							System.out.println("LMouse locked on object "+temp.toString());
+							llock=temp;
 							break;
 						}
 					}
 				//If it's not on an object, make it the "empty" object
-				if(lock==null)
-					lock=TreeUIManager.empty;
+				if(llock==null)
+					llock=TreeUIManager.empty;
 			}
 			else{
 				//Move the object if it is set to movable
-				if(lock.isMoveable()){
+				if(llock.isMoveable()){
 					//If it is a panel, then let's do some snapping!
-					lock.dmove(mouseX-previousX, mouseY-previousY);
+					llock.dmove(mouseX-previousX, mouseY-previousY);
 				}
 			}
-			lock.locked=true;
+			//Let the object know that it has been locked on(If there is no object, it will lock on to the empty object)
+			llock.locked=true;
 		}
 		else
 		{
-			if(lock!=null){
+			if(llock!=null){
 				checkSnap();
-				lock.locked=false;
+				llock.locked=false;
 			}
-			lock=null;
+			llock=null;
 		}
-		//Process right click
 		
-
+		
+		//Process right click
+		//Right clicks will ONLY process on editor wrapper classes
+		if(input.isMouseButtonDown(0)){//If the mouse is down, check if it needs to lock an object
+			if(rlock==null){//There's no current lock yet, get a lock
+				for(InteractableObject io:uiObjectList){//Iterate through all objects
+					if(io.isMouseOver(mouseX,mouseY)){
+						InteractableObject temp=io;
+						//First check if we have clicked on the base panel
+						if(io instanceof EditorBasePanel){
+							System.out.println("RMouse locked on object "+temp.toString());
+							rlock=temp;
+							break;
+						}
+						//If it's not the base panel it must have EditorFunctional to have right-click functionality
+						if(io instanceof EditorFunctional){
+							System.out.println("RMouse locked on object "+temp.toString());
+							rlock=temp;
+							break;
+						}
+					}
+				}
+				
+				//If it's not on an object, make it the "empty" object
+				if(rlock==null)
+					rlock=TreeUIManager.empty;
+			}
+			else{
+				//We already have a lock, what should we do?
+				//Unless the lock is on the basepanel, move the thing to where the mouse is
+				if(!(rlock instanceof EditorBasePanel)){
+					//So we need to make sure we move it properly
+				}
+			}
+			rlock.locked=true;
+		}
+		else
+		{
+			rlock=null;
+		}
 		
 		previousX=mouseX;
 		previousY=mouseY;

@@ -160,7 +160,7 @@ public class TreeUIManager{
 		while(it.hasNext()){
 			InteractableObject temp=it.next();
 			//Check if the object is locked by the mouseManager
-			if(temp.equals(mouseManager.lock)&&mouseManager.lock instanceof Snappable)
+			if(temp.equals(mouseManager.llock)&&mouseManager.llock instanceof Snappable)
 				drawPanelSnap(g,temp);
 			else
 				temp.draw(g);

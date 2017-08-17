@@ -3,7 +3,6 @@ package Test;
 import java.util.Hashtable;
 
 import org.newdawn.slick.state.BasicGameState;
-import org.newdawn.slick.state.StateBasedGame;
 
 public class SuperGlobal{
 	private static int width,length;

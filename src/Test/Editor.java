@@ -12,28 +12,12 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import DataLinkNetwork.DataNetwork;
-import DataLinkNetwork.DataNetworkNode;
-import FocusObject.OriginObject;
-import FocusObject.Panel;
+import Editor.EditorBasePanel;
 import FocusObject.TreeUIManager;
-import FocusObject.Window;
+import GameLogic.Incubator;
 import GameObjects.BasicPaneledGameObject;
-import GameObjects.Generator;
-import TreeUI.Button;
-import TreeUI.Dial;
-import TreeUI.Incubator;
-import TreeUI.Indicator;
-import TreeUI.IndicatorBar;
-import TreeUI.IndicatorDial;
-import TreeUI.InventorySlot;
-import TreeUI.Key;
-import TreeUI.Keyhole;
-import TreeUI.Keyrack;
-import TreeUI.PowerMonitor;
-import TreeUI.Slider;
 import TreeUI.StateChangeButton;
 import TreeUI.StaticText;
-import TreeUI.TextBox;
 
 public class Editor extends BasicGameState{
 
@@ -47,6 +31,7 @@ public class Editor extends BasicGameState{
 		super();
 		this.parent=parent;
 	}
+	@Override
 	public void init(GameContainer container, StateBasedGame arg1)
 			throws SlickException {
 		try{
@@ -58,6 +43,10 @@ public class Editor extends BasicGameState{
 			dn=new DataNetwork();
 			im=new TreeUIManager(container.getInput(),keys,10);
 			inc = new Incubator(im,dn);
+			
+			inc.addObject(EditorBasePanel.class);
+			
+			
 			
 			
 			//masterOO=new BasicPaneledGameObject(300,400,10,10);

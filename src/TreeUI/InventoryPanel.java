@@ -1,7 +1,5 @@
 package TreeUI;
 
-import java.util.ArrayList;
-
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
@@ -34,6 +32,7 @@ public class InventoryPanel extends Panel{
 	public boolean isMoveable() {
 		return false;
 	}
+	@Override
 	public void draw(Graphics g){
 		//TODO Draw a panel and then draw the inventory slots
 		g.setColor(Color.gray);

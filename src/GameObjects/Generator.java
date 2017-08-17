@@ -3,9 +3,7 @@ package GameObjects;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
-import DataLinkNetwork.DataNetworkNode;
 import GameLogic.GameMath;
-import TreeUI.UIItem;
 
 //This class will connect to a datanode and broadcast it's power value
 

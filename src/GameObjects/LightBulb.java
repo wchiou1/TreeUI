@@ -10,6 +10,7 @@ public class LightBulb extends NonPaneledGameObject{
 		
 	}
 
+	@Override
 	public void update() {
 		
 	}

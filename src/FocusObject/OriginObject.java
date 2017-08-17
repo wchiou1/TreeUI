@@ -36,6 +36,7 @@ public abstract class OriginObject extends UIElement{
 	public boolean isMoveable() {
 		return false;
 	}
+	@Override
 	public final void keyPress(int mouseX, int mouseY, int key) {
 		if(!locked){
 			if(key==Input.KEY_E){

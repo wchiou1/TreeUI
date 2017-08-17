@@ -1,7 +1,5 @@
 package TreeUI;
 
-import java.util.Hashtable;
-
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 

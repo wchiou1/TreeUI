@@ -19,6 +19,7 @@ public class Window extends Snappable{
 		this.height=height;
 		this.color=color;
 	}
+	@Override
 	public boolean isMouseOver(int x, int y){
 		if(x>=this.x&&x<=this.x+width)
 			if(y>=this.y&&y<=this.y+height)

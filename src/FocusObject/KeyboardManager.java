@@ -7,8 +7,6 @@ import java.util.LinkedList;
 
 import org.newdawn.slick.Input;
 
-import Test.SuperGlobal;
-
 public class KeyboardManager{
 	static Hashtable<Integer,SmartInteger> remapHash = new Hashtable<Integer,SmartInteger>();//<Input,listen>
 	private Input input;

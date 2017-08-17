@@ -31,6 +31,7 @@ All interactable objects will have a wrapper class which responds to a right-cli
 This wrapper class will accept a constructor class on creation.
 There will be a wrapper class for the incubator.(constructor class)
 There will be a hardcoded panel which will display variables.
+Do we need wrapper classes?(YES, otherwise we would need to implement a way to prevent the editor from working during normal operation)
 
 How will we make new uielements?
 	Maybe we right-click on a panel?
@@ -48,7 +49,9 @@ ISSUE: Need to figure out how to select an element for variable modifying
 PROBLEM: Need to add in right-click functionality for mouse manager
 Solution-kinda: Maybe don't have right-click?
 
-PROBLEM: Need to have a way to 
+MAJOR-ISSUE: Need to troubleshoot why class scanning is not working. Need to get my desktop.
+----Editor Plan----
+Create right-click which will check for the specialized panel and panel wrappers.
 ----
 Create a button which is capable of switching game states[DONE]
 Create a new game state which is an actual "main menu"[DONE]Main menu will use the TreeUI that the demo uses for the menu[DONE]

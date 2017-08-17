@@ -7,7 +7,6 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 
 import DataLinkNetwork.DataNetworkNode;
-import TreeUI.PanelExit;
 import TreeUI.Snappable;
 import TreeUI.UIElement;
 import TreeUI.UIItem;
@@ -152,6 +151,7 @@ public class Panel extends Snappable{
 				((OriginObject)e).dMoveTreeUI(dx, dy);
 		}
 	}
+	@Override
 	public String getSaveString(){
 		String temp="";
 		//Get the panel information

@@ -1,4 +1,4 @@
-package TreeUI;
+package GameLogic;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -9,6 +9,7 @@ import FocusObject.InteractableObject;
 import FocusObject.OriginObject;
 import FocusObject.Panel;
 import FocusObject.TreeUIManager;
+import TreeUI.UIElement;
 
 /**
  * This class will create a panel tree.
@@ -30,7 +31,7 @@ public class Incubator{
 		objectCount++;
 		Panel p = new Panel();
 		panels.put(objectCount,p);
-		tuim.addObject((InteractableObject)panels.get(objectCount));
+		tuim.addObject(panels.get(objectCount));
 		dn.add(p.getNode());
 		return objectCount;
 	}
@@ -58,7 +59,7 @@ public class Incubator{
 		
 		objectCount++;
 		objects.put(new Integer(objectCount), (InteractableObject)newObject);
-		tuim.addObject((InteractableObject)objects.get(objectCount));
+		tuim.addObject(objects.get(objectCount));
 		return objectCount;
 	}
 	public void loadPanelString(String panelStr){
