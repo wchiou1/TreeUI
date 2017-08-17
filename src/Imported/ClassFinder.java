@@ -1,7 +1,9 @@
 package Imported;
 
 import java.io.File;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,14 +23,21 @@ public class ClassFinder {
         if (scannedUrl == null) {
             throw new IllegalArgumentException(String.format(BAD_PACKAGE_ERROR, scannedPath, scannedPackage));
         }
-        System.out.println(scannedUrl.getFile());
-        File scannedDir = new File(scannedUrl.getFile());
-        System.out.print("Chicken"+scannedDir.listFiles());
-        List<Class<?>> classes = new ArrayList<Class<?>>();
-        for (File file : scannedDir.listFiles()) {
-            classes.addAll(find(file, scannedPackage));
-        }
-        return classes;
+        try {
+			System.out.println(Paths.get(scannedUrl.toURI()).toFile());
+        
+	        File scannedDir = Paths.get(scannedUrl.toURI()).toFile();
+	        System.out.print("Chicken"+scannedDir.listFiles());
+	        List<Class<?>> classes = new ArrayList<Class<?>>();
+	        for (File file : scannedDir.listFiles()) {
+	            classes.addAll(find(file, scannedPackage));
+	        }
+	        return classes;
+        } catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
     }
 
     private static List<Class<?>> find(File file, String scannedPackage) {
