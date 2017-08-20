@@ -7,7 +7,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 
 import Editor.EditorBasePanel;
-import Editor.EditorFunctional;
+import Editor.RightClickable;
+import TreeUI.UIElement;
 import TreeUI.UIItem;
 
 //This class will contain all interactable objects and will take in mouse input
@@ -17,8 +18,9 @@ import TreeUI.UIItem;
 public class MouseManager{
 	private int previousX,previousY;
 	private UIItem held;
-	LinkedList<InteractableObject> uiObjectList;
-	LinkedList<InteractableObject> gameObjectList;
+	LinkedList<InteractableObject> uiObjectList;//Panels
+	LinkedList<InteractableObject> gameObjectList;//Gameobjects
+	ArrayList<InteractableObject> toBeDeleted;
 	Input input;
 	InteractableObject llock;
 	InteractableObject rlock;
@@ -27,6 +29,7 @@ public class MouseManager{
 		this.input=input;
 		this.uiObjectList=uiObjectList;
 		this.gameObjectList=gameObjectList;
+		this.toBeDeleted = new ArrayList<InteractableObject>();
 		this.stickiness=stickiness;
 		previousX=0;
 		previousY=0;
@@ -152,7 +155,7 @@ public class MouseManager{
 		if(input.isMouseButtonDown(0)){//If the mouse is down, check if it needs to lock an object
 			if(llock==null){//There's no current lock yet, get a lock
 				for(InteractableObject io:uiObjectList){//Iterate through all objects
-					if(io.isMouseOver(mouseX,mouseY)){
+					if(io.masterIsMouseOver(mouseX,mouseY)){
 						InteractableObject temp=io;
 						//If it's a panel, check inside the panel for click logic
 						//move to the front is handled by general object handling
@@ -177,7 +180,7 @@ public class MouseManager{
 				
 				if(llock==null)//We didn't find an object, try gameobjects
 					for(InteractableObject io:gameObjectList){//Iterate through all objects
-						if(io.isMouseOver(mouseX,mouseY)){
+						if(io.masterIsMouseOver(mouseX,mouseY)){
 							InteractableObject temp=io;
 							if(io instanceof Panel){
 								temp=((Panel) io).getObject(mouseX, mouseY);
@@ -221,19 +224,36 @@ public class MouseManager{
 		
 		//Process right click
 		//Right clicks will ONLY process on editor wrapper classes
-		if(input.isMouseButtonDown(0)){//If the mouse is down, check if it needs to lock an object
+		if(input.isMouseButtonDown(1)){//If the mouse is down, check if it needs to lock an object
 			if(rlock==null){//There's no current lock yet, get a lock
 				for(InteractableObject io:uiObjectList){//Iterate through all objects
-					if(io.isMouseOver(mouseX,mouseY)){
+					if(io.masterIsMouseOver(mouseX,mouseY)){
 						InteractableObject temp=io;
-						//First check if we have clicked on the base panel
-						if(io instanceof EditorBasePanel){
+						//Check if it is rightclickable
+						if(io instanceof RightClickable){
+							if(io instanceof Panel){
+								temp=((Panel) io).getObject(mouseX, mouseY);
+								if(temp==null)
+									temp=io;
+							}
 							System.out.println("RMouse locked on object "+temp.toString());
 							rlock=temp;
 							break;
 						}
-						//If it's not the base panel it must have EditorFunctional to have right-click functionality
-						if(io instanceof EditorFunctional){
+					}
+				}
+				
+				//Didn't find it in uiobjectlist, try gameobjects
+				for(InteractableObject io:gameObjectList){//Iterate through all objects
+					if(io.masterIsMouseOver(mouseX,mouseY)){
+						InteractableObject temp=io;
+						//Check if it is rightclickable
+						if(io instanceof RightClickable){
+							if(io instanceof Panel){
+								temp=((Panel) io).getObject(mouseX, mouseY);
+								if(temp==null)
+									temp=io;
+							}
 							System.out.println("RMouse locked on object "+temp.toString());
 							rlock=temp;
 							break;
@@ -244,23 +264,47 @@ public class MouseManager{
 				//If it's not on an object, make it the "empty" object
 				if(rlock==null)
 					rlock=TreeUIManager.empty;
+				else
+					((RightClickable)rlock).rightClick(mouseX, mouseY,held);
 			}
 			else{
 				//We already have a lock, what should we do?
 				//Unless the lock is on the basepanel, move the thing to where the mouse is
 				if(!(rlock instanceof EditorBasePanel)){
 					//So we need to make sure we move it properly
+					//We will need to modify the xr and yr variables
+					if(rlock instanceof UIElement){
+						((UIElement)rlock).x+=mouseX-previousX;
+						((UIElement)rlock).y+=mouseY-previousY;
+					}
+					else{
+						((UIElement)rlock).rx+=mouseX-previousX;
+						((UIElement)rlock).ry+=mouseY-previousY;
+					}
 				}
 			}
 			rlock.locked=true;
 		}
-		else
-		{
+		else{
 			rlock=null;
 		}
 		
 		previousX=mouseX;
 		previousY=mouseY;
+		
+		deleteMarkedObjects();
+		
+	}
+	private void deleteMarkedObjects(){
+		for(InteractableObject io:toBeDeleted){
+			//Check if it's in gameobjects
+			gameObjectList.remove(io);
+			//Check if it's in uielements
+			uiObjectList.remove(io);
+		}
+	}
+	public void markDeleted(InteractableObject io){
+		toBeDeleted.add(io);
 	}
 	/**
 	 * Draws the held item

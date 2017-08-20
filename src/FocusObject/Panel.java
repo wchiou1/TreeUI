@@ -16,9 +16,11 @@ public class Panel extends Snappable{
 	protected ArrayList<UIElement> objectList = new ArrayList<UIElement>();//List of objects that the panel must render
 	//The attached datanode which all UIELements
 										//will use to communicate with the datanetwork
-	private boolean virgin = true;//If The panel has ever been opened before(used to error check setting the panel's origin object)
+	protected boolean virgin = true;//If The panel has ever been opened before(used to error check setting the panel's origin object)
 	public Panel(){
 		dataNode = new DataNetworkNode();
+		this.width=100;
+		this.height=100;
 	}
 	/**
 	 * Adds an interactable object and uses the x and y as position delta from panel x and y
@@ -43,8 +45,6 @@ public class Panel extends Snappable{
 	 */
 	public void open(){
 		active=true;
-		for(UIElement io:objectList)
-			io.hover=false;
 	}
 	void openAll(){
 		open();
@@ -82,9 +82,10 @@ public class Panel extends Snappable{
 		g.setColor(Color.white);
 		g.fillRoundRect(x+2, y+2, width-4, height-4, 2);
 		
-		g.setClip(x+2, y+2, width-4, height-4);
-		for(UIElement io:objectList)
+		for(UIElement io:objectList){
+			g.setClip(x+2, y+2, width-4, height-4);
 			io.UDraw(g);
+		}
 		g.clearClip();
 	}
 
@@ -96,7 +97,7 @@ public class Panel extends Snappable{
 		if(!active)
 			return null;
 		for(InteractableObject io:objectList){
-			if(io.hover=io.isMouseOver(x, y))
+			if(io.masterIsMouseOver(x, y))
 				return io;
 		}
 		return null;
@@ -108,8 +109,6 @@ public class Panel extends Snappable{
 		if(x>=this.x&&x<=this.x+width)
 			if(y>=this.y&&y<=this.y+height)
 				return true;
-		for(InteractableObject io:objectList)
-			io.hover=false;
 		return false;
 	}
 
@@ -142,7 +141,7 @@ public class Panel extends Snappable{
 			return;
 		}
 		oo.setView(this);
-		move(oo.getX()-width/2,oo.getY()-height);
+		move(oo.getX()+oo.rx-width/2,oo.getY()+oo.ry-height);
 	}
 	public void dMoveTreeUI(int dx, int dy){
 		dmove(dx,dy);

@@ -13,8 +13,10 @@ public abstract class InteractableObject{
 	public int x=0,y=0;
 	protected DataNetworkNode dataNode;
 	protected boolean locked=false;
-	protected boolean hover=false;
+	private boolean hover=false;
+	protected int id;
 	protected InteractableObject(){
+		id=count;
 		count++;
 	}
 	public static final int getCount(){
@@ -23,6 +25,14 @@ public abstract class InteractableObject{
 	public void setDataLink(DataNetworkNode dataNode){
 		this.dataNode=dataNode;
 	}
+	/**
+	 * Handles removal of the instance
+	 */
+	public void masterDestroy(){
+		dataNode.destroy();
+		destroy();
+	}
+	public abstract void destroy();
 	/**
 	 * Getter for the datanode
 	 */
@@ -57,6 +67,16 @@ public abstract class InteractableObject{
 	 * @param key
 	 */
 	public abstract void keyPress(int mouseX, int mouseY, int key);
+	/**
+	 * Calls isMouseOver and stores the results in .hover for further processing
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	public boolean masterIsMouseOver(int x, int y){
+		this.hover = isMouseOver(x,y);
+		return this.hover;
+	}
 	/**
 	 * Returns if the mouse if over the object.
 	 * Mouse coords are given as parameters

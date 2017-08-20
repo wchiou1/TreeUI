@@ -16,6 +16,7 @@ public abstract class OriginObject extends UIElement{
 		view.close();
 	}
 	public void open(){
+		System.out.println("Opening");
 		view.open();
 	}
 	public void openAll(){

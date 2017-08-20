@@ -12,6 +12,7 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import DataLinkNetwork.DataNetwork;
+import Editor.Editor;
 import Editor.EditorBasePanel;
 import FocusObject.TreeUIManager;
 import GameLogic.Incubator;
@@ -19,7 +20,7 @@ import GameObjects.BasicPaneledGameObject;
 import TreeUI.StateChangeButton;
 import TreeUI.StaticText;
 
-public class Editor extends BasicGameState{
+public class EditorState extends BasicGameState{
 
 	int width;
 	int height;
@@ -27,7 +28,7 @@ public class Editor extends BasicGameState{
 	DataNetwork dn;
 	Incubator inc;
 	StateBasedGame parent;
-	public Editor(Shell parent){
+	public EditorState(Shell parent){
 		super();
 		this.parent=parent;
 	}
@@ -44,44 +45,9 @@ public class Editor extends BasicGameState{
 			im=new TreeUIManager(container.getInput(),keys,10);
 			inc = new Incubator(im,dn);
 			
-			inc.addObject(EditorBasePanel.class);
+			Editor editor = new Editor(inc);
 			
 			
-			
-			
-			//masterOO=new BasicPaneledGameObject(300,400,10,10);
-			//im.addObject(masterOO);
-			int masterOO = inc.addObject(BasicPaneledGameObject.class);
-			inc.writeParam(masterOO, "x", 300);
-			inc.writeParam(masterOO, "y", 400);
-			inc.writeParam(masterOO, "width", 10);
-			inc.writeParam(masterOO, "height", 10);
-			
-			//Panel p=new Panel(-50,-100,100,100);
-			//im.addObject(p);
-			int p = inc.addPanel();
-			inc.writeParam(p, "x", -50);
-			inc.writeParam(p, "y", -100);
-			inc.writeParam(p, "width", 100);
-			inc.writeParam(p, "height", 100);
-			
-			//p.setOrigin(masterOO);
-			inc.setOrigin(p, masterOO);
-			
-			//StaticText st1=new StaticText(0,20,"Demo");
-			//p.addObject(st1);
-			int st1 = inc.addUIElement(p, StaticText.class);
-			inc.writeParam(st1, "rx", -50);
-			inc.writeParam(st1, "ry", -100);
-			inc.writeParam(st1, "text", "Demo");
-	
-			//StateChangeButton scb1=new StateChangeButton(parent,30,80,20,"Demo");
-			//p.addObject(scb1);
-			int scb1 = inc.addUIElement(p, StateChangeButton.class);
-			inc.writeParam(scb1, "rx", 30);
-			inc.writeParam(scb1, "ry", 80);
-			inc.writeParam(scb1, "radius", 20);
-			inc.writeParam(scb1, "targetState", "Demo");
 		}catch(Exception e){
 			e.printStackTrace();
 		}

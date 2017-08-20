@@ -15,6 +15,9 @@ import TreeUI.UIElement;
  * This class will create a panel tree.
  * How will we attach it to a origin object?
  * The Incubator will be able to create everything, it will have a save feature
+ * 
+ * The purpose of this class is to combine classloading with a monitor so we can save the Tree
+ * ANY OBJECT YOU CREATE WITHOUT THE INCUBATOR CANNOT BE SAVED
  * @author Wesley Chiou
  */
 public class Incubator{
@@ -27,6 +30,9 @@ public class Incubator{
 	}
 	Hashtable<Integer,Panel> panels = new Hashtable<Integer,Panel>();
 	Hashtable<Integer,InteractableObject> objects = new Hashtable<Integer,InteractableObject>();
+	public TreeUIManager getManager(){
+		return tuim;
+	}
 	public int addPanel(){
 		objectCount++;
 		Panel p = new Panel();
@@ -42,25 +48,43 @@ public class Incubator{
 		}
 		panels.remove(panelID);
 	}
-	public int addObject(Class<?> objectType) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
-		Object newObject = objectType.getConstructor().newInstance();
+	public Panel getPanel(int panelID){
+		return panels.get(panelID);
+	}
+	public InteractableObject getObject(int objectID){
+		return objects.get(objectID);
+	}
+	public int addObject(Class<?> objectType){
 		
-		//Check elementType is of instance InteractableObject
-		if(!(newObject instanceof InteractableObject)){
-			System.out.println("Error in Incubator-addUIElement:Not an InteractableObject("+objectType+")");
+		Object newObject;
+		try {
+			newObject = objectType.getConstructor().newInstance();
+			
+		
+		
+			//Check elementType is of instance InteractableObject
+			if(!(newObject instanceof InteractableObject)){
+				System.out.println("Error in Incubator-addUIElement:Not an InteractableObject("+objectType+")");
+				return -1;
+			}
+			
+			//Check if the element is of type OriginObject
+			if(newObject instanceof OriginObject){
+				//Add the datanode to the datanodenetwork
+				dn.add(((OriginObject)newObject).getNode());
+			}
+			
+			objectCount++;
+			objects.put(new Integer(objectCount), (InteractableObject)newObject);
+			tuim.addObject(objects.get(objectCount));
+			return objectCount;
+		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+				| InvocationTargetException | NoSuchMethodException | SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 			return -1;
 		}
 		
-		//Check if the element is of type OriginObject
-		if(newObject instanceof OriginObject){
-			//Add the datanode to the datanodenetwork
-			dn.add(((OriginObject)newObject).getNode());
-		}
-		
-		objectCount++;
-		objects.put(new Integer(objectCount), (InteractableObject)newObject);
-		tuim.addObject(objects.get(objectCount));
-		return objectCount;
 	}
 	public void loadPanelString(String panelStr){
 		

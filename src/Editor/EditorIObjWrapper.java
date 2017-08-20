@@ -2,7 +2,7 @@ package Editor;
 
 import TreeUI.UIItem;
 
-public class EditorIObjWrapper implements EditorFunctional{
+public class EditorIObjWrapper implements RightClickable{
 
 	@Override
 	public UIItem rightClick(int x, int y, UIItem item) {

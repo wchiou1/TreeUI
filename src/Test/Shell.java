@@ -1,5 +1,7 @@
 package Test;
 
+import java.lang.reflect.Modifier;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.newdawn.slick.AppGameContainer;
@@ -8,18 +10,22 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 import FocusObject.Panel;
+import GameObjects.GameObject;
+import GameObjects.NonPaneledGameObject;
+import GameObjects.PaneledGameObject;
 import Imported.ClassFinder;
 
 public class Shell extends StateBasedGame {
 
 	public static int menu = 0;
+	private static ArrayList<Class<?>> gameObjectTypes = new ArrayList<Class<?>>();
 
 	public Shell(String name) {
 		super(name);
 		SuperGlobal.setShell(this);
 		SuperGlobal.setGameState("MainMenu", new MainMenu(this));
 		SuperGlobal.setGameState("Demo", new Demo(this));
-		SuperGlobal.setGameState("Editor", new Editor(this));
+		SuperGlobal.setGameState("Editor", new EditorState(this));
 		
 		//int shipID=Integer.parseInt(JOptionPane.showInputDialog("Enter your shipID:"));
 		//this.addState(new SBLobby());
@@ -30,7 +36,21 @@ public class Shell extends StateBasedGame {
 		
 		List<Class<?>> cls=ClassFinder.find(Shell.class.getPackage().getName());
 		System.out.println(cls);
-		
+		scanGOTypes();
+	}
+	
+	private void scanGOTypes(){
+		List<Class<?>> cls=ClassFinder.find(GameObject.class.getPackage().getName());
+		for(Class<?> type:cls){
+			//Filter out abstract objects
+			if(Modifier.isAbstract(type.getModifiers()))
+				continue;
+			gameObjectTypes.add(type);
+		}
+	}
+	
+	public static ArrayList<Class<?>> getGOTypes(){
+		return gameObjectTypes;
 	}
 
 	@Override

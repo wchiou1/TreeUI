@@ -13,6 +13,7 @@ import TreeUI.InventoryPanel;
 import TreeUI.Snappable;
 
 public class TreeUIManager{
+	public static TreeUIManager master;
 	private int stickiness;//How far the mouse delta has to be before a suggested snap is abandoned
 	private KeyboardManager keyManager;
 	private MouseManager mouseManager;
@@ -41,6 +42,7 @@ public class TreeUIManager{
 			uiObjectList.add(invPan);
 			inventoryManager = new InventoryManager(invPan,4);
 		}
+		master=this;
 			
 	}
 	public void update(){
@@ -53,6 +55,13 @@ public class TreeUIManager{
 			io.update(mouseX, mouseY);
 		}
 	}
+	public void removeObject(InteractableObject io){
+		if(io==null){
+			System.out.println("Null object, error");
+		}
+		if(!uiObjectList.remove(io))
+			System.out.println("Object not found, error");
+	}
 	public void addObject(InteractableObject io){
 		if(io==null){
 			System.out.println("Null object, error");
@@ -60,8 +69,7 @@ public class TreeUIManager{
 		uiObjectList.add(io);
 	}
 	public void addGameObject(InteractableObject io){
-		if(io instanceof PaneledGameObject)
-		gameObjectList.add(io);
+		gameObjectList.addFirst(io);
 	}
 	/**
 	 * Checks if there is a snap and then draws the panel in the suggested snap location

@@ -1,4 +1,4 @@
-package GameObjects;
+package GameLogic;
 
 public enum _Enum_GameObject{
 	generator,

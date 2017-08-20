@@ -9,12 +9,9 @@ import GameLogic.GameMath;
 
 public class Generator extends PaneledGameObject{
 	public String key;
-	/*public Generator(int x, int y){
-		this.x=x;
-		this.y=y;
-		this.dataNode=new DataNetworkNode();
+	public Generator(){
 		key=":P Generator "+id;
-	}*/
+	}
 
 	@Override
 	public boolean isMoveable() {
