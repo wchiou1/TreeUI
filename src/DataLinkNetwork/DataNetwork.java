@@ -9,6 +9,10 @@ public class DataNetwork{
 	}
 	
 	public void add(DataNetworkNode node){
+		if(node==null){
+			System.out.println("Attempted to add a null node to a datanetwork");
+			return;
+		}
 		nodes.add(node);
 	}
 	

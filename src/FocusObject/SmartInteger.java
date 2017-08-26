@@ -1,4 +1,4 @@
-package FocusObject;
+package focusObject;
 
 public class SmartInteger{
 	public int value;

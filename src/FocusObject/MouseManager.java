@@ -1,13 +1,15 @@
-package FocusObject;
+package focusObject;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.MouseListener;
 
 import Editor.EditorBasePanel;
-import Editor.RightClickable;
+import Editor.EditorImmune;
+import GameObjects.PaneledGameObject;
 import TreeUI.UIElement;
 import TreeUI.UIItem;
 
@@ -15,18 +17,22 @@ import TreeUI.UIItem;
 //This is to allow for an object to "lock" on to the mouse
 
 
-public class MouseManager{
+public class MouseManager implements MouseListener{
 	private int previousX,previousY;
 	private UIItem held;
+	private boolean editor=false;
+	private KeyboardManager keyManager;
 	LinkedList<InteractableObject> uiObjectList;//Panels
 	LinkedList<InteractableObject> gameObjectList;//Gameobjects
 	ArrayList<InteractableObject> toBeDeleted;
 	Input input;
 	InteractableObject llock;
+	InteractableObject flock = TreeUIManager.empty;
 	InteractableObject rlock;
 	int stickiness;
-	protected MouseManager(Input input,LinkedList<InteractableObject>gameObjectList,LinkedList<InteractableObject> uiObjectList,int stickiness){
+	protected MouseManager(Input input,KeyboardManager keyManager,LinkedList<InteractableObject>gameObjectList,LinkedList<InteractableObject> uiObjectList,int stickiness){
 		this.input=input;
+		this.keyManager = keyManager;
 		this.uiObjectList=uiObjectList;
 		this.gameObjectList=gameObjectList;
 		this.toBeDeleted = new ArrayList<InteractableObject>();
@@ -34,6 +40,10 @@ public class MouseManager{
 		previousX=0;
 		previousY=0;
 		held=null;
+		setInput(input);
+	}
+	public void enableEditor(){
+		this.editor=true;
 	}
 	/**
 	 * 
@@ -145,8 +155,12 @@ public class MouseManager{
 	}
 	
 	void moveToFront(InteractableObject io){
-		uiObjectList.remove(io);
-		uiObjectList.addFirst(io);
+		if(!uiObjectList.remove(io)){
+			System.out.println("WARNING: Panel does not exist in the TreeUIManager!");
+		}
+		else{
+			uiObjectList.addFirst(io);
+		}
 	}
 	
 	protected void update(){
@@ -165,15 +179,18 @@ public class MouseManager{
 								temp=io;
 						}
 						//If it's an origin object, ensure that the panel is on top
-						if(temp instanceof OriginObject)
+						if(temp instanceof OriginObject){
+							System.out.println("OriginObject clicked, displaying panel("+((OriginObject)temp).getView().x+","+((OriginObject)temp).getView().y+")");
 							moveToFront(((OriginObject)temp).getView());
-						held=temp.click(mouseX, mouseY,held);
+						}
 						//If it's movable, move it infront(Panels are movable)
 						if(temp.isMoveable()){
 							moveToFront(io);
 						}
 						System.out.println("LMouse locked on object "+temp.toString());
+						flock.fleetingLock=false;
 						llock=temp;
+						held=temp.masterClick(mouseX, mouseY,held);
 						break;
 					}
 				}
@@ -189,18 +206,22 @@ public class MouseManager{
 							}
 							if(temp instanceof OriginObject)
 								moveToFront(((OriginObject)temp).getView());
-							held=temp.click(mouseX, mouseY,held);
 							if(temp.isMoveable()){
 								moveToFront(io);
 							}
 							System.out.println("LMouse locked on object "+temp.toString());
+							flock.fleetingLock=false;
 							llock=temp;
+							held=temp.masterClick(mouseX, mouseY,held);
 							break;
 						}
 					}
 				//If it's not on an object, make it the "empty" object
 				if(llock==null)
 					llock=TreeUIManager.empty;
+				flock=llock;
+				flock.fleetingLock=true;
+				keyManager.setTypingLock(llock);
 			}
 			else{
 				//Move the object if it is set to movable
@@ -211,6 +232,7 @@ public class MouseManager{
 			}
 			//Let the object know that it has been locked on(If there is no object, it will lock on to the empty object)
 			llock.locked=true;
+			
 		}
 		else
 		{
@@ -230,7 +252,7 @@ public class MouseManager{
 					if(io.masterIsMouseOver(mouseX,mouseY)){
 						InteractableObject temp=io;
 						//Check if it is rightclickable
-						if(io instanceof RightClickable){
+						if(editor){
 							if(io instanceof Panel){
 								temp=((Panel) io).getObject(mouseX, mouseY);
 								if(temp==null)
@@ -243,41 +265,43 @@ public class MouseManager{
 					}
 				}
 				
+				
 				//Didn't find it in uiobjectlist, try gameobjects
-				for(InteractableObject io:gameObjectList){//Iterate through all objects
-					if(io.masterIsMouseOver(mouseX,mouseY)){
-						InteractableObject temp=io;
-						//Check if it is rightclickable
-						if(io instanceof RightClickable){
-							if(io instanceof Panel){
-								temp=((Panel) io).getObject(mouseX, mouseY);
-								if(temp==null)
-									temp=io;
+				if(rlock==null)
+					for(InteractableObject io:gameObjectList){//Iterate through all objects
+						if(io.masterIsMouseOver(mouseX,mouseY)){
+							InteractableObject temp=io;
+							//Check if it is rightclickable
+							if(editor){
+								if(io instanceof Panel){
+									temp=((Panel) io).getObject(mouseX, mouseY);
+									if(temp==null)
+										temp=io;
+								}
+								System.out.println("RMouse locked on object "+temp.toString());
+								rlock=temp;
+								break;
 							}
-							System.out.println("RMouse locked on object "+temp.toString());
-							rlock=temp;
-							break;
 						}
 					}
-				}
 				
 				//If it's not on an object, make it the "empty" object
 				if(rlock==null)
 					rlock=TreeUIManager.empty;
 				else
-					((RightClickable)rlock).rightClick(mouseX, mouseY,held);
+					((InteractableObject)rlock).rightClick(mouseX, mouseY,held);
 			}
 			else{
 				//We already have a lock, what should we do?
 				//Unless the lock is on the basepanel, move the thing to where the mouse is
-				if(!(rlock instanceof EditorBasePanel)){
+				if(!(rlock instanceof EditorImmune)){
 					//So we need to make sure we move it properly
 					//We will need to modify the xr and yr variables
-					if(rlock instanceof UIElement){
-						((UIElement)rlock).x+=mouseX-previousX;
-						((UIElement)rlock).y+=mouseY-previousY;
+					if(rlock instanceof PaneledGameObject){
+						((PaneledGameObject)rlock).x+=mouseX-previousX;
+						((PaneledGameObject)rlock).y+=mouseY-previousY;
 					}
-					else{
+					if(rlock instanceof UIElement){
 						((UIElement)rlock).rx+=mouseX-previousX;
 						((UIElement)rlock).ry+=mouseY-previousY;
 					}
@@ -285,26 +309,17 @@ public class MouseManager{
 			}
 			rlock.locked=true;
 		}
-		else{
+		else
+		{
+			if(rlock!=null){
+				rlock.locked=false;
+			}
 			rlock=null;
 		}
 		
 		previousX=mouseX;
 		previousY=mouseY;
 		
-		deleteMarkedObjects();
-		
-	}
-	private void deleteMarkedObjects(){
-		for(InteractableObject io:toBeDeleted){
-			//Check if it's in gameobjects
-			gameObjectList.remove(io);
-			//Check if it's in uielements
-			uiObjectList.remove(io);
-		}
-	}
-	public void markDeleted(InteractableObject io){
-		toBeDeleted.add(io);
 	}
 	/**
 	 * Draws the held item
@@ -312,6 +327,56 @@ public class MouseManager{
 	 */
 	public void draw(Graphics g){
 		if(held!=null)
-			held.draw(g,input.getMouseX(),input.getMouseY());
+			held.draw(g,input.getMouseX()-10,input.getMouseY()-10);
+	}
+	@Override
+	public void inputEnded() {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void inputStarted() {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public boolean isAcceptingInput() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public void setInput(Input arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseClicked(int arg0, int arg1, int arg2, int arg3) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseDragged(int arg0, int arg1, int arg2, int arg3) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseMoved(int arg0, int arg1, int arg2, int arg3) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mousePressed(int arg0, int arg1, int arg2) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseReleased(int arg0, int arg1, int arg2) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseWheelMoved(int arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 }

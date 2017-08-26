@@ -1,4 +1,4 @@
-package FocusObject;
+package focusObject;
 
 import java.lang.reflect.Field;
 import java.util.Hashtable;
@@ -7,32 +7,36 @@ import org.newdawn.slick.Graphics;
 
 import TreeUI.UIItem;
 import DataLinkNetwork.DataNetworkNode;
+import Editor.Bud;
+import Editor.EditorImmune;
+import Editor.EditorItem;
+import Editor.Selector;
 
 public abstract class InteractableObject{
 	protected static int count = 0;
 	public int x=0,y=0;
 	protected DataNetworkNode dataNode;
 	protected boolean locked=false;
+	protected boolean keyLock=false;//For when you "click" on an object using a key press
+	protected boolean fleetingLock=false;
 	private boolean hover=false;
 	protected int id;
 	protected InteractableObject(){
 		id=count;
 		count++;
 	}
+	public int getId(){
+		return id;
+	}
 	public static final int getCount(){
 		return count;
+	}
+	public boolean checkDataLink(){
+		return dataNode!=null;
 	}
 	public void setDataLink(DataNetworkNode dataNode){
 		this.dataNode=dataNode;
 	}
-	/**
-	 * Handles removal of the instance
-	 */
-	public void masterDestroy(){
-		dataNode.destroy();
-		destroy();
-	}
-	public abstract void destroy();
 	/**
 	 * Getter for the datanode
 	 */
@@ -55,7 +59,20 @@ public abstract class InteractableObject{
 	 * @param g
 	 */
 	public abstract void draw(Graphics g);
-	
+	public UIItem rightClick(int x, int y, UIItem item){
+		return item;
+	}
+	public UIItem masterClick(int x, int y, UIItem item){
+		if(item instanceof EditorItem&&!(this instanceof EditorImmune)){
+			//Need to handle editoritems
+			if(item instanceof Selector){
+				((Selector)item).setNewSubject(this);
+			}
+			//Cancel typical actions if there is an editor item
+			return item;
+		}
+		return click(x,y,item);
+	}
 	/**
 	 * Performs actions when clicked on
 	 */

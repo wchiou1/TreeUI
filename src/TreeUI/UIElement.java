@@ -2,8 +2,8 @@ package TreeUI;
 
 import org.newdawn.slick.Graphics;
 
-import FocusObject.InteractableObject;
-import FocusObject.Panel;
+import focusObject.InteractableObject;
+import focusObject.Panel;
 
 /**
  * Allows access to the relative coords and setting the parent panel

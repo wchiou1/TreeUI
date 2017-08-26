@@ -41,6 +41,5 @@ public class Fan extends NonPaneledGameObject{
 		// TODO Auto-generated method stub
 		return false;
 	}
-
 	
 }

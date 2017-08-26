@@ -3,6 +3,10 @@ package Editor;
 import java.lang.reflect.InvocationTargetException;
 
 import GameLogic.Incubator;
+import Test.SuperGlobal;
+import TreeUI.InventoryPanel;
+import focusObject.InventoryManager;
+import focusObject.Panel;
 
 /**
  * This is the editor class.
@@ -17,14 +21,22 @@ public class Editor{
 		this.inc=inc;
 		//Create and add the EditorBasePanel
 		inc.getManager().addGameObject(new EditorBasePanel(inc));
+		inc.getManager().addObject(new Panel(100,0,2,SuperGlobal.getLength()));//Left
+		inc.getManager().addObject(new Panel(SuperGlobal.getWidth(),0,2,SuperGlobal.getLength()));//Right
+		inc.getManager().addObject(new Panel(0,-2,SuperGlobal.getWidth(),2));//Top
+		inc.getManager().addObject(new Panel(0,SuperGlobal.getLength(),SuperGlobal.getWidth(),2));//Bottom
+		VariablePanel vp = new VariablePanel(inc);
+		inc.getManager().addObject(vp);
+		InventoryPanel iPanel = new InventoryPanel();
+		iPanel.forcePush(0, new Selector(vp));
+		inc.getManager().addObject(iPanel);
 	}
 	
 	/**
 	 * Get the save string with wrappers filtered out and save it in a file
 	 */
 	public void getCompleteSaveString(String fileName){
-		//We must remove all wrappers!
-		//because of how the wrappers work, we need to reconnect any originobjects to their wrapped panels
+		
 	}
 	/**
 	 * Load a save string and automatically add in wrappers to support editing

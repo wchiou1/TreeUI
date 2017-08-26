@@ -1,4 +1,4 @@
-package FocusObject;
+package focusObject;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -6,10 +6,14 @@ import java.util.Hashtable;
 import java.util.LinkedList;
 
 import org.newdawn.slick.Input;
+import org.newdawn.slick.KeyListener;
 
-public class KeyboardManager{
+import GameLogic.RequiresTyping;
+
+public class KeyboardManager implements KeyListener{
 	static Hashtable<Integer,SmartInteger> remapHash = new Hashtable<Integer,SmartInteger>();//<Input,listen>
 	private Input input;
+	private RequiresTyping typingLock = null;//This will contain the object which keypresses will be forwarded
 	private ArrayList<Integer> keys;
 	private InteractableObject lock;
 	LinkedList<InteractableObject> objectList;
@@ -20,6 +24,24 @@ public class KeyboardManager{
 		for(Integer i:keys){
 			remapHash.put(i, new SmartInteger(i));
 		}
+	}
+	/**
+	 * This function is called everytime the leftmouse is pressed, it gets the object that the mouse was over
+	 * @param newLock
+	 */
+	public void setTypingLock(InteractableObject newLock){
+		//Do nothing if we already have the same object
+		if(newLock==typingLock)
+			return;
+		//If the object does NOT require typing, set the typingLock to null
+		if(newLock instanceof RequiresTyping){
+			System.out.println("Set typingLock to "+newLock);
+			typingLock=(RequiresTyping)newLock;
+		}
+		else{
+			typingLock=null;
+		}
+		
 	}
 	/**
 	 * Remaps a default key to another key
@@ -41,6 +63,10 @@ public class KeyboardManager{
 	}
 	
 	public void update(InteractableObject mouseOn){
+		//This code requires refactoring due to how typingInput needs to work
+		if(typingLock!=null)
+			return;//There is an object that has taken keyboard focus. We give zero shits about where the mouse is when this has happened
+		
 		//Receives what the mouse is currently on via the MouseManager
 		
 		int mouseX=input.getMouseX();
@@ -87,5 +113,36 @@ public class KeyboardManager{
 				lock.locked=false;
 			lock=null;
 		}
+	}
+	@Override
+	public void inputEnded() {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void inputStarted() {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public boolean isAcceptingInput() {
+		return true;
+	}
+	@Override
+	public void setInput(Input arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void keyPressed(int key, char c) {
+		//If we have a focus lock, give it ALL the keyPresses
+		if(typingLock!=null)
+			typingLock.processUniversalKeyPress(key, c);
+		
+	}
+	@Override
+	public void keyReleased(int arg0, char arg1) {
+		// TODO Auto-generated method stub
+		
 	}
 }

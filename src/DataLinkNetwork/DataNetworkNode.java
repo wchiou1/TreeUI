@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
-import FocusObject.SmartInteger;
+import focusObject.SmartInteger;
 
 public class DataNetworkNode{
 	static int nodeCount=0;

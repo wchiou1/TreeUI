@@ -1,11 +1,11 @@
 package Editor;
 
-import FocusObject.InteractableObject;
-import FocusObject.OriginObject;
-import FocusObject.Panel;
 import GameLogic.Incubator;
 import GameObjects.BasicPaneledGameObject;
 import TreeUI.UIItem;
+import focusObject.InteractableObject;
+import focusObject.OriginObject;
+import focusObject.Panel;
 
 /**
  * This class will be used by the editor as a placeholder for a gameobject
@@ -14,7 +14,7 @@ import TreeUI.UIItem;
  * @author Wesley Chiou
  *
  */
-public class Sapling extends BasicPaneledGameObject implements RightClickable{
+public class Sapling extends BasicPaneledGameObject implements EditorImmune{
 	//Saplings will NEVER be made by the incubator
 	//The object the sapling turns into WILL need to be created by the incubator
 	private Incubator inc;//Incubator is required to "morph" into a savable object
@@ -29,6 +29,14 @@ public class Sapling extends BasicPaneledGameObject implements RightClickable{
 		SPanel.setOrigin(this);
 	}
 	public void morph(Class<?> objectType){
+		if(objectType==null){
+			System.out.println("Got a null type, morphing into nothing");
+			//Destroy itself
+			SPanel.clearReferences();
+			destroy();
+			return;
+		}
+		
 		System.out.println("Morphing to "+objectType);
 		//Time to morph! Let's not fuck this up...
 		//We need to first create the object
@@ -43,31 +51,26 @@ public class Sapling extends BasicPaneledGameObject implements RightClickable{
 			//The incubator will not ever see the wrapper. We must remember to connect the panel and the origin object before saving!
 			
 			//Create the panel
-			Panel wrappedPanel = inc.getPanel(inc.addPanel());
+			Panel panel = inc.getPanel(inc.addPanel());
+			panel.enableEditing(inc);
 			
-			//Wrap the panel
-			EditorPanelWrapper wrapper = new EditorPanelWrapper(wrappedPanel);
-			
-			//Connect the wrapper to our new object, THIS CONNECTION IS NOT TO BE SAVED, DO NOT USE THE INCUBATOR
-			wrapper.setOrigin((OriginObject)product);
-			
-			//Destroy itself
-			//SPanel.destroy();
-			//destroy();
-			
-			
+			//Connect our new panel to our new object, use the incubator
+			inc.setOrigin(panel.getId(), product.getId());
 		}
+		//Destroy itself
+		SPanel.clearReferences();
+		destroy();
 	}
 	public void destroy(){
 		inc.getManager().removeObject(this);
+		inc.getManager().removeObject(SPanel);
 		SPanel=null;
 		
 	}
 	
 	@Override
 	public UIItem rightClick(int x, int y, UIItem item) {
-		// TODO Auto-generated method stub
-		return null;
+		return item;
 	}
 	
 }

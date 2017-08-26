@@ -1,8 +1,8 @@
 package GameObjects;
 
 import DataLinkNetwork.DataNetworkNode;
-import FocusObject.OriginObject;
 import TreeUI.UIItem;
+import focusObject.OriginObject;
 
 public abstract class PaneledGameObject extends OriginObject implements GameObject{
 	protected int id;

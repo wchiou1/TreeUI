@@ -14,9 +14,9 @@ public class PowerMonitor extends TextBox{
 		super(x, y);
 	}*/
 	@Override
-	public void setDataLink(DataNetworkNode dataNode){
-		this.dataNode=dataNode;
-		powerNode=new DNKeyWrapper(dataNode,":P");
+	public void setDataLink(DataNetworkNode node){
+		this.dataNode=node;
+		powerNode = new DNKeyWrapper(node,":P");
 	}
 	@Override
 	public void draw(Graphics g) {

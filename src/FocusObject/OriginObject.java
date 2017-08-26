@@ -1,4 +1,4 @@
-package FocusObject;
+package focusObject;
 
 import org.newdawn.slick.Input;
 
@@ -6,7 +6,6 @@ import TreeUI.UIElement;
 
 public abstract class OriginObject extends UIElement{
 	protected Panel view;
-	public int height,width;
 	protected boolean highlight;
 	
 	public void setView(Panel v){
@@ -25,13 +24,7 @@ public abstract class OriginObject extends UIElement{
 
 	
 
-	@Override
-	public boolean isMouseOver(int x, int y) {
-		if(x>=this.x&&x<=this.x+width)
-			if(y>=this.y&&y<=this.y+height)
-				return true;
-		return false;
-	}
+	
 
 	@Override
 	public boolean isMoveable() {

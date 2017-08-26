@@ -3,7 +3,7 @@ package Editor;
 import TreeUI.TextButton;
 import TreeUI.UIItem;
 
-public class GOClassButton extends TextButton{
+public class GOClassButton extends TextButton implements EditorImmune{
 	private Class<?> GOClass;
 	private Sapling origin;
 	public GOClassButton(Sapling origin,Class<?> GOClass,int x, int y){
@@ -11,7 +11,10 @@ public class GOClassButton extends TextButton{
 		this.ry=y;
 		this.origin=origin;
 		this.GOClass=GOClass;
-		this.text=GOClass.getSimpleName();
+		if(GOClass==null)
+			this.text="Delete";
+		else
+			this.text=GOClass.getSimpleName();
 	}
 	
 	@Override

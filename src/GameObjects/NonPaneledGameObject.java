@@ -1,6 +1,6 @@
 package GameObjects;
 
-import FocusObject.InteractableObject;
+import focusObject.InteractableObject;
 
 /**
  * This class declares that the object exists within the gameworld, but CANNOT be clicked on to open a panel.

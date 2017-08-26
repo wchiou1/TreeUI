@@ -54,6 +54,9 @@ public class Indicator extends UIElement{
 
 	@Override
 	public boolean isMouseOver(int x, int y) {
+		if(x>=this.x&&x<=this.x+width)
+			if(y>=this.y&&y<=this.y+height)
+				return true;
 		return false;
 	}
 

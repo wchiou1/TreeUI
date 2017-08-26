@@ -3,8 +3,8 @@ package TreeUI;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
-import FocusObject.OriginObject;
 import TreeUI.UIItem;
+import focusObject.OriginObject;
 
 /**
  * This class is a simple implementation of an origin object
@@ -12,6 +12,11 @@ import TreeUI.UIItem;
  *
  */
 public class BasicPanelButton extends OriginObject{
+	public int width,height;
+	public BasicPanelButton(){
+		this.width=10;
+		this.height=10;
+	}
 	/*public BasicPanelButton(int x, int y){
 		//This is relative to the panel they are on
 		this.x=x;
@@ -29,6 +34,13 @@ public class BasicPanelButton extends OriginObject{
 	public void update() {
 		// TODO Auto-generated method stub
 		
+	}
+	@Override
+	public boolean isMouseOver(int x, int y) {
+		if(x>=this.x&&x<=this.x+width)
+			if(y>=this.y&&y<=this.y+height)
+				return true;
+		return false;
 	}
 	
 	@Override

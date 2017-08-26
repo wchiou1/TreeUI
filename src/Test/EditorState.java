@@ -14,36 +14,28 @@ import org.newdawn.slick.state.StateBasedGame;
 import DataLinkNetwork.DataNetwork;
 import Editor.Editor;
 import Editor.EditorBasePanel;
-import FocusObject.TreeUIManager;
 import GameLogic.Incubator;
 import GameObjects.BasicPaneledGameObject;
 import TreeUI.StateChangeButton;
 import TreeUI.StaticText;
+import focusObject.TreeUIManager;
 
-public class EditorState extends BasicGameState{
+public class EditorState extends TreeUIGameState{
 
 	int width;
 	int height;
-	TreeUIManager im;
-	DataNetwork dn;
-	Incubator inc;
-	StateBasedGame parent;
 	public EditorState(Shell parent){
-		super();
+		super(parent);
 		this.parent=parent;
 	}
 	@Override
 	public void init(GameContainer container, StateBasedGame arg1)
 			throws SlickException {
+		super.init(container,arg1);
 		try{
-			ArrayList<Integer> keys=new ArrayList<Integer>();
-			keys.add(Input.KEY_E);
-			keys.add(Input.KEY_R);
 			width = container.getWidth();
 			height = container.getHeight();
-			dn=new DataNetwork();
-			im=new TreeUIManager(container.getInput(),keys,10);
-			inc = new Incubator(im,dn);
+			im.enableEditor();
 			
 			Editor editor = new Editor(inc);
 			
@@ -64,17 +56,19 @@ public class EditorState extends BasicGameState{
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
-		g.setBackground(Color.white);
-		im.draw(g);
+		super.render(container, game, g);
 		
 	}
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
-		im.update();
-		dn.update();
+		super.update(container, game, delta);
 		
+	}
+	@Override
+	public void keyPressed(int key, char c) {
+		super.keyPressed(key, c);
 	}
 
 	@Override

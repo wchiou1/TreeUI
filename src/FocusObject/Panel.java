@@ -1,4 +1,4 @@
-package FocusObject;
+package focusObject;
 
 import java.util.ArrayList;
 
@@ -6,7 +6,8 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 
-import DataLinkNetwork.DataNetworkNode;
+import Editor.Bud;
+import GameLogic.Incubator;
 import TreeUI.Snappable;
 import TreeUI.UIElement;
 import TreeUI.UIItem;
@@ -14,17 +15,34 @@ import TreeUI.UIItem;
 public class Panel extends Snappable{
 	public boolean active = false; //Whether the panel is active(inactive panels are invisible)
 	protected ArrayList<UIElement> objectList = new ArrayList<UIElement>();//List of objects that the panel must render
+	private Incubator inc;
 	//The attached datanode which all UIELements
 										//will use to communicate with the datanetwork
 	protected boolean virgin = true;//If The panel has ever been opened before(used to error check setting the panel's origin object)
 	public Panel(){
-		dataNode = new DataNetworkNode();
 		this.width=100;
 		this.height=100;
+	}
+	public Panel(int x, int y, int width, int height){
+		this.x=x;
+		this.y=y;
+		this.width=width;
+		this.height=height;
+		this.active=true;
+	}
+	public void enableEditing(Incubator inc){
+		this.inc=inc;
+	}
+	public ArrayList<UIElement> getObjList(){
+		return objectList;
+	}
+	public boolean removeObject(UIElement io){
+		return objectList.remove(io);
 	}
 	/**
 	 * Adds an interactable object and uses the x and y as position delta from panel x and y
 	 * @param AddedObject
+	 * @throws NoOriginObjectException 
 	 */
 	public void addObject(UIElement io){
 		io.setDataLink(dataNode);
@@ -56,6 +74,8 @@ public class Panel extends Snappable{
 	 * Close the panel and any subsequent panels
 	 */
 	public void close(){
+		if(objectList==null)
+			System.out.println("NULL! How did this happen?!");
 		for(InteractableObject io:objectList)
 			if(io instanceof OriginObject)
 				((OriginObject)io).close();
@@ -92,6 +112,13 @@ public class Panel extends Snappable{
 	@Override
 	public UIItem click(int x, int y,UIItem item) {
 		return item;
+	}
+	public UIItem rightClick(int x, int y, UIItem item) {
+		//When right-click is called we want to create a bud at the mouse location
+		System.out.println("PanelWrapper Right click at ("+x+","+y+")");
+		//Now to create the Bud
+		addObject(new Bud(x,y,inc,this));
+		return null;
 	}
 	public InteractableObject getObject(int x, int y){
 		if(!active)
@@ -140,6 +167,7 @@ public class Panel extends Snappable{
 			System.out.println("Panel Error: Attempted to change origin object. Operation canceled.");
 			return;
 		}
+		setDataLink(oo.getNode());
 		oo.setView(this);
 		move(oo.getX()+oo.rx-width/2,oo.getY()+oo.ry-height);
 	}

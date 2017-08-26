@@ -12,8 +12,6 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import DataLinkNetwork.DataNetwork;
-import FocusObject.InteractableObject;
-import FocusObject.TreeUIManager;
 import GameLogic.Incubator;
 import GameObjects.BasicPaneledGameObject;
 import GameObjects.Generator;
@@ -23,6 +21,7 @@ import TreeUI.Dial;
 import TreeUI.Indicator;
 import TreeUI.IndicatorBar;
 import TreeUI.IndicatorDial;
+import TreeUI.InputBox;
 import TreeUI.InventorySlot;
 import TreeUI.Key;
 import TreeUI.Keyhole;
@@ -31,32 +30,24 @@ import TreeUI.PanelExit;
 import TreeUI.PowerMonitor;
 import TreeUI.Slider;
 import TreeUI.TextBox;
+import focusObject.InteractableObject;
+import focusObject.TreeUIManager;
 
-public class Demo extends BasicGameState{
+public class Demo extends TreeUIGameState{
 
 	int width;
 	int height;
-	TreeUIManager im;
-	DataNetwork dn;
-	Incubator inc;
-	BasicPaneledGameObject masterOO;
 	public Demo(Shell parent){
-		
+		super(parent);
 	}
 	@Override
-	public void init(GameContainer container, StateBasedGame arg1)
+	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
-		
+		super.init(container, game);
 		try{
-			ArrayList<Integer> keys=new ArrayList<Integer>();
-			keys.add(Input.KEY_E);
-			keys.add(Input.KEY_R);
 			width = container.getWidth();
 			height = container.getHeight();
-			
-			im=new TreeUIManager(container.getInput(),keys,10);
-			dn=new DataNetwork();
-			inc = new Incubator(im,dn);
+		
 			//im.addObject(new Window(100,100,50,50,Color.blue));
 			//im.addObject(new Window(50,50,50,50,Color.red));
 			Key key1=new Key(123,"key1");
@@ -100,22 +91,16 @@ public class Demo extends BasicGameState{
 			int oo2 = inc.addUIElement(p,BasicPanelButton.class);
 			inc.writeParam(oo2, "rx", 10);
 			inc.writeParam(oo2, "ry", 10);
-			inc.writeParam(oo2, "width", 10);
-			inc.writeParam(oo2, "height", 10);
 			
 			//BasicPanelButton oo3=new BasicPanelButton();
 			int oo3 = inc.addUIElement(p,BasicPanelButton.class);
 			inc.writeParam(oo3, "rx", 24);
 			inc.writeParam(oo3, "ry", 10);
-			inc.writeParam(oo3, "width", 10);
-			inc.writeParam(oo3, "height", 10);
 	
 			//BasicPanelButton oo4=new BasicPanelButton();
 			int oo4 = inc.addUIElement(p,BasicPanelButton.class);
 			inc.writeParam(oo4, "rx", 38);
 			inc.writeParam(oo4, "ry", 10);
-			inc.writeParam(oo4, "width", 10);
-			inc.writeParam(oo4, "height", 10);
 			
 			//AddUIElement automatically adds the object to the panel
 			//p.addObject(oo2);
@@ -138,6 +123,10 @@ public class Demo extends BasicGameState{
 			//p2.setOrigin(oo2);
 			inc.setOrigin(p2, oo2);
 			
+			int ib = inc.addUIElement(p2, InputBox.class);
+			inc.writeParam(ib, "rx", 80);
+			inc.writeParam(ib, "ry", 50);
+			
 			//Panel p3=new Panel(-50,-100,150,150);
 			//im.addObject(p3);
 			int p3 = inc.addPanel();
@@ -154,6 +143,8 @@ public class Demo extends BasicGameState{
 			//p3.setOrigin(oo3);
 			inc.setOrigin(p3, oo3);
 			
+			
+			
 			//Panel p4=new Panel(-50,-100);
 			//im.addObject(p4);
 			int p4 = inc.addPanel();
@@ -169,6 +160,8 @@ public class Demo extends BasicGameState{
 			
 			//p4.setOrigin(oo4);
 			inc.setOrigin(p4, oo4);
+			
+			
 			
 			//Dial d1=new Dial(20,20,"dial1");
 			//p2.addObject(d1);
@@ -364,19 +357,14 @@ public class Demo extends BasicGameState{
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
-		g.setBackground(Color.white);
-		im.draw(g);
+		super.render(container, game, g);
 		
 	}
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
-		im.update();
-		dn.update();
-		if(container.getInput().isKeyDown(Input.KEY_UP)){
-			masterOO.dMoveTreeUI(0, -1);
-		}
+		super.update(container, game, delta);
 		
 	}
 

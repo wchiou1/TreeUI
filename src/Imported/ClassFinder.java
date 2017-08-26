@@ -27,7 +27,6 @@ public class ClassFinder {
 			System.out.println(Paths.get(scannedUrl.toURI()).toFile());
         
 	        File scannedDir = Paths.get(scannedUrl.toURI()).toFile();
-	        System.out.print("Chicken"+scannedDir.listFiles());
 	        List<Class<?>> classes = new ArrayList<Class<?>>();
 	        for (File file : scannedDir.listFiles()) {
 	            classes.addAll(find(file, scannedPackage));

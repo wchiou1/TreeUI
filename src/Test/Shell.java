@@ -1,25 +1,30 @@
 package Test;
 
+import java.awt.Font;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.KeyListener;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.StateBasedGame;
 
-import FocusObject.Panel;
 import GameObjects.GameObject;
 import GameObjects.NonPaneledGameObject;
 import GameObjects.PaneledGameObject;
 import Imported.ClassFinder;
+import TreeUI.UIElement;
+import focusObject.Panel;
 
-public class Shell extends StateBasedGame {
+public class Shell extends StateBasedGame{
 
 	public static int menu = 0;
 	private static ArrayList<Class<?>> gameObjectTypes = new ArrayList<Class<?>>();
-
+	private static ArrayList<Class<?>> uiElementTypes = new ArrayList<Class<?>>();
+	public static TrueTypeFont SMALL_FONT;
 	public Shell(String name) {
 		super(name);
 		SuperGlobal.setShell(this);
@@ -37,16 +42,32 @@ public class Shell extends StateBasedGame {
 		List<Class<?>> cls=ClassFinder.find(Shell.class.getPackage().getName());
 		System.out.println(cls);
 		scanGOTypes();
+		scanUITypes();
 	}
-	
+	private void scanUITypes(){
+		List<Class<?>> cls=ClassFinder.find(UIElement.class.getPackage().getName());
+		for(Class<?> type:cls){
+			//Filter out abstract objects
+			if(Modifier.isAbstract(type.getModifiers()))
+				continue;
+			if(UIElement.class.isAssignableFrom(type))
+				uiElementTypes.add(type);
+		}
+	}
 	private void scanGOTypes(){
 		List<Class<?>> cls=ClassFinder.find(GameObject.class.getPackage().getName());
 		for(Class<?> type:cls){
 			//Filter out abstract objects
 			if(Modifier.isAbstract(type.getModifiers()))
 				continue;
+			//if(GameObject.class.isAssignableFrom(type))
+			//Pointless if statement, there is no core gameobject class(The required parent class OriginObject makes extending another class impossible)
 			gameObjectTypes.add(type);
 		}
+	}
+	
+	public static ArrayList<Class<?>> getUITypes(){
+		return uiElementTypes;
 	}
 	
 	public static ArrayList<Class<?>> getGOTypes(){
@@ -55,12 +76,13 @@ public class Shell extends StateBasedGame {
 
 	@Override
 	public void initStatesList(GameContainer container) throws SlickException {
+		container.setShowFPS(false);
+		SMALL_FONT = new TrueTypeFont(new Font("Verdana", Font.PLAIN, 10), true);
 		this.enterState(0);
 	}
 	
 	public static void main(String Args[])
 	{
-		System.out.println(Panel.class.toString());
 		try{
 			AppGameContainer app = new AppGameContainer(new Shell("Zoom and Drag Testing"));
 			app.setIcon("res/icon1.png");

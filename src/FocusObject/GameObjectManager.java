@@ -1,4 +1,4 @@
-package FocusObject;
+package focusObject;
 
 import java.util.LinkedList;
 

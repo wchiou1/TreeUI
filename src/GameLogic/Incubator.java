@@ -5,11 +5,11 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Hashtable;
 
 import DataLinkNetwork.DataNetwork;
-import FocusObject.InteractableObject;
-import FocusObject.OriginObject;
-import FocusObject.Panel;
-import FocusObject.TreeUIManager;
 import TreeUI.UIElement;
+import focusObject.InteractableObject;
+import focusObject.OriginObject;
+import focusObject.Panel;
+import focusObject.TreeUIManager;
 
 /**
  * This class will create a panel tree.
@@ -21,7 +21,8 @@ import TreeUI.UIElement;
  * @author Wesley Chiou
  */
 public class Incubator{
-	private int objectCount = 0;//Total
+	//private int objectCount = 0;
+	//Use the built in IO counter, don't use this pos
 	private TreeUIManager tuim;
 	private DataNetwork dn;
 	public Incubator(TreeUIManager tuim, DataNetwork dn){
@@ -34,12 +35,10 @@ public class Incubator{
 		return tuim;
 	}
 	public int addPanel(){
-		objectCount++;
 		Panel p = new Panel();
-		panels.put(objectCount,p);
-		tuim.addObject(panels.get(objectCount));
-		dn.add(p.getNode());
-		return objectCount;
+		panels.put(p.getId(),p);
+		tuim.addObject(panels.get(p.getId()));
+		return p.getId();
 	}
 	public void removePanel(int panelID){
 		if(!panels.containsKey(panelID)){
@@ -73,11 +72,10 @@ public class Incubator{
 				//Add the datanode to the datanodenetwork
 				dn.add(((OriginObject)newObject).getNode());
 			}
-			
-			objectCount++;
-			objects.put(new Integer(objectCount), (InteractableObject)newObject);
-			tuim.addObject(objects.get(objectCount));
-			return objectCount;
+			int objId = ((InteractableObject)newObject).getId();
+			objects.put(new Integer(objId), (InteractableObject)newObject);
+			tuim.addObject(objects.get(objId));
+			return objId;
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
 				| InvocationTargetException | NoSuchMethodException | SecurityException e) {
 			// TODO Auto-generated catch block
@@ -104,7 +102,7 @@ public class Incubator{
 	 */
 	public int addUIElement(int panelID,Class<?> elementType) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
 		//Errorcheck for panel
-		if(panelID>objectCount||panelID<0){
+		if(panelID>InteractableObject.getCount()||panelID<0){
 			System.out.println("Error in Incubator-addUIElement:Invalid ID("+panelID+")");
 			return -1;
 		}
@@ -124,15 +122,15 @@ public class Incubator{
 			return -1;
 		}
 		
+		int objId = ((UIElement)newElement).getId();
 		selectedPanel.addObject((UIElement)newElement);
+
+		objects.put(new Integer(objId), (UIElement)newElement);
 		
-		objectCount++;
-		objects.put(new Integer(objectCount), (UIElement)newElement);
-		
-		return objectCount;
+		return objId;
 	}
 	/**
-	 * Accepts an objectID and a parameter string and creates
+	 * Accepts an objectID and a parameter string and writes the object to the parameter
 	 * @param objectID
 	 * @param param
 	 */
@@ -223,11 +221,12 @@ public class Incubator{
 			System.out.println("Error in Incubator-getFields:Object DNE("+objectID+")");
 			return null;
 		}
-		Object selectedObject = objects.get(objectID);
+		Object selectedObject;
+		if(containsPanel(objectID))
+			selectedObject = panels.get(objectID);
+		else
+			selectedObject = objects.get(objectID);
 		Field[] fields = selectedObject.getClass().getFields();
-		for(Field f:fields){
-			System.out.println(f.getName()+":"+f.get(selectedObject));
-		}
 			
 		return fields;
 	

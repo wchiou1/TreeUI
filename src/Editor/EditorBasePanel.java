@@ -1,10 +1,10 @@
 package Editor;
 
-import FocusObject.Panel;
 import GameLogic.Incubator;
 import Test.SuperGlobal;
 import TreeUI.UIElement;
 import TreeUI.UIItem;
+import focusObject.Panel;
 
 /**
  * This panel will act as the baseplate for the editor. This is to allow capturing of the mouse clicks in order to create new objects
@@ -12,7 +12,7 @@ import TreeUI.UIItem;
  * @author Wesley Chiou
  *
  */
-public class EditorBasePanel extends Panel implements RightClickable{
+public class EditorBasePanel extends Panel implements EditorImmune{
 	private Incubator inc;//We need to the incubator so we can allow saplings to create savable objects
 	public EditorBasePanel(Incubator inc){
 		this.x=0;

@@ -1,4 +1,4 @@
-package FocusObject;
+package focusObject;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -17,33 +17,31 @@ public class TreeUIManager{
 	private int stickiness;//How far the mouse delta has to be before a suggested snap is abandoned
 	private KeyboardManager keyManager;
 	private MouseManager mouseManager;
-	private InventoryManager inventoryManager;
+	//private InventoryManager inventoryManager;
 	private GameObjectManager gameObjectManager;
 	private LinkedList<InteractableObject> uiObjectList;
 	private LinkedList<InteractableObject> gameObjectList;
 	private Input input;
-	private InventoryPanel invPan;
 	
 	//Placeholder object to indicate that lock is on nothing
 	static InteractableObject empty=new Window(0,0,0,0,Color.green);
 	public TreeUIManager(Input input,ArrayList<Integer> keys, int stickiness){
-		this(input,keys,stickiness,true);
-	}
-	public TreeUIManager(Input input,ArrayList<Integer> keys, int stickiness,boolean inventory){
 		this.stickiness=stickiness;
 		this.input=input;
 		uiObjectList = new LinkedList<InteractableObject>();
 		gameObjectList = new LinkedList<InteractableObject>();
 		gameObjectManager = new GameObjectManager();
 		keyManager = new KeyboardManager(input,uiObjectList,keys);
-		mouseManager = new MouseManager(input,gameObjectList,uiObjectList,stickiness);
-		if(inventory){
-			invPan=new InventoryPanel();
-			uiObjectList.add(invPan);
-			inventoryManager = new InventoryManager(invPan,4);
-		}
+		mouseManager = new MouseManager(input,keyManager,gameObjectList,uiObjectList,stickiness);
+		
 		master=this;
 			
+	}
+	public void keyPressed(int key, char c) {
+		keyManager.keyPressed(key, c);
+	}
+	public void enableEditor(){
+		mouseManager.enableEditor();
 	}
 	public void update(){
 		int mouseX = input.getMouseX();
@@ -59,7 +57,7 @@ public class TreeUIManager{
 		if(io==null){
 			System.out.println("Null object, error");
 		}
-		if(!uiObjectList.remove(io))
+		if(!uiObjectList.remove(io)&&!gameObjectList.remove(io))
 			System.out.println("Object not found, error");
 	}
 	public void addObject(InteractableObject io){

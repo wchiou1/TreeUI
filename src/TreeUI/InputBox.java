@@ -1,24 +1,28 @@
 package TreeUI;
 
-
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
+import GameLogic.RequiresTyping;
 import Test.Shell;
 
-
-public class TextButton extends StaticText{
-	
+public class InputBox extends TextButton implements RequiresTyping{
+	protected boolean keyLocked = false;
 	public int width,height;
-	public TextButton(){
+	public InputBox(){
 		this.x=0;
 		this.y=0;
 		this.width=80;
 		this.height=20;
 	}
 	@Override
+	public void update(int x, int y){
+		
+	}
+	@Override
 	public UIItem click(int x, int y,UIItem item) {
-		//Does nothing on click
+		if(!fleetingLock)
+			text="";
 		return item;
 	}
 	
@@ -29,7 +33,10 @@ public class TextButton extends StaticText{
 		
 		g.setClip(x+2, y+2, width-4, height-4);
 		g.setFont(Shell.SMALL_FONT);
-		g.drawString(text, x+2, y+2);
+		if(fleetingLock)
+			g.drawString(text+"|", x+2, y+2);
+		else
+			g.drawString(text, x+2, y+2);
 		
 	}
 	
@@ -40,4 +47,11 @@ public class TextButton extends StaticText{
 				return true;
 		return false;
 	}
+	
+	@Override
+	public void processUniversalKeyPress(int key, char c) {
+		System.out.println("UNIVERSAL "+key+","+c);
+		
+	}
+	
 }

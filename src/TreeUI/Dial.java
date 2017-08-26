@@ -7,7 +7,7 @@ import GameLogic.GameMath;
 //	180		0
 //		90
 public class Dial extends UIElement{
-	public int radius=20,angle=0,previousAngle=0,mouseAngle=0,lowerLimit=-90,upperLimit=90;
+	public int radius=20,angle=0,previousAngle=0,mouseAngle=0,lowerLimit=-180,upperLimit=180;
 	public String key="";
 	/*public Dial(int x, int y,String key){
 		this.x=x;

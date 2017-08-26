@@ -5,33 +5,37 @@ import java.util.ArrayList;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
-import FocusObject.Panel;
 import Test.Shell;
 import TreeUI.UIElement;
+import focusObject.Panel;
 
-public class SaplingPanel extends Panel{
+public class SaplingPanel extends Panel implements EditorImmune{
 	private Sapling origin;
 	public SaplingPanel(Sapling origin){
 		this.active=true;
 		this.origin=origin;
 		//We need to create all the buttons related to the gameobjects
 		//Where will we get the list from? Look in shell
+
 		createGOButtons();
+
 	}
 	
 	private void createGOButtons(){
 		//First get the list of gameobjects
 		ArrayList<Class<?>> classes = Shell.getGOTypes();
 		//We need to adjust the height of the panel
-		this.height = classes.size()*20;
+		this.height = (classes.size()+1)*20;
 		
 		for(int i=0;i<classes.size();i++){
 			GOClassButton tempButton = new GOClassButton(origin,classes.get(i),0,i*20);
 			addObject(tempButton);
 		}
+		GOClassButton tempButton = new GOClassButton(origin,null,0,classes.size()*20);
+		addObject(tempButton);
 		
 	}
-	public void destroy(){
+	public void clearReferences(){
 		origin=null;
 		objectList=null;
 	}

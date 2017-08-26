@@ -1,6 +1,6 @@
 package TreeUI;
 
-import FocusObject.InteractableObject;
+import focusObject.InteractableObject;
 
 /**
  * Adds functionality for supporting snapping

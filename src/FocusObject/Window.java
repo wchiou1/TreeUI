@@ -1,4 +1,4 @@
-package FocusObject;
+package focusObject;
 
 
 import org.newdawn.slick.Color;
@@ -53,6 +53,10 @@ public class Window extends Snappable{
 	public void keyPress(int mouseX, int mouseY, int key) {
 		//Doesn't do anything
 		
+	}
+	@Override
+	public UIItem rightClick(int x, int y, UIItem item) {
+		return item;
 	}
 	
 }

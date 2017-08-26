@@ -1,4 +1,4 @@
-package FocusObject;
+package focusObject;
 
 import org.newdawn.slick.Graphics;
 
