@@ -3,6 +3,8 @@ package TreeUI;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
+import uiItem.UIItem;
+
 public class Indicator extends UIElement{
 	public int width=6,height=8;
 	public String key = "";

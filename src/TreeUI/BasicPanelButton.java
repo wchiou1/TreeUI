@@ -3,8 +3,8 @@ package TreeUI;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
-import TreeUI.UIItem;
 import focusObject.OriginObject;
+import uiItem.UIItem;
 
 /**
  * This class is a simple implementation of an origin object

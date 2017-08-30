@@ -2,10 +2,10 @@ package GameObjects;
 
 import org.newdawn.slick.Graphics;
 
-import TreeUI.UIItem;
+import uiItem.UIItem;
 
 public class Fan extends NonPaneledGameObject{
-
+	private int angle=0;
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
@@ -40,6 +40,18 @@ public class Fan extends NonPaneledGameObject{
 	public boolean isMouseOver(int x, int y) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public int getCenterX() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getCenterY() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 }

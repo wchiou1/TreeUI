@@ -4,6 +4,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 import Test.Shell;
+import uiItem.UIItem;
 
 public class StaticText extends UIElement{
 	public String text = "";
@@ -32,13 +33,10 @@ public class StaticText extends UIElement{
 	}
 
 	@Override
-	public UIItem click(int x, int y,UIItem item) {
-		//Does nothing on click
-		return item;
-	}
-
-	@Override
 	public boolean isMouseOver(int x, int y) {
+		if(x>=this.x&&x<=this.x+width)
+			if(y>=this.y&&y<=this.y+height)
+				return true;
 		return false;
 	}
 
@@ -52,5 +50,10 @@ public class StaticText extends UIElement{
 	public void update(int mouseX, int mouseY) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public UIItem click(int x, int y, UIItem item) {
+		return item;
 	}
 }

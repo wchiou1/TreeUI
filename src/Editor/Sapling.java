@@ -2,10 +2,10 @@ package Editor;
 
 import GameLogic.Incubator;
 import GameObjects.BasicPaneledGameObject;
-import TreeUI.UIItem;
 import focusObject.InteractableObject;
 import focusObject.OriginObject;
 import focusObject.Panel;
+import uiItem.UIItem;
 
 /**
  * This class will be used by the editor as a placeholder for a gameobject

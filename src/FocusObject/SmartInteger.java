@@ -8,4 +8,7 @@ public class SmartInteger{
 	public SmartInteger(int value){
 		this.value=value;
 	}
+	public Object clone(){
+		return new SmartInteger(value);
+	}
 }

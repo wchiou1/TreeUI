@@ -2,6 +2,9 @@ package TreeUI;
 
 import org.newdawn.slick.Graphics;
 
+import uiItem.Key;
+import uiItem.UIItem;
+
 public class Keyhole extends UIElement{
 	public int pattern = -1;
 	public String key = "";

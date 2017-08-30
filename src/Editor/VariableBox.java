@@ -6,10 +6,11 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 import GameLogic.Incubator;
+import GameLogic.StringUtils;
 import Test.Shell;
 import TreeUI.InputBox;
-import TreeUI.UIItem;
 import focusObject.InteractableObject;
+import uiItem.UIItem;
 
 /**
  * This UIElement will display the variables of the object it has listed
@@ -34,11 +35,16 @@ public class VariableBox extends InputBox implements EditorImmune{
 		this.object=subject;
 		this.type=field.getType().getSimpleName();
 		prefix = field.getName()+"("+type+"): ";
+		try {
+			postfix = ""+field.get(object);
+		} catch (IllegalArgumentException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	@Override
 	public void update(int x, int y){
-		if(type=="int")
-			error = !isNumeric(postfix);
+		isError();
 		try {
 			//Only display the variable stuff if it's not selected for typing
 			if(!fleetingLock){
@@ -51,6 +57,13 @@ public class VariableBox extends InputBox implements EditorImmune{
 		text = prefix+postfix;
 	}
 	
+	private void isError(){
+		if(field.getType()==int.class)
+			error = !StringUtils.isNumeric(postfix);
+		if(field.getType()==boolean.class)
+			error = !StringUtils.isBoolean(postfix);
+	}
+	
 	@Override
 	public UIItem click(int x, int y,UIItem item) {
 		if(!fleetingLock){
@@ -61,21 +74,35 @@ public class VariableBox extends InputBox implements EditorImmune{
 	private void attemptVariableOverwrite(){
 		System.out.println("Got "+field.getType().getSimpleName());
 		if(field.getType()==int.class){
-			System.out.println("Attempting to overwrite "+field.getName()+"("+field.getType().getSimpleName()+") to "+postfix);
-			inc.writeParam(object.getId(), field.getName(), Integer.parseInt(postfix));
+			if(StringUtils.isNumeric(postfix)){
+				System.out.println("Attempting to overwrite "+field.getName()+"("+field.getType().getSimpleName()+") to "+postfix);
+				inc.writeParam(object.getId(), field.getName(), Integer.parseInt(postfix));
+			}
+			else{
+				System.out.println(postfix+" failed errorchecking for type "+field.getType().getSimpleName());
+			}
 		}
 		if(field.getType()==String.class){
 			System.out.println("Attempting to overwrite "+field.getName()+"("+field.getType().getSimpleName()+") to "+postfix);
 			inc.writeParam(object.getId(), field.getName(), postfix);
 		}
+		if(field.getType()==boolean.class){
+			if(StringUtils.isBoolean(postfix)){
+				System.out.println("Attempting to overwrite "+field.getName()+"("+field.getType().getSimpleName()+") to "+postfix);
+				inc.writeParam(object.getId(), field.getName(), Boolean.parseBoolean(postfix));
+			}
+			else{
+				System.out.println(postfix+" failed errorchecking for type "+field.getType().getSimpleName());
+			}
+			
+		}
 	}
-	public boolean isNumeric(String s) {  
-	    return s != null && s.matches("[-+]?\\d*\\.?\\d+");  
-	}
+	
 	
 	@Override
 	public void processUniversalKeyPress(int key, char c) {
 		//We need to have it so that it attempts to apply the new variable to the object once enter has been pressed
+		int code = (int)c;
 		if(key==28){
 			attemptVariableOverwrite();
 			return;
@@ -84,9 +111,9 @@ public class VariableBox extends InputBox implements EditorImmune{
 			if(postfix.length()!=0)
 				postfix=postfix.substring(0, postfix.length()-1);
 		}
-		else{
+		else if(code>=32&&code<=126){
 			postfix+=c;
-		}	
+		}
 	}
 	
 	@Override

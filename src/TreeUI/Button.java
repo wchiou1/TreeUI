@@ -3,10 +3,12 @@ package TreeUI;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import GameLogic.GameMath;
+import uiItem.UIItem;
 
 public class Button extends UIElement{
 	public int radius = 6;
 	public String key = "";
+	public int range=2;
 	/*public Button(int x, int y,String key){
 		this.x=x;
 		this.y=y;
@@ -39,7 +41,7 @@ public class Button extends UIElement{
 			dataNode.changeData(key, 0);
 			temp=-1;
 		}
-		if(temp>=3)
+		if(temp>=range)
 			dataNode.changeData(key, 0);
 		else
 			dataNode.changeData(key, temp+1);

@@ -4,8 +4,9 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Hashtable;
 
-import DataLinkNetwork.DataNetwork;
+import GameObjects.GameObject;
 import TreeUI.UIElement;
+import aspenNetwork.AspenNetwork;
 import focusObject.InteractableObject;
 import focusObject.OriginObject;
 import focusObject.Panel;
@@ -24,8 +25,8 @@ public class Incubator{
 	//private int objectCount = 0;
 	//Use the built in IO counter, don't use this pos
 	private TreeUIManager tuim;
-	private DataNetwork dn;
-	public Incubator(TreeUIManager tuim, DataNetwork dn){
+	private AspenNetwork dn;
+	public Incubator(TreeUIManager tuim, AspenNetwork dn){
 		this.tuim=tuim;
 		this.dn=dn;
 	}
@@ -67,14 +68,17 @@ public class Incubator{
 				return -1;
 			}
 			
-			//Check if the element is of type OriginObject
-			if(newObject instanceof OriginObject){
+			//Check if the element is of type GameObject
+			if(newObject instanceof GameObject){
 				//Add the datanode to the datanodenetwork
-				dn.add(((OriginObject)newObject).getNode());
+				dn.add(((GameObject)newObject).getNode());
 			}
 			int objId = ((InteractableObject)newObject).getId();
 			objects.put(new Integer(objId), (InteractableObject)newObject);
-			tuim.addObject(objects.get(objId));
+			if(newObject instanceof GameObject)
+				tuim.addGameObject(objects.get(objId));
+			else
+				tuim.addObject(objects.get(objId));
 			return objId;
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
 				| InvocationTargetException | NoSuchMethodException | SecurityException e) {

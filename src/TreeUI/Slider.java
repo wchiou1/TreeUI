@@ -3,6 +3,8 @@ package TreeUI;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
+import uiItem.UIItem;
+
 public class Slider extends UIElement{
 	private int length;
 	public int width=50,height=10,range=100,current=0;

@@ -10,7 +10,7 @@ import Editor.Bud;
 import GameLogic.Incubator;
 import TreeUI.Snappable;
 import TreeUI.UIElement;
-import TreeUI.UIItem;
+import uiItem.UIItem;
 
 public class Panel extends Snappable{
 	public boolean active = false; //Whether the panel is active(inactive panels are invisible)

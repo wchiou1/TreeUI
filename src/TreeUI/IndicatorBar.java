@@ -3,6 +3,8 @@ package TreeUI;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
+import uiItem.UIItem;
+
 public class IndicatorBar extends UIElement{
 	public boolean vertical=true;
 	public int width=9,height=100,range=100;

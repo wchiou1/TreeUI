@@ -3,6 +3,9 @@ package TreeUI;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
+import uiItem.Key;
+import uiItem.UIItem;
+
 
 /**
  * This UIElement holds a single key which will be put into the inventory

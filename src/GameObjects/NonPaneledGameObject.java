@@ -1,5 +1,6 @@
 package GameObjects;
 
+import aspenNetwork.AspenNode;
 import focusObject.InteractableObject;
 
 /**
@@ -8,10 +9,11 @@ import focusObject.InteractableObject;
  *
  */
 
-public abstract class NonPaneledGameObject extends InteractableObject{
+public abstract class NonPaneledGameObject extends InteractableObject implements GameObject{
 	protected int id;
 	protected NonPaneledGameObject(){
 		this.id=count;
+		dataNode = new AspenNode(this);
 		System.out.println(":"+id+" "+this.getClass());
 	}
 	@Override

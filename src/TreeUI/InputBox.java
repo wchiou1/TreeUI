@@ -5,6 +5,7 @@ import org.newdawn.slick.Graphics;
 
 import GameLogic.RequiresTyping;
 import Test.Shell;
+import uiItem.UIItem;
 
 public class InputBox extends TextButton implements RequiresTyping{
 	protected boolean keyLocked = false;
@@ -50,8 +51,15 @@ public class InputBox extends TextButton implements RequiresTyping{
 	
 	@Override
 	public void processUniversalKeyPress(int key, char c) {
-		System.out.println("UNIVERSAL "+key+","+c);
-		
+		System.out.println(key+":"+c+"|"+(int)c);
+		int code = (int)c;
+		if(key==14){
+			if(text.length()!=0)
+				text=text.substring(0, text.length()-1);
+		}
+		else if((code>=65&&code<=90)||(code>=97&&code<=122)){
+			text+=c;
+		}	
 	}
 	
 }

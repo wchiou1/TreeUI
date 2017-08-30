@@ -1,18 +1,18 @@
 package GameObjects;
 
-import DataLinkNetwork.DataNetworkNode;
-import TreeUI.UIItem;
+import aspenNetwork.AspenNode;
 import focusObject.OriginObject;
+import uiItem.UIItem;
 
 public abstract class PaneledGameObject extends OriginObject implements GameObject{
 	protected int id;
 	protected PaneledGameObject(){
 		this.id=count;
-		dataNode = new DataNetworkNode();
+		dataNode = new AspenNode(this);
 		System.out.println(":"+id+" "+this.getClass());
 	}
 	@Override
-	public DataNetworkNode getNode(){
+	public AspenNode getNode(){
 		return dataNode;
 	}
 	@Override

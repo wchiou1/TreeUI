@@ -27,19 +27,18 @@ public class Editor{
 		inc.getManager().addObject(new Panel(0,SuperGlobal.getLength(),SuperGlobal.getWidth(),2));//Bottom
 		VariablePanel vp = new VariablePanel(inc);
 		inc.getManager().addObject(vp);
-		InventoryPanel iPanel = new InventoryPanel();
-		iPanel.forcePush(0, new Selector(vp));
-		inc.getManager().addObject(iPanel);
+		inc.getManager().addItemtoInv(new Selector(vp));
+		inc.getManager().addItemtoInv(new NodeConnector(inc));
 	}
 	
 	/**
-	 * Get the save string with wrappers filtered out and save it in a file
+	 * Get the save string
 	 */
 	public void getCompleteSaveString(String fileName){
 		
 	}
 	/**
-	 * Load a save string and automatically add in wrappers to support editing
+	 * Load a save string
 	 */
 	public void loadSaveString(){
 		

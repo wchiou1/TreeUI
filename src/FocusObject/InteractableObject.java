@@ -5,17 +5,19 @@ import java.util.Hashtable;
 
 import org.newdawn.slick.Graphics;
 
-import TreeUI.UIItem;
-import DataLinkNetwork.DataNetworkNode;
+import aspenNetwork.AspenNode;
+import uiItem.UIItem;
 import Editor.Bud;
 import Editor.EditorImmune;
 import Editor.EditorItem;
+import Editor.NodeConnector;
 import Editor.Selector;
+import GameObjects.GameObject;
 
 public abstract class InteractableObject{
 	protected static int count = 0;
 	public int x=0,y=0;
-	protected DataNetworkNode dataNode;
+	protected AspenNode dataNode;
 	protected boolean locked=false;
 	protected boolean keyLock=false;//For when you "click" on an object using a key press
 	protected boolean fleetingLock=false;
@@ -34,16 +36,15 @@ public abstract class InteractableObject{
 	public boolean checkDataLink(){
 		return dataNode!=null;
 	}
-	public void setDataLink(DataNetworkNode dataNode){
+	public void setDataLink(AspenNode dataNode){
 		this.dataNode=dataNode;
 	}
 	/**
 	 * Getter for the datanode
 	 */
-	public DataNetworkNode getNode(){
+	public AspenNode getNode(){
 		return dataNode;
 	}
-	
 	/**
 	 * Allows for animation updates and includes mouse coords
 	 * This can be left empty if the object does not have an animation
@@ -68,6 +69,9 @@ public abstract class InteractableObject{
 			if(item instanceof Selector){
 				((Selector)item).setNewSubject(this);
 			}
+			if(item instanceof NodeConnector&&this instanceof GameObject){
+				((NodeConnector)item).applyGameObject(this);
+			}
 			//Cancel typical actions if there is an editor item
 			return item;
 		}
@@ -76,7 +80,9 @@ public abstract class InteractableObject{
 	/**
 	 * Performs actions when clicked on
 	 */
-	public abstract UIItem click(int x, int y,UIItem item);
+	public UIItem click(int x, int y,UIItem item){
+		return item;
+	}
 	/**
 	 * Applies a keypress to the interactable object
 	 * @param mouseX

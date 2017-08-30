@@ -11,11 +11,11 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import DataLinkNetwork.DataNetwork;
 import GameLogic.Incubator;
 import GameObjects.BasicPaneledGameObject;
 import TreeUI.StateChangeButton;
 import TreeUI.StaticText;
+import aspenNetwork.AspenNetwork;
 import focusObject.TreeUIManager;
 
 public class MainMenu extends TreeUIGameState{

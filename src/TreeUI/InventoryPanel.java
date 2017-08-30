@@ -8,6 +8,7 @@ import org.newdawn.slick.Graphics;
 import Editor.EditorImmune;
 import Test.SuperGlobal;
 import focusObject.Panel;
+import uiItem.UIItem;
 
 /**
  * This creates an inventory panel horizontally with the size and length auto generated
@@ -27,6 +28,26 @@ public class InventoryPanel extends Panel implements EditorImmune{
 		this.active=true;
 		addSlots();
 	}
+	public void clearHighlight(){
+		for(InventoryPanelSlot s:slots){
+			s.highlight=false;
+		}
+	}
+	public void setHighlight(int slot){
+		clearHighlight();
+		slots.get(slot).highlight=true;
+	}
+	public int size(){
+		return slotNum;
+	}
+	public UIItem swap(int slot, UIItem item){
+		UIItem temp = getItem(slot);
+		slots.get(slot).forcePush(item);
+		return temp;
+	}
+	public UIItem getItem(int slot){
+		return slots.get(slot).getStored();
+	}
 	private void addSlots(){
 		for(int i=0;i<slotNum;i++){
 			slots.add(new InventoryPanelSlot(2+i*22,2));
@@ -35,8 +56,6 @@ public class InventoryPanel extends Panel implements EditorImmune{
 	}
 	public void forcePush(int slot, UIItem item){
 		slots.get(slot).forcePush(item);
-		System.out.println("ForcePushed "+item+" into InventoryPanel");
-		printStorage();
 	}
 	@Override
 	public boolean isMoveable() {

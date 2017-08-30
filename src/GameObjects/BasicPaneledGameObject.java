@@ -3,7 +3,7 @@ package GameObjects;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
-import TreeUI.UIItem;
+import uiItem.UIItem;
 
 public class BasicPaneledGameObject extends PaneledGameObject{
 	public int width,height;
@@ -35,6 +35,16 @@ public class BasicPaneledGameObject extends PaneledGameObject{
 	@Override
 	public UIItem rightClick(int x, int y, UIItem item) {
 		return item;
+	}
+	@Override
+	public int getCenterX() {
+		// TODO Auto-generated method stub
+		return x+width/2;
+	}
+	@Override
+	public int getCenterY() {
+		// TODO Auto-generated method stub
+		return y+height/2;
 	}
 	
 }

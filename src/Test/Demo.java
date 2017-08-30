@@ -11,7 +11,6 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import DataLinkNetwork.DataNetwork;
 import GameLogic.Incubator;
 import GameObjects.BasicPaneledGameObject;
 import GameObjects.Generator;
@@ -23,15 +22,16 @@ import TreeUI.IndicatorBar;
 import TreeUI.IndicatorDial;
 import TreeUI.InputBox;
 import TreeUI.InventorySlot;
-import TreeUI.Key;
 import TreeUI.Keyhole;
 import TreeUI.Keyrack;
 import TreeUI.PanelExit;
 import TreeUI.PowerMonitor;
 import TreeUI.Slider;
 import TreeUI.TextBox;
+import aspenNetwork.AspenNetwork;
 import focusObject.InteractableObject;
 import focusObject.TreeUIManager;
+import uiItem.Key;
 
 public class Demo extends TreeUIGameState{
 
@@ -58,7 +58,6 @@ public class Demo extends TreeUIGameState{
 			int generate = inc.addObject(Generator.class);
 			inc.writeParam(generate, "x", 300);
 			inc.writeParam(generate, "y", 300);
-			inc.writeParam(generate, "key", ":P Generator "+InteractableObject.getCount());
 			
 			
 			//masterOO=new BasicPaneledGameObject(300,400,10,10);

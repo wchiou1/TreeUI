@@ -3,8 +3,8 @@ package Editor;
 import GameLogic.Incubator;
 import Test.SuperGlobal;
 import TreeUI.UIElement;
-import TreeUI.UIItem;
 import focusObject.Panel;
+import uiItem.UIItem;
 
 /**
  * This panel will act as the baseplate for the editor. This is to allow capturing of the mouse clicks in order to create new objects

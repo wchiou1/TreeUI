@@ -1,31 +1,28 @@
 package TreeUI;
 
-import org.newdawn.slick.Color;
-import org.newdawn.slick.Graphics;
 
-import DataLinkNetwork.DNKeyWrapper;
-import DataLinkNetwork.DataNetworkNode;
+import aspenNetwork.ANKeyWrapper;
+import aspenNetwork.AspenNode;
 
 public class PowerMonitor extends TextBox{
 
 	//PowerMonitor uses a keywrapper instead of a direct key
-	DNKeyWrapper powerNode;
+	ANKeyWrapper powerNode;
 	/*public PowerMonitor(int x, int y) {
 		super(x, y);
 	}*/
 	@Override
-	public void setDataLink(DataNetworkNode node){
+	public void setDataLink(AspenNode node){
 		this.dataNode=node;
-		powerNode = new DNKeyWrapper(node,":P");
+		powerNode = new ANKeyWrapper(node,":P");
 	}
 	@Override
-	public void draw(Graphics g) {
-		g.setColor(Color.black);
+	public void update(int mouseX, int mouseY) {
 		int data=powerNode.getTotalValue();
 		if(data==Integer.MIN_VALUE)
-			g.drawString("NO SIGNAL", x, y);
+			text = "NO SIGNAL";
 		else
-			g.drawString(""+data, x, y);
+			text = ""+data;
 		
 		
 	}

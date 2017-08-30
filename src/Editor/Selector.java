@@ -3,8 +3,8 @@ package Editor;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
-import TreeUI.UIItem;
 import focusObject.InteractableObject;
+import uiItem.UIItem;
 
 public class Selector extends UIItem implements EditorItem{
 	private VariablePanel vp;

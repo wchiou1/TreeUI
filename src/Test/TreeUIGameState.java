@@ -10,13 +10,13 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import DataLinkNetwork.DataNetwork;
 import GameLogic.Incubator;
+import aspenNetwork.AspenNetwork;
 import focusObject.TreeUIManager;
 
 public abstract class TreeUIGameState extends BasicGameState{
 	TreeUIManager im;
-	DataNetwork dn;
+	AspenNetwork dn;
 	Incubator inc;
 	StateBasedGame parent;
 	public TreeUIGameState(Shell parent){
@@ -29,7 +29,7 @@ public abstract class TreeUIGameState extends BasicGameState{
 		ArrayList<Integer> keys=new ArrayList<Integer>();
 		keys.add(Input.KEY_E);
 		keys.add(Input.KEY_R);
-		dn=new DataNetwork();
+		dn=new AspenNetwork(1000);
 		im=new TreeUIManager(container.getInput(),keys,10);
 		inc = new Incubator(im,dn);
 		
@@ -43,13 +43,17 @@ public abstract class TreeUIGameState extends BasicGameState{
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		im.update();
-		dn.update();
+		im.update(delta);
+		dn.update(delta);
 	}
 	
 	@Override
 	public void keyPressed(int key, char c) {
 		im.keyPressed(key, c);
+	}
+	@Override
+	public void mouseWheelMoved(int arg0){
+		im.mouseWheelMoved(arg0);
 	}
 	
 }

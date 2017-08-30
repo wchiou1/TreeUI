@@ -3,7 +3,7 @@ package focusObject;
 import org.newdawn.slick.Graphics;
 
 import TreeUI.InventoryPanel;
-import TreeUI.UIItem;
+import uiItem.UIItem;
 
 /**
  * Handles the inventory of the player
@@ -12,13 +12,17 @@ import TreeUI.UIItem;
  */
 public class InventoryManager{
 	private InventoryPanel inventory;
-	UIItem activeItem;
-	int activeSlot;//-1 means there is no active slot
-	UIItem[] hotbar;
-	public InventoryManager(InventoryPanel inv,int size){
-		activeSlot=-1;
-		hotbar=new UIItem[size];
+	int activeSlot;
+	public InventoryManager(InventoryPanel inv){
+		activeSlot=0;
 		inventory=inv;
+		inventory.setHighlight(activeSlot);
+	}
+	public void overwriteActive(UIItem item){
+		inventory.forcePush(activeSlot, item);
+	}
+	public InventoryPanel getPanel(){
+		return inventory;
 	}
 	/**
 	 * Adds an item in the first hotbar slot possible
@@ -26,51 +30,42 @@ public class InventoryManager{
 	 * @return if there is room in the hotbar
 	 */
 	public boolean addItem(UIItem item){
-		int i;
-		for(i=0;i<hotbar.length;i++){
-			if(hotbar[i]==null){
-				hotbar[i]=item;
+		System.out.println("Adding "+item);
+		//First let's set the query slot to 0
+		for(int i=0;i<inventory.size();i++){
+			if(inventory.getItem(i)==null){
+				inventory.swap(i, item);
 				return true;
 			}
 		}
 		return false;
 	}
-	/**
-	 * Switch active item
-	 */
-	public void switchActive(int slot){
-		if(slot>=hotbar.length||slot<0)
-			return;
-		activeItem=hotbar[slot];
+	public UIItem switchActiveUp(){
+		activeSlot++;
+		if(activeSlot>=inventory.size())
+			activeSlot=0;
+		inventory.setHighlight(activeSlot);
+		return getActiveItem();
+	}
+	public UIItem switchActiveDown(){
+		activeSlot--;
+		if(activeSlot<0)
+			activeSlot=inventory.size()-1;
+		inventory.setHighlight(activeSlot);
+		return getActiveItem();
 	}
 	/**
 	 * Gets the current active
 	 * @return
 	 */
 	public UIItem getActiveItem(){
-		return activeItem;
+		return inventory.getItem(activeSlot);
 	}
 	
-	/**
-	 * Removes the item at the slot
-	 */
-	public void removeItem(int slot){
-		if(slot>=hotbar.length||slot<0)
-			return;
-		hotbar[slot]=null;
-		if(slot==activeSlot)
-			activeSlot=-1;
-		activeItem=null;
-	}
 	/**
 	 * Removes the currently active item
 	 */
 	public void removeActiveItem(){
-		hotbar[activeSlot]=null;
-		activeItem=null;
-		activeSlot=-1;
-	}
-	public void draw(Graphics g){
-		
+		inventory.forcePush(activeSlot, null);
 	}
 }

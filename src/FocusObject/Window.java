@@ -5,7 +5,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 import TreeUI.Snappable;
-import TreeUI.UIItem;
+import uiItem.UIItem;
 
 public class Window extends Snappable{
 

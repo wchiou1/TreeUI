@@ -8,17 +8,18 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 
+import Editor.Editor;
+import GameObjects.GameObject;
 import GameObjects.PaneledGameObject;
 import TreeUI.InventoryPanel;
 import TreeUI.Snappable;
+import uiItem.UIItem;
 
 public class TreeUIManager{
 	public static TreeUIManager master;
 	private int stickiness;//How far the mouse delta has to be before a suggested snap is abandoned
-	private KeyboardManager keyManager;
-	private MouseManager mouseManager;
-	//private InventoryManager inventoryManager;
-	private GameObjectManager gameObjectManager;
+	private InputManager inputManager;
+	private InventoryManager inventoryManager;
 	private LinkedList<InteractableObject> uiObjectList;
 	private LinkedList<InteractableObject> gameObjectList;
 	private Input input;
@@ -30,26 +31,36 @@ public class TreeUIManager{
 		this.input=input;
 		uiObjectList = new LinkedList<InteractableObject>();
 		gameObjectList = new LinkedList<InteractableObject>();
-		gameObjectManager = new GameObjectManager();
-		keyManager = new KeyboardManager(input,uiObjectList,keys);
-		mouseManager = new MouseManager(input,keyManager,gameObjectList,uiObjectList,stickiness);
-		
+		inventoryManager = new InventoryManager(new InventoryPanel());
+		inputManager = new InputManager(input,inventoryManager,gameObjectList,uiObjectList,stickiness,keys);
 		master=this;
 			
 	}
+	public LinkedList<InteractableObject> getGameObjects(){
+		return gameObjectList;
+	}
 	public void keyPressed(int key, char c) {
-		keyManager.keyPressed(key, c);
+		inputManager.keyPressed(key, c);
+	}
+	public void mouseWheelMoved(int arg0){
+		inputManager.mouseWheelMoved(arg0);
+	}
+	public void addItemtoInv(UIItem item){
+		inventoryManager.addItem(item);
 	}
 	public void enableEditor(){
-		mouseManager.enableEditor();
+		inputManager.enableEditor();
+		inputManager.enableInventory();
+		addObject(inventoryManager.getPanel());
 	}
-	public void update(){
+	public void update(int delta){
 		int mouseX = input.getMouseX();
 		int mouseY = input.getMouseY();
-		mouseManager.update();
-		keyManager.update(mouseManager.getMouseOn());
-		gameObjectManager.update();
+		inputManager.update(delta);
 		for(InteractableObject io:uiObjectList){
+			io.update(mouseX, mouseY);
+		}
+		for(InteractableObject io:gameObjectList){
 			io.update(mouseX, mouseY);
 		}
 	}
@@ -64,7 +75,7 @@ public class TreeUIManager{
 		if(io==null){
 			System.out.println("Null object, error");
 		}
-		uiObjectList.add(io);
+		uiObjectList.addFirst(io);
 	}
 	public void addGameObject(InteractableObject io){
 		gameObjectList.addFirst(io);
@@ -166,13 +177,14 @@ public class TreeUIManager{
 		while(it.hasNext()){
 			InteractableObject temp=it.next();
 			//Check if the object is locked by the mouseManager
-			if(temp.equals(mouseManager.llock)&&mouseManager.llock instanceof Snappable)
+			if(temp.equals(inputManager.llock)&&inputManager.llock instanceof Snappable)
 				drawPanelSnap(g,temp);
 			else
 				temp.draw(g);
 		}
-		//Have the mouseManager draw the "held" item last
-		mouseManager.draw(g);
+		
+		//Have the mouseManager draw the "held" item last along with it's overlay
+		inputManager.draw(g);
 		
 		
 		

@@ -3,6 +3,8 @@ package TreeUI;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
+import uiItem.UIItem;
+
 /**
  * This class stores a UIItem and gives the item to the hand slot
  * in the mouse manager when clicked.

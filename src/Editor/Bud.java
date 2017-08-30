@@ -8,9 +8,9 @@ import org.newdawn.slick.Graphics;
 import GameLogic.Incubator;
 import TreeUI.BasicPanelButton;
 import TreeUI.UIElement;
-import TreeUI.UIItem;
 import focusObject.OriginObject;
 import focusObject.Panel;
+import uiItem.UIItem;
 
 /**
  * This class will be used by the editor as a placeholder for a UIElement

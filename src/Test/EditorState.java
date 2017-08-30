@@ -11,13 +11,13 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import DataLinkNetwork.DataNetwork;
 import Editor.Editor;
 import Editor.EditorBasePanel;
 import GameLogic.Incubator;
 import GameObjects.BasicPaneledGameObject;
 import TreeUI.StateChangeButton;
 import TreeUI.StaticText;
+import aspenNetwork.AspenNetwork;
 import focusObject.TreeUIManager;
 
 public class EditorState extends TreeUIGameState{
@@ -36,7 +36,6 @@ public class EditorState extends TreeUIGameState{
 			width = container.getWidth();
 			height = container.getHeight();
 			im.enableEditor();
-			
 			Editor editor = new Editor(inc);
 			
 			

@@ -60,9 +60,8 @@ public class Shell extends StateBasedGame{
 			//Filter out abstract objects
 			if(Modifier.isAbstract(type.getModifiers()))
 				continue;
-			//if(GameObject.class.isAssignableFrom(type))
-			//Pointless if statement, there is no core gameobject class(The required parent class OriginObject makes extending another class impossible)
-			gameObjectTypes.add(type);
+			if(GameObject.class.isAssignableFrom(type))
+				gameObjectTypes.add(type);
 		}
 	}
 	

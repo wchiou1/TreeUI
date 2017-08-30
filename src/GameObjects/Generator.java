@@ -4,26 +4,30 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 import GameLogic.GameMath;
-import TreeUI.UIItem;
+import uiItem.UIItem;
 
-//This class will connect to a datanode and broadcast it's power value
+//This class will broadcast it's power value
 
 public class Generator extends PaneledGameObject{
-	public String key;
+	private String powerFreq;
+	public String toggleFreq;
 	public Generator(){
-		key=":P Generator "+id;
+		powerFreq=":P Generator "+id;
+		toggleFreq="";
 	}
 
 	@Override
 	public boolean isMoveable() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public void draw(Graphics g) {
 		//Draw the generator sprite
-		g.setColor(Color.green);
+		if(dataNode.getData(toggleFreq)==1||dataNode.getData(toggleFreq)==Integer.MIN_VALUE)
+			g.setColor(Color.green);
+		else if(dataNode.getData(toggleFreq)==0)
+			g.setColor(Color.darkGray);
 		g.fillOval(x, y, 20, 20);
 		
 	}
@@ -37,8 +41,21 @@ public class Generator extends PaneledGameObject{
 
 	@Override
 	public void update() {
-		//Just broadcast power for now
-		dataNode.changeData(key, 600);
+		//Check if it's toggled on
+		if(dataNode.getData(toggleFreq)==1)
+			dataNode.changeData(powerFreq, 600);
+		else
+			dataNode.changeData(powerFreq, 600);
+	}
+
+	@Override
+	public int getCenterX() {
+		return x+10;
+	}
+
+	@Override
+	public int getCenterY() {
+		return y+10;
 	}
 	
 }

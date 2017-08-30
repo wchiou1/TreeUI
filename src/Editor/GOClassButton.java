@@ -1,7 +1,7 @@
 package Editor;
 
 import TreeUI.TextButton;
-import TreeUI.UIItem;
+import uiItem.UIItem;
 
 public class GOClassButton extends TextButton implements EditorImmune{
 	private Class<?> GOClass;
