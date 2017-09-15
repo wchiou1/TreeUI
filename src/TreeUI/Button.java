@@ -3,6 +3,7 @@ package TreeUI;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import GameLogic.GameMath;
+import focusObject.UIElement;
 import uiItem.UIItem;
 
 public class Button extends UIElement{

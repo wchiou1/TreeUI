@@ -5,11 +5,10 @@ import java.lang.reflect.InvocationTargetException;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
-import GameLogic.Incubator;
 import TreeUI.BasicPanelButton;
-import TreeUI.UIElement;
 import focusObject.OriginObject;
 import focusObject.Panel;
+import focusObject.UIElement;
 import uiItem.UIItem;
 
 /**

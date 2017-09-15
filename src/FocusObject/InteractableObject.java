@@ -13,11 +13,12 @@ import Editor.EditorItem;
 import Editor.NodeConnector;
 import Editor.Selector;
 import GameObjects.GameObject;
+import Test.Shell;
 
 public abstract class InteractableObject{
 	protected static int count = 0;
 	public int x=0,y=0;
-	protected AspenNode dataNode;
+	protected transient AspenNode dataNode;
 	protected boolean locked=false;
 	protected boolean keyLock=false;//For when you "click" on an object using a key press
 	protected boolean fleetingLock=false;
@@ -146,31 +147,6 @@ public abstract class InteractableObject{
 	public void update() {
 		// TODO Auto-generated method stub
 		
-	}
-	/**
-	 * Returns the object type and arguments in string format for later construction
-	 * @return
-	 */
-	public String getSaveString(){
-		//Let's dynamically read the class we got
-		Class<?> ourClass = this.getClass();
-		//First let's get the class
-		String temp = "{type:"+ourClass.getName();
-		
-		//If the class we get doesn't have a getSaveString, do toString? Do we need this?
-		//We only need this for arrays and stuff, arrays won't have a getSaveString.
-		//I guess the question is does a UIElement need to have fillable arrays?
-		Field[] fields = ourClass.getFields();
-		try {
-			for(Field f:fields){
-				temp+=","+f.getName()+":"+f.get(this);
-			}
-		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		}
-		return temp+"}";
 	}
 	/**
 	 * Returns a hashtable with parameter names as keys and variable types as data

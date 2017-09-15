@@ -4,6 +4,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 import Test.Shell;
+import focusObject.UIElement;
 import uiItem.UIItem;
 
 public class StaticText extends UIElement{
@@ -14,6 +15,15 @@ public class StaticText extends UIElement{
 		this.y=0;
 		this.width=80;
 		this.height=20;
+	}
+	public StaticText(int x, int y, int width, int height,String text){
+		this.x=0;
+		this.y=0;
+		this.rx=x;
+		this.ry=y;
+		this.width=width;
+		this.height=height;
+		this.text=text;
 	}
 
 	@Override

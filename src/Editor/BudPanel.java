@@ -6,8 +6,8 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 import Test.Shell;
-import TreeUI.UIElement;
 import focusObject.Panel;
+import focusObject.UIElement;
 
 public class BudPanel extends Panel implements EditorImmune{
 	private Bud origin;

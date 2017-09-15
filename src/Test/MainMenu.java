@@ -11,7 +11,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import GameLogic.Incubator;
+import Editor.Incubator;
 import GameObjects.BasicPaneledGameObject;
 import TreeUI.StateChangeButton;
 import TreeUI.StaticText;

@@ -2,6 +2,7 @@ package TreeUI;
 
 import org.newdawn.slick.Graphics;
 
+import focusObject.UIElement;
 import uiItem.Key;
 import uiItem.UIItem;
 

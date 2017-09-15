@@ -38,6 +38,17 @@ public class ClassFinder {
 			return null;
 		}
     }
+    
+    public static boolean existsWithin(String className,String packageName){
+    	//First get the list of classes
+    	List<Class<?>> classList = find(packageName);
+    	for(Class<?> c:classList){
+    		//We gotta check it against the classname
+    		if(className.equals(c.getSimpleName()))
+    			return true;
+    	}
+    	return false;
+    }
 
     private static List<Class<?>> find(File file, String scannedPackage) {
         List<Class<?>> classes = new ArrayList<Class<?>>();

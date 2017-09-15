@@ -1,6 +1,5 @@
 package Editor;
 
-import GameLogic.Incubator;
 import GameObjects.BasicPaneledGameObject;
 import focusObject.InteractableObject;
 import focusObject.OriginObject;

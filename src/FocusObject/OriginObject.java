@@ -2,29 +2,24 @@ package focusObject;
 
 import org.newdawn.slick.Input;
 
-import TreeUI.UIElement;
+import uiItem.UIItem;
 
 public abstract class OriginObject extends UIElement{
 	protected Panel view;
 	protected boolean highlight;
 	
-	public void setView(Panel v){
+	void setView(Panel v){
 		view=v;
 	}
 	public void close(){
 		view.close();
 	}
 	public void open(){
-		System.out.println("Opening");
 		view.open();
 	}
 	public void openAll(){
 		view.openAll();
 	}
-
-	
-
-	
 
 	@Override
 	public boolean isMoveable() {
@@ -49,6 +44,15 @@ public abstract class OriginObject extends UIElement{
 			}
 		}
 		
+	}
+	@Override
+	public UIItem click(int x, int y,UIItem item) {
+		if(view==null){
+			System.out.println("ERROR: panel not set in origin object");
+			return item;
+		}
+		view.toggle();
+		return item;
 	}
 	
 	public void dMoveTreeUI(int dx, int dy){

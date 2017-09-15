@@ -7,15 +7,14 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 
 import Editor.Bud;
-import GameLogic.Incubator;
+import Editor.Incubator;
 import TreeUI.Snappable;
-import TreeUI.UIElement;
 import uiItem.UIItem;
 
 public class Panel extends Snappable{
 	public boolean active = false; //Whether the panel is active(inactive panels are invisible)
 	protected ArrayList<UIElement> objectList = new ArrayList<UIElement>();//List of objects that the panel must render
-	private Incubator inc;
+	private transient Incubator inc;
 	//The attached datanode which all UIELements
 										//will use to communicate with the datanetwork
 	protected boolean virgin = true;//If The panel has ever been opened before(used to error check setting the panel's origin object)
@@ -171,31 +170,21 @@ public class Panel extends Snappable{
 		oo.setView(this);
 		move(oo.getX()+oo.rx-width/2,oo.getY()+oo.ry-height);
 	}
+	public void setOrigin(OriginObject oo,int x, int y){
+		if(!virgin){
+			System.out.println("Panel Error: Attempted to change origin object. Operation canceled.");
+			return;
+		}
+		setDataLink(oo.getNode());
+		oo.setView(this);
+		move(x,y);
+	}
+	
 	public void dMoveTreeUI(int dx, int dy){
 		dmove(dx,dy);
 		for(UIElement e:objectList){
 			if(e instanceof OriginObject)
 				((OriginObject)e).dMoveTreeUI(dx, dy);
 		}
-	}
-	@Override
-	public String getSaveString(){
-		String temp="";
-		//Get the panel information
-		//All objects including panels will be contained in SBrackets
-		//We'll be using Javascript object syntax
-		temp += "{type:PANEL,x:"+x+",y:"+y+",width:"+width+",height:"+height+",objects:[";
-		//REMEMBER: WE NEED TO CAP THE SBRACKETS
-		
-		//Let's get the object strings now
-		for(UIElement io:objectList){
-			temp += io.getSaveString()+",";
-		}
-		temp = temp.substring(0, temp.length()-1);
-		temp += "]}";
-		System.out.println(temp);
-		return temp;
-		
-		
 	}
 }

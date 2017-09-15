@@ -9,12 +9,19 @@ import uiItem.UIItem;
 
 public class InputBox extends TextButton implements RequiresTyping{
 	protected boolean keyLocked = false;
-	public int width,height;
 	public InputBox(){
 		this.x=0;
 		this.y=0;
 		this.width=80;
 		this.height=20;
+	}
+	public InputBox(int x, int y, int width, int height){
+		this.x=0;
+		this.y=0;
+		this.rx=x;
+		this.ry=y;
+		this.width=width;
+		this.height=height;
 	}
 	@Override
 	public void update(int x, int y){
@@ -51,13 +58,13 @@ public class InputBox extends TextButton implements RequiresTyping{
 	
 	@Override
 	public void processUniversalKeyPress(int key, char c) {
-		System.out.println(key+":"+c+"|"+(int)c);
+		//System.out.println(key+":"+c+"|"+(int)c);
 		int code = (int)c;
 		if(key==14){
 			if(text.length()!=0)
 				text=text.substring(0, text.length()-1);
 		}
-		else if((code>=65&&code<=90)||(code>=97&&code<=122)){
+		else if((code>=65&&code<=90)||(code>=97&&code<=122)||code>=48&&code<=57){
 			text+=c;
 		}	
 	}

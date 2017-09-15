@@ -9,8 +9,6 @@ import uiItem.UIItem;
 
 
 public class TextButton extends StaticText{
-	
-	public int width,height;
 	public TextButton(){
 		this.x=0;
 		this.y=0;

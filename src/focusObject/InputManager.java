@@ -13,7 +13,6 @@ import Editor.EditorImmune;
 import GameLogic.RequiresTyping;
 import GameObjects.GameObject;
 import GameObjects.PaneledGameObject;
-import TreeUI.UIElement;
 import uiItem.HasOverlay;
 import uiItem.UIItem;
 

@@ -5,7 +5,6 @@ import java.lang.reflect.Field;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
-import GameLogic.Incubator;
 import GameLogic.StringUtils;
 import Test.Shell;
 import TreeUI.InputBox;
@@ -73,29 +72,7 @@ public class VariableBox extends InputBox implements EditorImmune{
 	}
 	private void attemptVariableOverwrite(){
 		System.out.println("Got "+field.getType().getSimpleName());
-		if(field.getType()==int.class){
-			if(StringUtils.isNumeric(postfix)){
-				System.out.println("Attempting to overwrite "+field.getName()+"("+field.getType().getSimpleName()+") to "+postfix);
-				inc.writeParam(object.getId(), field.getName(), Integer.parseInt(postfix));
-			}
-			else{
-				System.out.println(postfix+" failed errorchecking for type "+field.getType().getSimpleName());
-			}
-		}
-		if(field.getType()==String.class){
-			System.out.println("Attempting to overwrite "+field.getName()+"("+field.getType().getSimpleName()+") to "+postfix);
-			inc.writeParam(object.getId(), field.getName(), postfix);
-		}
-		if(field.getType()==boolean.class){
-			if(StringUtils.isBoolean(postfix)){
-				System.out.println("Attempting to overwrite "+field.getName()+"("+field.getType().getSimpleName()+") to "+postfix);
-				inc.writeParam(object.getId(), field.getName(), Boolean.parseBoolean(postfix));
-			}
-			else{
-				System.out.println(postfix+" failed errorchecking for type "+field.getType().getSimpleName());
-			}
-			
-		}
+		inc.writeParam(object.getId(), field.getName(), postfix);
 	}
 	
 	

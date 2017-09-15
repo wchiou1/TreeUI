@@ -1,9 +1,6 @@
-package TreeUI;
+package focusObject;
 
 import org.newdawn.slick.Graphics;
-
-import focusObject.InteractableObject;
-import focusObject.Panel;
 
 /**
  * Allows access to the relative coords and setting the parent panel
@@ -15,14 +12,14 @@ import focusObject.Panel;
  *
  */
 public abstract class UIElement extends InteractableObject{
-	protected Panel screen;
+	protected transient Panel screen;
 	public int rx=0,ry=0;
 	/**
 	 * Sets the parent panel and thus uses relative x and y instead of hard x and y
 	 * NOTE: If this is not called, then the object will use the hard x and y for calculations
 	 * @param screen
 	 */
-	public void setScreen(Panel screen){
+	void setScreen(Panel screen){
 		if(this.screen!=null){
 			System.out.println(""+this.getClass()+"UIElement Error: Attempted to change screen, operation canceled.");
 			return;

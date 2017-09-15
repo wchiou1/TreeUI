@@ -6,6 +6,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import GameLogic.GameMath;
 import Test.SuperGlobal;
+import focusObject.UIElement;
 import uiItem.UIItem;
 
 public class StateChangeButton extends UIElement{

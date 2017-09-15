@@ -1,9 +1,8 @@
 package Editor;
 
-import GameLogic.Incubator;
 import Test.SuperGlobal;
-import TreeUI.UIElement;
 import focusObject.Panel;
+import focusObject.UIElement;
 import uiItem.UIItem;
 
 /**

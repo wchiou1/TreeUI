@@ -26,7 +26,7 @@ public class Generator extends PaneledGameObject{
 		//Draw the generator sprite
 		if(dataNode.getData(toggleFreq)==1||dataNode.getData(toggleFreq)==Integer.MIN_VALUE)
 			g.setColor(Color.green);
-		else if(dataNode.getData(toggleFreq)==0)
+		else
 			g.setColor(Color.darkGray);
 		g.fillOval(x, y, 20, 20);
 		
@@ -42,10 +42,10 @@ public class Generator extends PaneledGameObject{
 	@Override
 	public void update() {
 		//Check if it's toggled on
-		if(dataNode.getData(toggleFreq)==1)
+		if(dataNode.getData(toggleFreq)==1||dataNode.getData(toggleFreq)==Integer.MIN_VALUE)
 			dataNode.changeData(powerFreq, 600);
 		else
-			dataNode.changeData(powerFreq, 600);
+			dataNode.changeData(powerFreq, 0);
 	}
 
 	@Override

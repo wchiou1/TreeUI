@@ -7,19 +7,20 @@ import focusObject.InteractableObject;
 import uiItem.UIItem;
 
 public class Selector extends UIItem implements EditorItem{
-	private VariablePanel vp;
+	private EditorCommandPanel ecp;
 	//We need to set the variable panel somehow
-	public Selector(VariablePanel vp){
-		this.vp=vp;
+	public Selector(EditorCommandPanel ecp ){
+		this.ecp=ecp;
 	}
 	
-	public VariablePanel getVariablePanel(){
-		return vp;
+	public EditorCommandPanel getEditorCommandPanel(){
+		return ecp;
 	}
 	
 	public void setNewSubject(InteractableObject io){
 		System.out.println("Set variable panel to object "+io);
-		vp.setObject(io);
+		ecp.setObject(io);
+		ecp.openVPanel();
 	}
 	
 	@Override

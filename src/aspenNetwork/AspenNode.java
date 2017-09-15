@@ -49,6 +49,8 @@ public class AspenNode{
 		return dataLink.get(key).value;
 	}
 	public void changeData(String key,int data){
+		if(key.isEmpty())
+			return;
 		if(!dataLink.containsKey(key)){
 			dataLink.put(key, new SmartInteger(data));
 			dataTime.put(key, new SmartInteger(5000));

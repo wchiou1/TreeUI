@@ -6,8 +6,8 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 import Test.Shell;
-import TreeUI.UIElement;
 import focusObject.Panel;
+import focusObject.UIElement;
 
 public class SaplingPanel extends Panel implements EditorImmune{
 	private Sapling origin;

@@ -13,7 +13,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import Editor.Editor;
 import Editor.EditorBasePanel;
-import GameLogic.Incubator;
+import Editor.Incubator;
 import GameObjects.BasicPaneledGameObject;
 import TreeUI.StateChangeButton;
 import TreeUI.StaticText;
@@ -35,7 +35,6 @@ public class EditorState extends TreeUIGameState{
 		try{
 			width = container.getWidth();
 			height = container.getHeight();
-			im.enableEditor();
 			Editor editor = new Editor(inc);
 			
 			

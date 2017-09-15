@@ -2,11 +2,11 @@ package Editor;
 
 import java.lang.reflect.InvocationTargetException;
 
-import GameLogic.Incubator;
 import Test.SuperGlobal;
 import TreeUI.InventoryPanel;
 import focusObject.InventoryManager;
 import focusObject.Panel;
+import focusObject.TreeUIManager;
 
 /**
  * This is the editor class.
@@ -19,16 +19,20 @@ public class Editor{
 	private Incubator inc;
 	public Editor(Incubator inc) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
 		this.inc=inc;
+		inc.getManager().enableEditor();
+		
 		//Create and add the EditorBasePanel
 		inc.getManager().addGameObject(new EditorBasePanel(inc));
-		inc.getManager().addObject(new Panel(100,0,2,SuperGlobal.getLength()));//Left
+		//Create the edge panels so panels will snap to the edges of the screen
+		inc.getManager().addObject(new Panel(-2,0,2,SuperGlobal.getLength()));//Left
 		inc.getManager().addObject(new Panel(SuperGlobal.getWidth(),0,2,SuperGlobal.getLength()));//Right
 		inc.getManager().addObject(new Panel(0,-2,SuperGlobal.getWidth(),2));//Top
 		inc.getManager().addObject(new Panel(0,SuperGlobal.getLength(),SuperGlobal.getWidth(),2));//Bottom
-		VariablePanel vp = new VariablePanel(inc);
-		inc.getManager().addObject(vp);
-		inc.getManager().addItemtoInv(new Selector(vp));
-		inc.getManager().addItemtoInv(new NodeConnector(inc));
+		
+		//Create the editor command panel, the command panel auto-generates the variable panel and save management panel
+		EditorCommandPanel ecp = new EditorCommandPanel(inc);
+		inc.getManager().addObject(ecp);
+		
 	}
 	
 	/**

@@ -16,8 +16,9 @@ import GameObjects.GameObject;
 import GameObjects.NonPaneledGameObject;
 import GameObjects.PaneledGameObject;
 import Imported.ClassFinder;
-import TreeUI.UIElement;
+import TreeUI.BasicPanelButton;
 import focusObject.Panel;
+import focusObject.UIElement;
 
 public class Shell extends StateBasedGame{
 
@@ -45,7 +46,7 @@ public class Shell extends StateBasedGame{
 		scanUITypes();
 	}
 	private void scanUITypes(){
-		List<Class<?>> cls=ClassFinder.find(UIElement.class.getPackage().getName());
+		List<Class<?>> cls=ClassFinder.find(BasicPanelButton.class.getPackage().getName());
 		for(Class<?> type:cls){
 			//Filter out abstract objects
 			if(Modifier.isAbstract(type.getModifiers()))

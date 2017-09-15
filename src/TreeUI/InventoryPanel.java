@@ -8,6 +8,7 @@ import org.newdawn.slick.Graphics;
 import Editor.EditorImmune;
 import Test.SuperGlobal;
 import focusObject.Panel;
+import focusObject.UIElement;
 import uiItem.UIItem;
 
 /**

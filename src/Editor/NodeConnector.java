@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
-import GameLogic.Incubator;
 import aspenNetwork.AspenNode;
 import focusObject.InteractableObject;
 import uiItem.HasOverlay;
