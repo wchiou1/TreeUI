@@ -6,6 +6,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 import aspenNetwork.AspenNode;
+import focusObject.Incubator;
 import focusObject.InteractableObject;
 import uiItem.HasOverlay;
 import uiItem.UIItem;

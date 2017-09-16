@@ -1,8 +1,0 @@
-142:{type:PowerMonitor,key:,text:600,width:80,height:20,rx:11,ry:72,x:315,y:318}
-119:{type:Dial,radius:20,angle:90,previousAngle:0,mouseAngle:0,lowerLimit:-180,upperLimit:180,key:,rx:9,ry:11,x:313,y:257}
-96:{type:PanelExit,rx:83,ry:6,x:387,y:252}
-@73:{type:Panel,active:true,height:100,width:100,x:304,y:246,objectList:[~96,~119,~142,~165]}
-212:{type:Switch,width:10,height:14,key:,up:true,rx:15,ry:38,x:319,y:184}
-189:{type:StaticText,text:,width:80,height:20,rx:10,ry:9,x:314,y:155}
-166:{type:Panel,active:true,height:100,width:100,x:304,y:146,objectList:[~189,~212]}
-165:{type:BasicPanelButton,width:10,height:10,rx:76,ry:43,x:380,y:289,view:~166}

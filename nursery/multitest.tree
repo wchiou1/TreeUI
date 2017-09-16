@@ -1,0 +1,7 @@
+142:{type:Slider,width:10,height:50,range:100,current:17,vertical:true,key:,rx:81,ry:43,x:449,y:281}
+119:{type:Dial,radius:20,angle:172,previousAngle:180,mouseAngle:206,lowerLimit:-180,upperLimit:180,key:,rx:10,ry:44,x:378,y:282}
+96:{type:Button,radius:6,key:,range:2,rx:17,ry:18,x:385,y:256}
+249:{type:Panel,active:true,height:100,width:100,x:368,y:138,objectList:[]}
+73:{type:Panel,active:true,height:100,width:100,x:368,y:238,objectList:[~96|~119|~142|~248]}
+248:{type:BasicPanelButton,width:10,height:10,rx:76,ry:17,x:444,y:255,view:~249}
+@72:{type:Generator,toggleFreq:,rx:0,ry:0,x:413,y:369,view:~73}

@@ -24,7 +24,7 @@ public class ClassFinder {
             throw new IllegalArgumentException(String.format(BAD_PACKAGE_ERROR, scannedPath, scannedPackage));
         }
         try {
-			System.out.println(Paths.get(scannedUrl.toURI()).toFile());
+			//System.out.println(Paths.get(scannedUrl.toURI()).toFile());
         
 	        File scannedDir = Paths.get(scannedUrl.toURI()).toFile();
 	        List<Class<?>> classes = new ArrayList<Class<?>>();

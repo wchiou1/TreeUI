@@ -1,6 +1,7 @@
 package Editor;
 
 import Test.SuperGlobal;
+import focusObject.Incubator;
 import focusObject.InteractableObject;
 import focusObject.Panel;
 

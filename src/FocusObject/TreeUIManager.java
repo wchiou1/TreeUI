@@ -48,7 +48,7 @@ public class TreeUIManager{
 	public void addItemtoInv(UIItem item){
 		inventoryManager.addItem(item);
 	}
-	public void enableEditor(){
+	void enableEditor(){
 		inputManager.enableEditor();
 		inputManager.enableInventory();
 		addObject(inventoryManager.getPanel());

@@ -1,9 +1,0 @@
-169:{type:Panel,active:false,height:100,width:100,x:397,y:177,objectList:[]}
-145:{type:Panel,active:false,height:100,width:100,x:150,y:174,objectList:[]}
-168:{type:BasicPanelButton,width:10,height:10,rx:61,ry:25,x:447,y:277,view:~169}
-121:{type:Panel,active:true,height:100,width:100,x:186,y:252,objectList:[~144]}
-144:{type:BasicPanelButton,width:10,height:10,rx:14,ry:22,x:200,y:274,view:~145}
-97:{type:Panel,active:true,height:100,width:100,x:386,y:252,objectList:[~168]}
-120:{type:BasicPanelButton,width:10,height:10,rx:76,ry:31,x:362,y:283,view:~121}
-@73:{type:Panel,active:true,height:100,width:100,x:286,y:252,objectList:[~96,~120]}
-96:{type:BasicPanelButton,width:10,height:10,rx:31,ry:67,x:317,y:319,view:~97}

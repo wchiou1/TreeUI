@@ -3,6 +3,7 @@ package Editor;
 import Test.SuperGlobal;
 import TreeUI.InputBox;
 import TreeUI.StaticText;
+import focusObject.Incubator;
 import focusObject.InteractableObject;
 import focusObject.Panel;
 

@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import Test.SuperGlobal;
 import TreeUI.InventoryPanel;
+import focusObject.Incubator;
 import focusObject.InventoryManager;
 import focusObject.Panel;
 import focusObject.TreeUIManager;
@@ -19,10 +20,8 @@ public class Editor{
 	private Incubator inc;
 	public Editor(Incubator inc) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
 		this.inc=inc;
-		inc.getManager().enableEditor();
+		inc.enableEditor();
 		
-		//Create and add the EditorBasePanel
-		inc.getManager().addGameObject(new EditorBasePanel(inc));
 		//Create the edge panels so panels will snap to the edges of the screen
 		inc.getManager().addObject(new Panel(-2,0,2,SuperGlobal.getLength()));//Left
 		inc.getManager().addObject(new Panel(SuperGlobal.getWidth(),0,2,SuperGlobal.getLength()));//Right

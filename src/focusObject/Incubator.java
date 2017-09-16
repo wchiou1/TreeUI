@@ -1,25 +1,23 @@
-package Editor;
+package focusObject;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Array;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
+import Editor.EditorBasePanel;
 import GameLogic.StringUtils;
 import GameObjects.GameObject;
+import GameObjects.NonPaneledGameObject;
+import GameObjects.PaneledGameObject;
 import Imported.ClassFinder;
 import aspenNetwork.AspenNetwork;
-import focusObject.InteractableObject;
-import focusObject.OriginObject;
-import focusObject.Panel;
-import focusObject.TreeUIManager;
-import focusObject.UIElement;
 
 /**
  * This class will create a panel tree. How will we attach it to a origin
@@ -36,6 +34,7 @@ public class Incubator {
 	// Use the built in IO counter, don't use this pos
 	private TreeUIManager tuim;
 	private AspenNetwork dn;
+	private boolean editor=false;
 
 	public Incubator(TreeUIManager tuim, AspenNetwork dn) {
 		this.tuim = tuim;
@@ -49,6 +48,12 @@ public class Incubator {
 		return tuim;
 	}
 
+	public void enableEditor(){
+		tuim.enableEditor();
+		editor=true;
+		//Create and add the EditorBasePanel
+		tuim.addGameObject(new EditorBasePanel(this));
+	}
 	public int addPanel() {
 		Panel p = new Panel();
 		panels.put(p.getId(), p);
@@ -92,7 +97,7 @@ public class Incubator {
 
 			// Check elementType is of instance InteractableObject
 			if (!(newObject instanceof InteractableObject)) {
-				System.out.println("Error in Incubator-addUIElement:Not an InteractableObject(" + objectType + ")");
+				System.out.println("Error in Incubator-addObject:Not an InteractableObject(" + objectType + ")");
 				return -1;
 			}
 
@@ -294,60 +299,6 @@ public class Incubator {
 
 	}
 
-	private void recursiveSave(Hashtable<Integer, String> ht, int objectID) {
-		if (ht.containsKey(objectID))
-			return;
-		if (getEither(objectID) == null) {
-			System.out.println("Error in Incubator-recursiveSave:Invalid objectID(" + objectID + ")");
-			return;
-		}
-		InteractableObject subject = getEither(objectID);
-		// We haven't done this object yet
-		ht.put(objectID, "");
-		// For now it'l be an empty string
-		String tempSaveString = "{";
-		try {
-			Field[] fields = getFields(objectID);
-			for (Field f : fields) {
-				// Check if it's an interactable object
-				if (f.getType().isAssignableFrom(InteractableObject.class)) {
-					// Check if this object even exists, if not, leave(Only way
-					// this happens is if someone created an object without the
-					// incubator)
-
-					int fieldObjID = ((InteractableObject) f.get(subject)).getId();
-					recursiveSave(ht, fieldObjID);
-					tempSaveString += f.getName() + ":~" + fieldObjID + ",";
-				}
-				// TODO implement support for arrays
-				else {
-					// Assume it's a primitive
-					tempSaveString += f.getName() + ":" + f.get(subject) + ",";
-
-				}
-			}
-			// Check if the object is a panel
-			if (subject instanceof Panel) {
-				// If it's a panel, we need to process the array of objects it
-				// contains
-				tempSaveString += "objectList:[";
-				ArrayList<UIElement> panelObjList = ((Panel) subject).getObjList();
-				for (UIElement uie : panelObjList) {
-					recursiveSave(ht, uie.getId());
-					tempSaveString += ht.get(uie.getId());
-				}
-			}
-			// Check if the object is an originObject
-			if (subject instanceof OriginObject) {
-
-			}
-
-		} catch (IllegalArgumentException | IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
 	/**
 	 * This method will get the save string for ONLY PANELS
 	 * For now the filehandling is done on the UI side, I will change this when universal object saving is rolled out
@@ -448,7 +399,7 @@ public class Incubator {
 	    	ArrayList<UIElement> panelObjList = ((Panel)subject).getObjList();
 	    	for(UIElement uie:panelObjList){
 	    		//First let's get the id of the element
-	    		tempSaveString+="~"+uie.getId()+",";
+	    		tempSaveString+="~"+uie.getId()+"|";
 	    		//Now we need to read te element
 	    		recursiveScan(ht,uie.getId(),false);
 	    		//We will assume there are no nulls
@@ -474,28 +425,167 @@ public class Incubator {
 
 	  }
 
-	private InteractableObject recursiveFileRead(Hashtable<Integer, String> lines,Hashtable<Integer, InteractableObject> objects,int objectID){
+	private InteractableObject recursiveFileRead(Hashtable<Integer, String> lines,Hashtable<Integer, InteractableObject> objects,int parentID,int objectID) throws ClassNotFoundException, NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
 		 //Check if this object is already being translated(recursive reference check)
 		if(objects.containsKey(objectID))
-			return null;
+			return objects.get(objectID);
+		
+		//Get the string for the object
+		String objString = lines.get(objectID);
+		
+		System.out.println(objString);
+		
+		//Let's start by removing the starting and ending bracket
+		objString=objString.substring(1,objString.length()-1);
+		
 		//We need to create the object immediately
-		//First read the type
-		return null;
+		
+		//Parse the string into field-data parts
+		String[] parts = objString.split(",");
+		
+		//Let's get the type first
+		String typestr = parts[0].split(":")[1];
+		
+		//Declare the class and object for this object
+		Class<?> c = null;
+		InteractableObject subject=null;
+		
+		//First check if the class exists as a gameobject or a uielement
+		if(ClassFinder.existsWithin(typestr, "GameObjects")){
+			//It's a gameobject
+			c = Class.forName("GameObjects."+typestr);
+			//We need to know if it's paneled or not
+			if(c.isAssignableFrom(NonPaneledGameObject.class)){
+				//System.out.print("NonPaneledGameObject detected: "+c);
+			}
+			if(c.isAssignableFrom(PaneledGameObject.class)){
+				//System.out.println("PaneledGameObject detected:" +c);
+			}
+			subject = getObject(addObject(c));
+			//System.out.println("Checking DATALINK for "+typestr+":"+subject.checkDataLink());
+			
+		}
+		if(ClassFinder.existsWithin(typestr, "TreeUI")){
+			//It's a UIElement
+			c = Class.forName("TreeUI."+typestr);
+			//We need to know if it's paneled or not
+			//System.out.println("UIElement detected:"+c);
+			
+			subject = getObject(addUIElement(objects.get(parentID).getId(), c));
+			//System.out.println("Checking DATALINK for "+typestr+":"+subject.checkDataLink());
+		}
+		
+		if(typestr.equalsIgnoreCase("Panel")){
+			c = Panel.class;
+			//We have a special case for panels
+			//System.out.print("Panel detected");
+			subject = getPanel(addPanel());
+			//Before setting the origin, make sure that the parent is an originobject
+			//What if a user wants to have a panel stored in an originobject, but not as a view?
+			//What the fuck, why would they do that. Just... no.
+			if(objects.get(parentID) instanceof OriginObject)
+				setOrigin(subject.getId(),objects.get(parentID).getId());
+			else
+				System.out.println("Alert in recursiveFileRead: Panel created without an originobject");
+			if(editor)
+				((Panel)subject).enableEditing(this);
+		}
+		
+		if(c==null){
+			//No class found in GameObjects or UI
+			System.out.println("Unable to find class("+typestr+")");
+			return null;
+		}
+		objects.put(objectID, subject);
+		
+		//We need to check if there are more fields to read, how would we do that?
+		for(int i=1;i<parts.length;i++){
+			//First we need to get the field
+			String part = parts[i];
+			String fieldstr = part.split(":")[0];
+			String fieldData = "";
+			if(part.split(":").length>1)
+				fieldData = part.split(":")[1];
+			
+		//Process the fieldstr
+			//Get the actual field
+			Field field = findUnderlying(subject.getClass(),fieldstr);
+			
+			//System.out.println(field.getName()+"("+field.getType().getSimpleName()+")"+InteractableObject.class.isAssignableFrom(field.getType())+":"+fieldData);
+			
+			//Is it an object?
+			if(Object.class.isAssignableFrom(field.getType())){
+				//The field is an object
+
+				if(String.class.isAssignableFrom(field.getType())){
+	    			//It's a string, just treat it like a primitive
+					writeParam(subject.getId(),fieldstr,fieldData);
+					continue;
+	    			
+	    		}
+	    		if(Array.class.isAssignableFrom(field.getType())){
+	    			//It's an array
+	    			//For now do nothing
+	    			continue;
+	    		}
+	    		if(ArrayList.class.isAssignableFrom(field.getType())){
+	    			//Strip the brackets
+	    			fieldData = fieldData.substring(1, fieldData.length()-1);
+	    			
+	    			//We got an arraylist, is the subject a panel by any chance?
+	    			if(subject instanceof Panel&&fieldstr.equals("objectList")){
+	    				//This is a panel objectList
+	    				//Let's start by parsing this badboy.
+	    				//First check if there are any delimiters
+	    				if(fieldData.indexOf('|')<0)
+	    					//It's empty
+	    					continue;
+	    				String[] dataParts = fieldData.split("\\|");
+	    				for(String s:dataParts){
+	    					//For each string, we need to create a new UIElement, adding to the panel is done on the other side
+	    					//First remove the ~
+	    					int elementID = Integer.parseInt(s.substring(1));
+	    					recursiveFileRead(lines,objects,objectID,elementID);
+	    				}
+	    				
+	    			}
+	    			//We do not have support for ArrayLists other than panels yet
+	    			continue;
+	    		}
+	    		if(InteractableObject.class.isAssignableFrom(field.getType())){
+	    			//We have an object!
+	    			//We need to know if it's a panel
+	    			if(Panel.class.isAssignableFrom(field.getType())){
+	    				//Hmmm... it's a panel... do we happen to have an originobject on our hands?
+	    				if(subject instanceof OriginObject&&fieldstr.equals("view")){
+	    					//We do! Let's use the incubator's built in functions then
+	    					recursiveFileRead(lines,objects,objectID,Integer.parseInt(fieldData.substring(1)));
+	    					continue;
+	    				}
+	    			}
+	    			//Oh it's not an origin object, we'll just create and put the object in the usual way then
+	    		}
+	    		//This this is not a supported object,but we'll try to add the object in anyway...
+	    		System.out.println("WARNING: Not an InteractableObject, attempting general object insert");
+	    		writeParam(subject.getId(),fieldstr,recursiveFileRead(lines,objects,objectID,Integer.parseInt(fieldData.substring(1))));
+	    		continue;
+			}
+			//It's not an object, it must be a primitive
+			writeParam(subject.getId(),fieldstr,fieldData);
+		}
+		
+		System.out.println("Done with object "+objectID);
+		
+		
+		return subject;
 	}
 
 	/**
-	 * 
+	 * Reads the file and changes behavior based on objectID
 	 * @param fileName
 	 * @param objectID
 	 */
-	public void readFileToObject(String fileName,int objectID){
-		//We need to account for 3 conditions
-		
-		//if it was loaded to the basepanel(create a gameobject)
-		
-		//if it was loaded to a gameobject(modify or replace the panel)
-		
-		//if it was loaded to a panel(create a uielement)
+	public void readFileToObject(String fileName){
 		
 		//Create new hashtable for the lines
 		Hashtable<Integer, String> lines = new Hashtable<Integer, String>();
@@ -506,7 +596,6 @@ public class Incubator {
 
 			int baseKey=-1;
 			String line;
-
 		 
 			while((line=reader.readLine())!=null){
 				 //We need to read the objectID and put the line in the hashtable
@@ -539,13 +628,14 @@ public class Incubator {
 			 	return;
 		 	}
 			
-
 		 	//Create the object hashtable
 		 	Hashtable<Integer, InteractableObject> objects = new Hashtable<Integer, InteractableObject>();
 
+		 	//Create the base object
+		 	
 		 	//We have the base object, let's start the recursiveRead
-		 	recursiveFileRead(lines,objects,baseKey);
-		 } catch (NumberFormatException | IOException e) {
+		 	recursiveFileRead(lines,objects,-1,baseKey);
+		 } catch (IOException | ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

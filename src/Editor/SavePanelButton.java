@@ -6,6 +6,7 @@ import java.io.UnsupportedEncodingException;
 
 import TreeUI.InputBox;
 import TreeUI.TextButton;
+import focusObject.Incubator;
 import focusObject.InteractableObject;
 import uiItem.UIItem;
 

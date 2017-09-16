@@ -2,6 +2,7 @@ package Editor;
 
 import TreeUI.InputBox;
 import TreeUI.TextButton;
+import focusObject.Incubator;
 import focusObject.InteractableObject;
 import uiItem.UIItem;
 
@@ -25,7 +26,7 @@ public class LoadPanelButton extends TextButton implements EditorImmune{
 			System.out.println("Error: No filename");
 			return item;
 		}
-		inc.readFileToObject(fileNameBox.text,source.getId());
+		inc.readFileToObject(fileNameBox.text);
 		return item;
 	}
 	

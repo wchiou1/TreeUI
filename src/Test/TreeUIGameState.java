@@ -10,8 +10,8 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import Editor.Incubator;
 import aspenNetwork.AspenNetwork;
+import focusObject.Incubator;
 import focusObject.TreeUIManager;
 
 public abstract class TreeUIGameState extends BasicGameState{

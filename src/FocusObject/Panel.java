@@ -7,7 +7,6 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 
 import Editor.Bud;
-import Editor.Incubator;
 import TreeUI.Snappable;
 import uiItem.UIItem;
 

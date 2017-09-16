@@ -8,6 +8,7 @@ import org.newdawn.slick.Graphics;
 import GameLogic.StringUtils;
 import Test.Shell;
 import TreeUI.InputBox;
+import focusObject.Incubator;
 import focusObject.InteractableObject;
 import uiItem.UIItem;
 

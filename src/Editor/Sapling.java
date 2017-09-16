@@ -1,6 +1,7 @@
 package Editor;
 
 import GameObjects.BasicPaneledGameObject;
+import focusObject.Incubator;
 import focusObject.InteractableObject;
 import focusObject.OriginObject;
 import focusObject.Panel;

@@ -6,6 +6,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 import TreeUI.BasicPanelButton;
+import focusObject.Incubator;
 import focusObject.OriginObject;
 import focusObject.Panel;
 import focusObject.UIElement;
