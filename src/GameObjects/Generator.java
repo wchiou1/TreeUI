@@ -11,8 +11,10 @@ import uiItem.UIItem;
 public class Generator extends PaneledGameObject{
 	private String powerFreq;
 	public String toggleFreq;
+	private int output;
 	public Generator(){
 		powerFreq=":P Generator "+id;
+		output = 0;
 		toggleFreq="";
 	}
 
@@ -42,10 +44,17 @@ public class Generator extends PaneledGameObject{
 	@Override
 	public void update() {
 		//Check if it's toggled on
-		if(dataNode.getData(toggleFreq)==1||dataNode.getData(toggleFreq)==Integer.MIN_VALUE)
-			dataNode.changeData(powerFreq, 600);
+		if(dataNode.getData(toggleFreq)==1||dataNode.getData(toggleFreq)==Integer.MIN_VALUE){
+			if(output<600)
+				output++;
+		}
 		else
-			dataNode.changeData(powerFreq, 0);
+		{
+			if(output>0)
+				output--;
+		}	
+			
+		dataNode.changeData(powerFreq, output);
 	}
 
 	@Override

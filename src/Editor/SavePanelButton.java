@@ -20,7 +20,7 @@ public class SavePanelButton extends TextButton implements EditorImmune{
 		this.ry=y;
 		this.inc=inc;
 		this.fileNameBox=fileNameBox;
-		this.width=90;
+		this.width=80;
 		this.text="Save Panel";
 	}
 	@Override

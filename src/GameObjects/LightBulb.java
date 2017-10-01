@@ -15,6 +15,7 @@ public class LightBulb extends NonPaneledGameObject{
 	private ANKeyWrapper powerNode;
 	public String toggleFreq="";
 	private String powerFreq="";
+	private int power_draw=0;
 	public LightBulb(){
 		powerFreq=":P Lightbulb "+id;
 		powerNode = new ANKeyWrapper(getNode(),":P");

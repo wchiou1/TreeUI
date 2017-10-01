@@ -29,7 +29,7 @@ public abstract class TreeUIGameState extends BasicGameState{
 		ArrayList<Integer> keys=new ArrayList<Integer>();
 		keys.add(Input.KEY_E);
 		keys.add(Input.KEY_R);
-		dn=new AspenNetwork(1000);
+		dn=new AspenNetwork(0);
 		im=new TreeUIManager(container.getInput(),keys,10);
 		inc = new Incubator(im,dn);
 		
