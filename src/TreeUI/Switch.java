@@ -65,7 +65,7 @@ public class Switch extends UIElement{
 		
 	}
 	@Override
-	public void update(int mouseX, int mouseY) {
+	public void update(int mouseX, int mouseY,int delta) {
 		if(up)
 			dataNode.changeData(key, 0);
 		else

@@ -2,8 +2,10 @@ package GameObjects;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 
 import GameLogic.GameMath;
+import GameLogic.ImageLoader;
 import uiItem.UIItem;
 
 //This class will broadcast it's power value
@@ -32,6 +34,7 @@ public class Generator extends PaneledGameObject{
 			g.setColor(Color.darkGray);
 		g.fillOval(x, y, 20, 20);
 		
+		
 	}
 
 	@Override
@@ -42,7 +45,7 @@ public class Generator extends PaneledGameObject{
 	}
 
 	@Override
-	public void update() {
+	public void update(int delta) {
 		//Check if it's toggled on
 		if(dataNode.getData(toggleFreq)==1||dataNode.getData(toggleFreq)==Integer.MIN_VALUE){
 			if(output<600)

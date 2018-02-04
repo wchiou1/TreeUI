@@ -5,7 +5,7 @@ import java.util.Hashtable;
 
 
 //This class wraps a datanode and filters out specific broadcasts based on the string
-//and compiles power data based on that
+//and compiles math data based on that
 //For instance: Broadcast of ":P Generator 1" with value of 600 would be translated
 //to 600 power. Broadcast of ":P LightBulb 1" with value of -200 would be a drain of
 //200 power.
@@ -23,6 +23,30 @@ public class ANKeyWrapper{
 			String key=keys.nextElement();
 			if(key.startsWith(wrapkey)){
 				total+=node.dataLink.get(key).value;
+			}
+		}
+		return total;
+	}
+	public int getPositiveTotal(){
+		int total=0;
+		Enumeration<String> keys=node.dataLink.keys();
+		while(keys.hasMoreElements()){
+			String key=keys.nextElement();
+			if(key.startsWith(wrapkey)){
+				if(node.dataLink.get(key).value>0)
+					total+=node.dataLink.get(key).value;
+			}
+		}
+		return total;
+	}
+	public int getNegativeTotal(){
+		int total=0;
+		Enumeration<String> keys=node.dataLink.keys();
+		while(keys.hasMoreElements()){
+			String key=keys.nextElement();
+			if(key.startsWith(wrapkey)){
+				if(node.dataLink.get(key).value<0)
+					total+=node.dataLink.get(key).value;
 			}
 		}
 		return total;

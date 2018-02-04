@@ -16,12 +16,12 @@ public abstract class PaneledGameObject extends OriginObject implements GameObje
 		return dataNode;
 	}
 	@Override
-	public void update(int x, int y){
-		update();
+	public void update(int x, int y,int delta){
+		update(delta);
 	}
 	/**
 	 * Object declared update function which will be called every step
 	 */
 	@Override
-	public abstract void update();
+	public abstract void update(int delta);
 }

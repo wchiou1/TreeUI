@@ -5,6 +5,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 
 import GameObjects.GameObject;
+import GameObjects.LightBulb;
 import focusObject.InteractableObject;
 import focusObject.SmartInteger;
 
@@ -15,11 +16,15 @@ public class AspenNode{
 	private ArrayList<AspenNode> neighbors;
 	private boolean changed;
 	Hashtable<String,SmartInteger> dataLink;
+	Hashtable<String,SmartInteger> transmitBuffer;
 	private Hashtable<String,SmartInteger> dataTime;//Keeps track of how recent the data it has is
+	private Hashtable<String,SmartInteger> dataTimeBuffer;
 	private GameObject parent;
 	public AspenNode(GameObject parent){
 		neighbors=new ArrayList<AspenNode>();
 		dataLink=new Hashtable<String,SmartInteger>();
+		transmitBuffer = new Hashtable<String,SmartInteger>();
+		dataTimeBuffer = new Hashtable<String,SmartInteger>();
 		dataTime=new Hashtable<String,SmartInteger>();
 		changed=false;
 		blocked=false;
@@ -70,6 +75,7 @@ public class AspenNode{
 		neighbors.remove(node);
 	}
 	public void changeNetwork(){
+		System.out.println("Clearing network");
 		preClear();
 		clear();
 	}
@@ -85,7 +91,9 @@ public class AspenNode{
 			return;
 		changed=false;
 		dataLink.clear();
+		transmitBuffer.clear();
 		dataTime.clear();
+		dataTimeBuffer.clear();
 		for(AspenNode node:neighbors)
 			node.clear();
 	}
@@ -95,16 +103,14 @@ public class AspenNode{
 			String key=keys.nextElement();
 			if(dataTime.get(key).value>0)
 				dataTime.get(key).value--;
+			if(dataTimeBuffer.containsKey(key)&&dataTimeBuffer.get(key).value>0)
+				dataTimeBuffer.get(key).value--;
 		}
 	}
-	public void update(){
+	void update(){
 		if(changed)
 			return;
 		tick();
-		if(blocked)
-			return;
-		transmit();
-		
 	}
 	protected void recieve(Hashtable<String,SmartInteger> foreignData,Hashtable<String,SmartInteger> foreignTime){
 		if(blocked)
@@ -112,15 +118,32 @@ public class AspenNode{
 		Enumeration<String> keys=foreignData.keys();
 		while(keys.hasMoreElements()){
 			String key=keys.nextElement();
-			if(!dataTime.containsKey(key)||foreignTime.get(key).value>dataTime.get(key).value){
+			if(!dataLink.containsKey(key)||foreignTime.get(key).value>dataTime.get(key).value){
+				
 				dataLink.put(key, ((SmartInteger)foreignData.get(key).clone()));
 				dataTime.put(key, ((SmartInteger)foreignTime.get(key).clone()));
 			}
 		}
 	}
-	private void transmit(){
-		for(AspenNode node:neighbors){
-			node.recieve(dataLink,dataTime);
+	void fillTransmitBuffer(){
+		//Takes the datalink hashtable and puts it's contents in the transmit buffer
+		transmitBuffer.clear();
+		dataTimeBuffer.clear();
+
+		Enumeration<String> keys=dataLink.keys();
+		while(keys.hasMoreElements()){
+			String key=keys.nextElement();
+			transmitBuffer.put(key, ((SmartInteger)dataLink.get(key).clone()));
+			dataTimeBuffer.put(key, ((SmartInteger)dataTime.get(key).clone()));
 		}
+		
+	}
+	void transmit(){
+		if(blocked)
+			return;
+		
+		for(AspenNode node:neighbors)
+			node.recieve(transmitBuffer,dataTimeBuffer);
+		
 	}
 }

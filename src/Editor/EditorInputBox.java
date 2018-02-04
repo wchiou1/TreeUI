@@ -25,7 +25,7 @@ public class EditorInputBox extends InputBox implements EditorImmune{
 		this.height=height;
 	}
 	@Override
-	public void update(int x, int y){
+	public void update(int x, int y,int delta){
 		
 	}
 	@Override

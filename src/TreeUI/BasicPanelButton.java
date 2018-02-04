@@ -31,11 +31,6 @@ public class BasicPanelButton extends OriginObject{
 		this.width=width;
 	}*/
 	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
 	public boolean isMouseOver(int x, int y) {
 		if(x>=this.x&&x<=this.x+width)
 			if(y>=this.y&&y<=this.y+height)

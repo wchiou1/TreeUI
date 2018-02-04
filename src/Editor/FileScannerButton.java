@@ -15,6 +15,7 @@ public class FileScannerButton extends OriginObject{
 		this.ry=y;
 		this.fileNameBox=fileNameBox;
 		this.width=20;
+		this.height = 20;
 	}
 	@Override
 	public void draw(Graphics g) {

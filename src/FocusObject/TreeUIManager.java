@@ -13,11 +13,13 @@ import GameObjects.GameObject;
 import GameObjects.PaneledGameObject;
 import TreeUI.InventoryPanel;
 import TreeUI.Snappable;
+import aspenNetwork.AspenNetwork;
 import uiItem.UIItem;
 
 public class TreeUIManager{
 	public static TreeUIManager master;
 	private int stickiness;//How far the mouse delta has to be before a suggested snap is abandoned
+	private AspenNetwork an;
 	private InputManager inputManager;
 	private InventoryManager inventoryManager;
 	private LinkedList<InteractableObject> uiObjectList;
@@ -26,9 +28,10 @@ public class TreeUIManager{
 	
 	//Placeholder object to indicate that lock is on nothing
 	static InteractableObject empty=new Window(0,0,0,0,Color.green);
-	public TreeUIManager(Input input,ArrayList<Integer> keys, int stickiness){
+	public TreeUIManager(Input input,ArrayList<Integer> keys, AspenNetwork an, int stickiness){
 		this.stickiness=stickiness;
 		this.input=input;
+		this.an=an;
 		uiObjectList = new LinkedList<InteractableObject>();
 		gameObjectList = new LinkedList<InteractableObject>();
 		inventoryManager = new InventoryManager(new InventoryPanel());
@@ -36,11 +39,19 @@ public class TreeUIManager{
 		master=this;
 			
 	}
+	public AspenNetwork getAspen(){
+		return an;
+	}
 	public LinkedList<InteractableObject> getGameObjects(){
 		return gameObjectList;
 	}
 	public void keyPressed(int key, char c) {
 		inputManager.keyPressed(key, c);
+		//Aspen Network debug
+		if(key==57){
+			update(20);
+			an.manualUpdate();
+		}
 	}
 	public void mouseWheelMoved(int arg0){
 		inputManager.mouseWheelMoved(arg0);
@@ -58,10 +69,10 @@ public class TreeUIManager{
 		int mouseY = input.getMouseY();
 		inputManager.update(delta);
 		for(InteractableObject io:uiObjectList){
-			io.update(mouseX, mouseY);
+			io.update(mouseX, mouseY,delta);
 		}
 		for(InteractableObject io:gameObjectList){
-			io.update(mouseX, mouseY);
+			io.update(mouseX, mouseY,delta);
 		}
 	}
 	public void removeObject(InteractableObject io){

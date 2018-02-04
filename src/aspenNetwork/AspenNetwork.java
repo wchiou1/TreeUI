@@ -20,11 +20,28 @@ public class AspenNetwork{
 	}
 	
 	public void update(int delta){
+		if(updateSpeed==-1)
+			return;
 		updateBuffer+=delta;
 		if(updateBuffer<updateSpeed)
 			return;
 		updateBuffer=0;
 		for(AspenNode node:nodes)
 			node.update();
+		for(AspenNode node:nodes)
+			node.transmit();
+		for(AspenNode node:nodes)
+			node.fillTransmitBuffer();
+	}
+	public void manualUpdate(){
+		System.out.println("Manually updating the Aspen Network...");
+		updateBuffer=0;
+		for(AspenNode node:nodes)
+			node.update();
+		for(AspenNode node:nodes)
+			node.transmit();
+		for(AspenNode node:nodes)
+			node.fillTransmitBuffer();
+		System.out.println("Done!");
 	}
 }

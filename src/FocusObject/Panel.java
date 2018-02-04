@@ -142,10 +142,10 @@ public class Panel extends Snappable{
 		return true;
 	}
 	@Override
-	public void update(int x, int y) {
+	public void update(int x, int y,int delta) {
 		//TODO Put panel close and open animation logic here
 		for(InteractableObject io:objectList)
-			io.update(x, y);
+			io.update(x, y,delta);
 	}
 	@Override
 	public void keyPress(int mouseX, int mouseY, int key) {

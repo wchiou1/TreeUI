@@ -11,4 +11,7 @@ public class SmartInteger{
 	public Object clone(){
 		return new SmartInteger(value);
 	}
+	public String toString(){
+		return ""+value;
+	}
 }

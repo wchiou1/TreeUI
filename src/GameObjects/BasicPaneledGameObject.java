@@ -13,7 +13,7 @@ public class BasicPaneledGameObject extends PaneledGameObject{
 		System.out.println();
 	}
 	@Override
-	public void update() {
+	public void update(int delta) {
 		// TODO Auto-generated method stub
 		
 	}

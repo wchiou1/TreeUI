@@ -8,7 +8,7 @@ public interface GameObject{
 	/**
 	 * Object declared update function which will be called every step
 	 */
-	public abstract void update();
+	public abstract void update(int delta);
 	/**
 	 * Object declared draw function which will be called by the GameObjectManager
 	 */

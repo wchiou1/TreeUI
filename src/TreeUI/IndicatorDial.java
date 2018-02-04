@@ -18,7 +18,7 @@ public class IndicatorDial extends UIElement{
 		angle=0;
 	}
 	@Override
-	public void update(int x, int y) {
+	public void update(int x, int y,int delta) {
 		//super.update(x, y);TODO
 		//update the angle
 		int temp=dataNode.getData(key);

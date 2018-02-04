@@ -65,7 +65,7 @@ public class InventorySlot extends UIElement{
 		return false;
 	}
 	@Override
-	public void update(int mouseX, int mouseY) {
+	public void update(int mouseX, int mouseY,int delta) {
 		// TODO Auto-generated method stub
 		
 	}

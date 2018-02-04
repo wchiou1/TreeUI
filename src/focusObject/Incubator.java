@@ -29,16 +29,16 @@ import aspenNetwork.AspenNetwork;
  * 
  * @author Wesley Chiou
  */
-public class Incubator {
+public class Incubator{
 	// private int objectCount = 0;
 	// Use the built in IO counter, don't use this pos
 	private TreeUIManager tuim;
 	private AspenNetwork dn;
 	private boolean editor=false;
 
-	public Incubator(TreeUIManager tuim, AspenNetwork dn) {
+	public Incubator(TreeUIManager tuim) {
 		this.tuim = tuim;
-		this.dn = dn;
+		this.dn = tuim.getAspen();
 	}
 
 	Hashtable<Integer, Panel> panels = new Hashtable<Integer, Panel>();
@@ -456,10 +456,10 @@ public class Incubator {
 			c = Class.forName("GameObjects."+typestr);
 			//We need to know if it's paneled or not
 			if(c.isAssignableFrom(NonPaneledGameObject.class)){
-				//System.out.print("NonPaneledGameObject detected: "+c);
+				System.out.print("NonPaneledGameObject detected: "+c);
 			}
 			if(c.isAssignableFrom(PaneledGameObject.class)){
-				//System.out.println("PaneledGameObject detected:" +c);
+				System.out.println("PaneledGameObject detected:" +c);
 			}
 			subject = getObject(addObject(c));
 			//System.out.println("Checking DATALINK for "+typestr+":"+subject.checkDataLink());
@@ -469,7 +469,7 @@ public class Incubator {
 			//It's a UIElement
 			c = Class.forName("TreeUI."+typestr);
 			//We need to know if it's paneled or not
-			//System.out.println("UIElement detected:"+c);
+			System.out.println("UIElement detected:"+c);
 			
 			subject = getObject(addUIElement(objects.get(parentID).getId(), c));
 			//System.out.println("Checking DATALINK for "+typestr+":"+subject.checkDataLink());
@@ -511,7 +511,7 @@ public class Incubator {
 			//Get the actual field
 			Field field = findUnderlying(subject.getClass(),fieldstr);
 			
-			//System.out.println(field.getName()+"("+field.getType().getSimpleName()+")"+InteractableObject.class.isAssignableFrom(field.getType())+":"+fieldData);
+			System.out.println(field.getName()+"("+field.getType().getSimpleName()+"):"+fieldData);
 			
 			//Is it an object?
 			if(Object.class.isAssignableFrom(field.getType())){
@@ -534,10 +534,12 @@ public class Incubator {
 	    			
 	    			//We got an arraylist, is the subject a panel by any chance?
 	    			if(subject instanceof Panel&&fieldstr.equals("objectList")){
+	    				System.out.println("ArrayList detected");
+	    				System.out.println(fieldData);
 	    				//This is a panel objectList
 	    				//Let's start by parsing this badboy.
-	    				//First check if there are any delimiters
-	    				if(fieldData.indexOf('|')<0)
+	    				//First check if it's empty
+	    				if(fieldData.isEmpty())
 	    					//It's empty
 	    					continue;
 	    				String[] dataParts = fieldData.split("\\|");

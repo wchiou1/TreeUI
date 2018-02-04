@@ -45,7 +45,7 @@ public class Window extends Snappable{
 		return null;
 	}
 	@Override
-	public void update(int x, int y) {
+	public void update(int x, int y,int delta) {
 		//No logic needed
 		
 	}

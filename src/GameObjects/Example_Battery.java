@@ -29,7 +29,7 @@ public class Example_Battery extends PaneledGameObject{
 	}
 
 	@Override
-	public void update() {
+	public void update(int delta) {
 		// TODO Auto-generated method stub
 		
 	}

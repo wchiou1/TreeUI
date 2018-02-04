@@ -43,7 +43,7 @@ public class Slider extends UIElement{
 
 	
 	@Override
-	public void update(int mouseX, int mouseY) {
+	public void update(int mouseX, int mouseY,int delta) {
 		//super.update(mouseX, mouseY);TODO
 		
 		//Update the location of the slider using mouse info

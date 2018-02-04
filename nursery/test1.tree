@@ -1,0 +1,4 @@
+204:{type:Keyhole,pattern:-1,key:,rx:47,ry:75,x:585,y:308}
+181:{type:Slider,width:50,height:10,range:100,current:0,vertical:true,key:,rx:28,ry:40,x:566,y:273}
+158:{type:Panel,active:true,height:100,width:100,x:538,y:233,objectList:[~181|~204]}
+@157:{type:BasicPaneledGameObject,width:5,height:5,rx:0,ry:0,x:490,y:352,view:~158}

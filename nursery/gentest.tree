@@ -1,0 +1,4 @@
+109:{type:PowerMonitor,key:,text:-3,width:80,height:20,rx:10,ry:11,x:179,y:110}
+76:{type:Panel,active:true,height:100,width:100,x:169,y:99,objectList:[~109|~138]}
+@75:{type:Generator,toggleFreq:asd,rx:0,ry:0,x:250,y:224,view:~76}
+138:{type:Switch,width:10,height:14,key:asd,up:true,rx:17,ry:69,x:186,y:168}

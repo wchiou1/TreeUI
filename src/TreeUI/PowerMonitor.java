@@ -17,7 +17,7 @@ public class PowerMonitor extends TextBox{
 		powerNode = new ANKeyWrapper(node,":P");
 	}
 	@Override
-	public void update(int mouseX, int mouseY) {
+	public void update(int mouseX, int mouseY,int delta) {
 		int data=powerNode.getTotalValue();
 		if(data==Integer.MIN_VALUE)
 			text = "NO SIGNAL";

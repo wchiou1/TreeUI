@@ -35,7 +35,7 @@ public class TextBox extends StaticText{
 	}
 
 	@Override
-	public void update(int mouseX, int mouseY) {
+	public void update(int mouseX, int mouseY,int delta) {
 		int data=dataNode.getData(key);
 		if(data==Integer.MIN_VALUE)
 			text="NO SIGNAL";

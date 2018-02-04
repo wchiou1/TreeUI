@@ -43,7 +43,7 @@ public class VariableBox extends InputBox implements EditorImmune{
 		}
 	}
 	@Override
-	public void update(int x, int y){
+	public void update(int x, int y,int delta){
 		isError();
 		try {
 			//Only display the variable stuff if it's not selected for typing

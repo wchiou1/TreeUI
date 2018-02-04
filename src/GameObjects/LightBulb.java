@@ -10,35 +10,48 @@ import uiItem.UIItem;
 public class LightBulb extends NonPaneledGameObject{
 	public boolean powered=false;
 	public boolean toggle=true;
-	public boolean on;
 	public int recordedPower;
+	public int posPower;
+	public int negPower;
 	private ANKeyWrapper powerNode;
 	public String toggleFreq="";
 	private String powerFreq="";
-	private int power_draw=0;
+	public double power_draw;
+	public static int greedCo = 4;
 	public LightBulb(){
 		powerFreq=":P Lightbulb "+id;
 		powerNode = new ANKeyWrapper(getNode(),":P");
-		on=true;
+		power_draw = 0;
+		posPower = 0;
+		negPower = 0;
 	}
 	@Override
-	public void update() {
+	public void update(int delta) {
 		recordedPower = powerNode.getTotalValue();
+		posPower = powerNode.getPositiveTotal();
+		negPower = powerNode.getNegativeTotal();
 		//Check if it has been ordered to turn off
 		if(dataNode.getData(toggleFreq)==0)
 			toggle=false;
 		else if(dataNode.getData(toggleFreq)==1)
 			toggle=true;
-		//Only turn on if there is positive power, if there is negative power, turn off
-		if(powerNode.getTotalValue()>0)
-			powered=true;
-		else if(powerNode.getTotalValue()<0)
-			powered=false;
-		on=powered&&toggle;
-		if(on)
-			dataNode.changeData(powerFreq, -200);
-		else
-			dataNode.changeData(powerFreq, 0);
+		if(recordedPower>0){//There is power on the network
+			if(power_draw>-200){//If we are not at max power yet
+				double ratio = Math.pow((1/(200.0/greedCo)), (1.0/(greedCo-1)));
+				//System.out.println("Ratio:"+(1.0/(greedCo-1)+"+"+(1/(200.0/greedCo))));
+				power_draw-=(200/greedCo)*Math.pow(1.0-ratio,Math.abs(power_draw/(200/greedCo)));//Increase consumption
+			}
+		}
+		else if(recordedPower<0){//There is no power on the network
+			if(power_draw<0)//If this is consuming power
+				//power_draw-=Math.floor(1.0*power_draw/3);
+				power_draw++;//Reduce consumption
+		}
+		else{
+			power_draw-=1;
+		}
+		
+		dataNode.changeData(powerFreq, (int) power_draw);
 	}
 
 	@Override
@@ -49,10 +62,11 @@ public class LightBulb extends NonPaneledGameObject{
 	@Override
 	public void draw(Graphics g) {
 		//Draw the lightbulb sprite
-		if(on)
-			g.setColor(Color.yellow);
-		else
-			g.setColor(Color.gray);
+		if(power_draw<-150){
+			g.setColor(new Color((int)Math.round(Math.abs((power_draw*1.0)/150)*255),(int)Math.round(Math.abs((power_draw*1.0)/150)*255),0));
+		}else{
+			g.setColor(new Color((int)Math.round(Math.abs((power_draw*1.0)/150)*255),(int)Math.round(Math.abs((power_draw*1.0)/150)*255),0));
+		}
 		g.fillOval(x, y, 20, 20);
 		
 	}

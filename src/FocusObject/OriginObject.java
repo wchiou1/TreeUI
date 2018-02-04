@@ -12,10 +12,12 @@ public abstract class OriginObject extends UIElement{
 		view=v;
 	}
 	public void close(){
-		view.close();
+		if(view!=null)
+			view.close();
 	}
 	public void open(){
-		view.open();
+		if(view!=null)
+			view.open();
 	}
 	public void openAll(){
 		view.openAll();
@@ -72,7 +74,7 @@ public abstract class OriginObject extends UIElement{
 		highlight=true;
 	}
 	@Override
-	public void update(int mouseX, int mouseY) {
+	public void update(int mouseX, int mouseY,int delta) {
 
 	}
 }

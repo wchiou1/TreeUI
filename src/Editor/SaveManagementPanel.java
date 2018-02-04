@@ -35,7 +35,7 @@ public class SaveManagementPanel extends Panel implements EditorImmune{
 		fn = new EditorInputBox(0,20,this.width-20,20);//The subject starts null for these buttons
 		spb = new SavePanelButton(0,40,inc,null,fn);//The save panel needs to update the FileScannerPanel
 		lpb = new LoadPanelButton(80,40,inc,null,fn);
-		fsp = new FileScannerPanel();
+		//fsp = new FileScannerPanel();
 		
 		addObject(spb);
 		addObject(lpb);

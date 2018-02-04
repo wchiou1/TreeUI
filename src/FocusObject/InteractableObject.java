@@ -50,7 +50,7 @@ public abstract class InteractableObject{
 	 * Allows for animation updates and includes mouse coords
 	 * This can be left empty if the object does not have an animation
 	 */
-	public abstract void update(int mouseX, int mouseY);
+	public abstract void update(int mouseX, int mouseY,int delta);
 	/**
 	 * Returns if the object is movable via the click and drag function
 	 * of the MouseManager
@@ -143,10 +143,6 @@ public abstract class InteractableObject{
 	 */
 	public int getY(){
 		return y;
-	}
-	public void update() {
-		// TODO Auto-generated method stub
-		
 	}
 	/**
 	 * Returns a hashtable with parameter names as keys and variable types as data

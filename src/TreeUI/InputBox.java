@@ -24,7 +24,7 @@ public class InputBox extends TextButton implements RequiresTyping{
 		this.height=height;
 	}
 	@Override
-	public void update(int x, int y){
+	public void update(int x, int y,int delta){
 		
 	}
 	@Override

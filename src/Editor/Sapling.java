@@ -47,8 +47,6 @@ public class Sapling extends BasicPaneledGameObject implements EditorImmune{
 		//Check if the object is an originObject
 		if(OriginObject.class.isAssignableFrom(objectType)){
 			System.out.println("OriginObject detected, creating and wrapping panel");
-			//Alright, we need to make a panel! BUT we must wrap it first!
-			//The incubator will not ever see the wrapper. We must remember to connect the panel and the origin object before saving!
 			
 			//Create the panel
 			Panel panel = inc.getPanel(inc.addPanel());

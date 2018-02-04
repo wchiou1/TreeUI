@@ -23,7 +23,7 @@ public class Dial extends UIElement{
 		upperLimit=90;
 	}*/
 	@Override
-	public void update(int mouseX, int mouseY) {
+	public void update(int mouseX, int mouseY,int delta) {
 		//super.update(mouseX, mouseY);TODO
 		if(!locked)
 			return;
