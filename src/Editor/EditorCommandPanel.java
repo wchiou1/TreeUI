@@ -45,7 +45,8 @@ public class EditorCommandPanel extends Panel implements EditorImmune{
 		
 		//Add all the objects required for editing into the inventory
 		inc.getManager().addItemtoInv(new Selector(this));//Selector needs access to the variable panel inorder to change variables displayed
-		inc.getManager().addItemtoInv(new NodeConnector(inc));//NodeCOnnector uses the Incubator to add network connections
+		inc.getManager().addItemtoInv(new NodeConnector(inc));//NodeConnector uses the Incubator to add network connections
+		inc.getManager().addItemtoInv(new ObjectGrabber());
 		
 	}
 	

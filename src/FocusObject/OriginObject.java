@@ -29,6 +29,12 @@ public abstract class OriginObject extends UIElement{
 	}
 	@Override
 	public final void keyPress(int mouseX, int mouseY, int key) {
+		testOpenPanel(key);
+		objectKeyPress(mouseX,mouseY,key);
+		
+	}
+	public abstract void objectKeyPress(int mouseX, int mouseY, int key);
+	private final void testOpenPanel(int key){
 		if(!locked){
 			if(key==Input.KEY_E){
 				if(view==null){
@@ -45,7 +51,6 @@ public abstract class OriginObject extends UIElement{
 				view.openAll();
 			}
 		}
-		
 	}
 	@Override
 	public UIItem click(int x, int y,UIItem item) {

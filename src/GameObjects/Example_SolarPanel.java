@@ -8,7 +8,7 @@ import GameLogic.GameMath;
 import GameLogic.ImageLoader;
 import world.Sun;
 
-public class Example_SolarPanel extends PaneledGameObject{
+public class Example_SolarPanel extends PoweredGameObject{
 	private String powerFreq;
 	private int output;
 	public double angle=0;
@@ -46,7 +46,29 @@ public class Example_SolarPanel extends PaneledGameObject{
 	}
 
 	@Override
-	public void update(int delta) {
+	public void powerUpdate(int delta) {
+		
+		output = calcPowerOutput();
+		dataNode.changeData(powerFreq, output);
+	}
+	
+	private int calcPowerOutput(){
+		int temp = (int)Math.round(Math.cos((Sun.getAngle()-angle)*Math.PI/180)*600);
+		return temp>0 ? temp : 0;
+	}
+
+	@Override
+	public int getCenterX() {
+		return x+10;
+	}
+
+	@Override
+	public int getCenterY() {
+		return y+10;
+	}
+
+	@Override
+	public void objectUpdate(int x, int y, int delta) {
 		target_angle=dataNode.getData(target_freq);
 		if(target_angle==Integer.MIN_VALUE)
 			target_angle=0;
@@ -71,23 +93,13 @@ public class Example_SolarPanel extends PaneledGameObject{
 		if(Math.abs(target_angle-angle)<1){
 			angle=target_angle;
 		}
-		output = calcPowerOutput();
-		dataNode.changeData(powerFreq, output);
-	}
-	
-	private int calcPowerOutput(){
-		int temp = (int)Math.round(Math.cos((Sun.getAngle()-angle)*Math.PI/180)*600);
-		return temp>0 ? temp : 0;
+		
 	}
 
 	@Override
-	public int getCenterX() {
-		return x+10;
-	}
-
-	@Override
-	public int getCenterY() {
-		return y+10;
+	public void objectKeyPress(int mouseX, int mouseY, int key) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

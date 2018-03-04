@@ -7,7 +7,8 @@ import GameLogic.GameMath;
 import aspenNetwork.ANKeyWrapper;
 import uiItem.UIItem;
 
-public abstract class PPoweredGO extends NonPaneledGameObject{
+//Powered game object which uses the picky algorithm(either turns off or on)
+public abstract class PPoweredGO extends PoweredGameObject{
 	public boolean powered=false;
 	public boolean toggle=true;
 	public int recordedPower;
@@ -18,7 +19,6 @@ public abstract class PPoweredGO extends NonPaneledGameObject{
 	private String powerFreq="";
 	public double power_draw;
 	public static int greedCo = 4;
-	public abstract String powerId;
 	public PPoweredGO(){
 		powerFreq=":P Lightbulb "+id;
 		powerNode = new ANKeyWrapper(getNode(),":P");
@@ -27,7 +27,7 @@ public abstract class PPoweredGO extends NonPaneledGameObject{
 		negPower = 0;
 	}
 	@Override
-	public void update(int delta) {
+	public void powerUpdate(int delta) {
 		recordedPower = powerNode.getTotalValue();
 		posPower = powerNode.getPositiveTotal();
 		negPower = powerNode.getNegativeTotal();
@@ -54,7 +54,7 @@ public abstract class PPoweredGO extends NonPaneledGameObject{
 		
 		dataNode.changeData(powerFreq, (int) power_draw);
 	}
-	public abstract subUpdate()
+	public abstract void objectUpdate(int delta);
 
 	@Override
 	public boolean isMoveable() {
@@ -77,13 +77,7 @@ public abstract class PPoweredGO extends NonPaneledGameObject{
 	public UIItem click(int x, int y, UIItem item) {
 		return item;
 	}
-
-	@Override
-	public void keyPress(int mouseX, int mouseY, int key) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	
 	@Override
 	public boolean isMouseOver(int x, int y) {
 		if(GameMath.dis(this.x+10, this.y+10, x, y)<=10)
@@ -91,15 +85,4 @@ public abstract class PPoweredGO extends NonPaneledGameObject{
 		return false;
 	}
 
-	@Override
-	public int getCenterX() {
-		// TODO Auto-generated method stub
-		return x+10;
-	}
-
-	@Override
-	public int getCenterY() {
-		// TODO Auto-generated method stub
-		return y+10;
-	}
 }

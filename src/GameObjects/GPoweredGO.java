@@ -7,15 +7,16 @@ import GameLogic.GameMath;
 import aspenNetwork.ANKeyWrapper;
 import uiItem.UIItem;
 
-public class GPoweredGO extends NonPaneledGameObject{
+//Powered object which uses the greedy algorithm
+public class GPoweredGO extends PoweredGameObject{
 	public boolean powered=false;
 	public boolean toggle=true;
 	public int recordedPower;
 	public int posPower;
 	public int negPower;
-	private ANKeyWrapper powerNode;
+	public ANKeyWrapper powerNode;
 	public String toggleFreq="";
-	private String powerFreq="";
+	public String powerFreq="";
 	public double power_draw;
 	public static int greedCo = 4;
 	public GPoweredGO(){
@@ -26,7 +27,7 @@ public class GPoweredGO extends NonPaneledGameObject{
 		negPower = 0;
 	}
 	@Override
-	public void update(int delta) {
+	public void powerUpdate(int delta) {
 		recordedPower = powerNode.getTotalValue();
 		posPower = powerNode.getPositiveTotal();
 		negPower = powerNode.getNegativeTotal();
@@ -77,12 +78,6 @@ public class GPoweredGO extends NonPaneledGameObject{
 	}
 
 	@Override
-	public void keyPress(int mouseX, int mouseY, int key) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public boolean isMouseOver(int x, int y) {
 		if(GameMath.dis(this.x+10, this.y+10, x, y)<=10)
 			return true;
@@ -99,5 +94,15 @@ public class GPoweredGO extends NonPaneledGameObject{
 	public int getCenterY() {
 		// TODO Auto-generated method stub
 		return y+10;
+	}
+	@Override
+	public void objectUpdate(int x, int y, int delta) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void objectKeyPress(int mouseX, int mouseY, int key) {
+		// TODO Auto-generated method stub
+		
 	}
 }

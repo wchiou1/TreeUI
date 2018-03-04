@@ -5,17 +5,12 @@ import org.newdawn.slick.Graphics;
 
 import uiItem.UIItem;
 
-public class BasicPaneledGameObject extends PaneledGameObject{
+public class BasicPaneledGameObject extends GameObject{
 	public int width,height;
 	public BasicPaneledGameObject(){
 		this.height=5;
 		this.width=5;
 		System.out.println();
-	}
-	@Override
-	public void update(int delta) {
-		// TODO Auto-generated method stub
-		
 	}
 	@Override
 	public boolean isMouseOver(int x, int y) {
@@ -45,6 +40,11 @@ public class BasicPaneledGameObject extends PaneledGameObject{
 	public int getCenterY() {
 		// TODO Auto-generated method stub
 		return y+height/2;
+	}
+	@Override
+	public void objectKeyPress(int mouseX, int mouseY, int key) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

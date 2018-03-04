@@ -14,8 +14,6 @@ import java.util.Hashtable;
 import Editor.EditorBasePanel;
 import GameLogic.StringUtils;
 import GameObjects.GameObject;
-import GameObjects.NonPaneledGameObject;
-import GameObjects.PaneledGameObject;
 import Imported.ClassFinder;
 import aspenNetwork.AspenNetwork;
 
@@ -149,20 +147,66 @@ public class Incubator{
 
 		Panel selectedPanel = panels.get(panelID);
 
-		Object newElement = elementType.getConstructor().newInstance();
+		UIElement newElement = createUIElement(elementType);
+		selectedPanel.addObject(newElement);
+
+		return newElement.getId();
+	}
+	
+	/**
+	 * Adds a UIElement of given type to the panel with objectID given, error
+	 * checks if object is of type Panel
+	 * 
+	 * @return object id of the new uielement, -1 if there was an error
+	 * @throws SecurityException
+	 * @throws NoSuchMethodException
+	 * @throws InvocationTargetException
+	 * @throws IllegalArgumentException
+	 * @throws IllegalAccessException
+	 * @throws InstantiationException
+	 */
+	public int addUIElement(int panelID, int elementID) throws InstantiationException, IllegalAccessException,
+			IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+		// Errorcheck for panel
+		if (panelID > InteractableObject.getCount() || panelID < 0) {
+			System.out.println("Error in Incubator-addUIElement:Invalid ID(" + panelID + ")");
+			return -1;
+		}
+		// Check if the thing is actually a panel
+		if (!containsPanel(panelID)) {
+			System.out.println("Error in Incubator-addUIElement:Not a Panel(" + panelID + ")");
+			return -1;
+		}
+
+		Panel selectedPanel = panels.get(panelID);
+
+		Object newElement = getObject(elementID);
 
 		// Check elementType is of instance UIElement
 		if (!(newElement instanceof UIElement)) {
-			System.out.println("Error in Incubator-addUIElement:Not a UIElement(" + elementType + ")");
+			System.out.println("Error in Incubator-addUIElement:Not a UIElement(" + elementID + ")");
 			return -1;
 		}
 
 		int objId = ((UIElement) newElement).getId();
 		selectedPanel.addObject((UIElement) newElement);
 
-		objects.put(new Integer(objId), (UIElement) newElement);
-
 		return objId;
+	}
+	
+	//Creates a UIElement, only to be used by the incubator's recursive fileread for temporary storage
+	private UIElement createUIElement(Class<?> elementType) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
+		Object newElement = elementType.getConstructor().newInstance();
+
+		// Check elementType is of instance UIElement
+		if (!(newElement instanceof UIElement)) {
+			System.out.println("Error in Incubator-addUIElement:Not a UIElement(" + elementType + ")");
+			return null;
+		}
+
+		int objId = ((UIElement) newElement).getId();
+		objects.put(new Integer(objId), (UIElement) newElement);
+		return (UIElement)newElement;
 	}
 
 	/**
@@ -197,9 +241,11 @@ public class Incubator{
 						System.out.println(
 								stringArg + " failed errorchecking for type " + superField.getType().getSimpleName());
 					}
+					return;
 				}
 				if (superField.getType() == String.class) {
 					superField.set(io, stringArg);
+					return;
 				}
 				if (superField.getType() == boolean.class) {
 					if (StringUtils.isBoolean(stringArg)) {
@@ -208,9 +254,11 @@ public class Incubator{
 						System.out.println(
 								stringArg + " failed errorchecking for type " + superField.getType().getSimpleName());
 					}
+					return;
 
 				}
-				// We've already processed this, terminate the method
+				System.out.println("Attempted write \""+stringArg+"\"(String) into "+superField.getType().getSimpleName()+" was rejected");
+				//It's not a valid string input, output an error
 				return;
 			}
 
@@ -353,28 +401,30 @@ public class Incubator{
 
 
 	    	//Check if it's an object
-	    	if(f.getType().isAssignableFrom(Object.class)){
+	    	if(Object.class.isAssignableFrom(f.getType())){
 	    		//It's an object, but is it a string or an array?
-	    		if(f.getType().isAssignableFrom(String.class)){
+	    		if(String.class.isAssignableFrom(f.getType())){
 	    			//It's a string, just treat it like a primitive
-	    			tempSaveString+=f.get(subject);
+	    			tempSaveString+=f.get(subject)+",";
 	    			continue;
 	    		}
-	    		if(f.getType().isAssignableFrom(Array.class)){
+	    		if(Array.class.isAssignableFrom(f.getType())){
 	    			//It's an array
 	    			//For now do nothing
 	    			continue;
 	    		}
-	    		if(f.getType().isAssignableFrom(ArrayList.class)){
+	    		if(ArrayList.class.isAssignableFrom(f.getType())){
 	    			//For now do nothing
 	    			continue;
 	    		}
-	    		if(f.getType().isAssignableFrom(InteractableObject.class)){
+	    		if(InteractableObject.class.isAssignableFrom(f.getType())){
 	    			//We have a valid object
 	    			//Get the object
 	    			InteractableObject subject2 = (InteractableObject)f.get(subject);
 	    			if(subject2==null)
 	    				tempSaveString+="~#,";
+	    			else
+	    				tempSaveString+="~"+subject2.getId()+",";
 	    			continue;
 	    		}
 	    		//If it's not the classes we want, throw it out.
@@ -400,7 +450,7 @@ public class Incubator{
 	    	for(UIElement uie:panelObjList){
 	    		//First let's get the id of the element
 	    		tempSaveString+="~"+uie.getId()+"|";
-	    		//Now we need to read te element
+	    		//Now we need to read the element
 	    		recursiveScan(ht,uie.getId(),false);
 	    		//We will assume there are no nulls
 	    	}
@@ -455,23 +505,33 @@ public class Incubator{
 			//It's a gameobject
 			c = Class.forName("GameObjects."+typestr);
 			//We need to know if it's paneled or not
-			if(c.isAssignableFrom(NonPaneledGameObject.class)){
-				System.out.print("NonPaneledGameObject detected: "+c);
-			}
-			if(c.isAssignableFrom(PaneledGameObject.class)){
-				System.out.println("PaneledGameObject detected:" +c);
+			if(c.isAssignableFrom(GameObject.class)){
+				System.out.print("GameObject detected: "+c);
 			}
 			subject = getObject(addObject(c));
 			//System.out.println("Checking DATALINK for "+typestr+":"+subject.checkDataLink());
 			
 		}
-		if(ClassFinder.existsWithin(typestr, "TreeUI")){
+		if(ClassFinder.existsWithin(typestr, "TreeUI.Engineering")){
+			//It's a UIElement
+			c = Class.forName("TreeUI.Engineering."+typestr);
+			//We need to know if it's paneled or not
+			System.out.println("Engineering UIElement detected:"+c);
+			System.out.println(""+parentID+"|"+objects.get(parentID).getId());
+			
+			subject = createUIElement(c);
+			//subject = getObject(addUIElement(objects.get(parentID).getId(), c));
+			//System.out.println("Checking DATALINK for "+typestr+":"+subject.checkDataLink());
+		}
+		else if(ClassFinder.existsWithin(typestr, "TreeUI")){
 			//It's a UIElement
 			c = Class.forName("TreeUI."+typestr);
 			//We need to know if it's paneled or not
 			System.out.println("UIElement detected:"+c);
 			
-			subject = getObject(addUIElement(objects.get(parentID).getId(), c));
+			subject = createUIElement(c);
+			//Dead code, addUIElement fails since it requires panel id which is not supplied if the parent is not the panel
+			//subject = getObject(addUIElement(objects.get(parentID).getId(), c));
 			//System.out.println("Checking DATALINK for "+typestr+":"+subject.checkDataLink());
 		}
 		
@@ -548,6 +608,7 @@ public class Incubator{
 	    					//First remove the ~
 	    					int elementID = Integer.parseInt(s.substring(1));
 	    					recursiveFileRead(lines,objects,objectID,elementID);
+	    					addUIElement(subject.getId(),objects.get(elementID).getId());
 	    				}
 	    				
 	    			}
@@ -567,8 +628,12 @@ public class Incubator{
 	    			}
 	    			//Oh it's not an origin object, we'll just create and put the object in the usual way then
 	    		}
+	    		if(fieldData.equals("~#")){
+	    			writeParam(subject.getId(),fieldstr,null);
+	    			continue;
+	    		}
 	    		//This this is not a supported object,but we'll try to add the object in anyway...
-	    		System.out.println("WARNING: Not an InteractableObject, attempting general object insert");
+	    		System.out.println("WARNING: Not an InteractableObject, attempting general object insert for "+fieldstr);
 	    		writeParam(subject.getId(),fieldstr,recursiveFileRead(lines,objects,objectID,Integer.parseInt(fieldData.substring(1))));
 	    		continue;
 			}

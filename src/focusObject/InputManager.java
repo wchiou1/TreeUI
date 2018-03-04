@@ -12,7 +12,6 @@ import org.newdawn.slick.InputListener;
 import Editor.EditorImmune;
 import GameLogic.RequiresTyping;
 import GameObjects.GameObject;
-import GameObjects.PaneledGameObject;
 import uiItem.HasOverlay;
 import uiItem.UIItem;
 

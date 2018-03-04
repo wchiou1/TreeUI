@@ -10,10 +10,10 @@ import uiItem.UIItem;
 
 //This class will broadcast it's power value
 
-public class Generator extends PaneledGameObject{
+public class Generator extends PoweredGameObject{
 	private String powerFreq;
 	public String toggleFreq;
-	private int output;
+	public int output;
 	public Generator(){
 		powerFreq=":P Generator "+id;
 		output = 0;
@@ -45,7 +45,7 @@ public class Generator extends PaneledGameObject{
 	}
 
 	@Override
-	public void update(int delta) {
+	public void powerUpdate(int delta) {
 		//Check if it's toggled on
 		if(dataNode.getData(toggleFreq)==1||dataNode.getData(toggleFreq)==Integer.MIN_VALUE){
 			if(output<600)
@@ -68,6 +68,18 @@ public class Generator extends PaneledGameObject{
 	@Override
 	public int getCenterY() {
 		return y+10;
+	}
+
+	@Override
+	public void objectUpdate(int x, int y, int delta) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void objectKeyPress(int mouseX, int mouseY, int key) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

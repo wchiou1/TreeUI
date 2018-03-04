@@ -8,9 +8,6 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 
-import Editor.Editor;
-import GameObjects.GameObject;
-import GameObjects.PaneledGameObject;
 import TreeUI.InventoryPanel;
 import TreeUI.Snappable;
 import aspenNetwork.AspenNetwork;

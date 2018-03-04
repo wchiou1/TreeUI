@@ -1,0 +1,4 @@
+108:{type:Wire,key:,cut:false,vertical:false,pulse:false,length:60,thickness:4,wireRed:50,wireGreen:203,wireBlue:71,rx:35,ry:9,x:347,y:340}
+83:{type:Panel,active:true,height:100,width:100,x:312,y:331,objectList:[~108|~133]}
+@82:{type:Generator,toggleFreq:,output:600,rx:0,ry:0,x:362,y:431,view:~83}
+133:{type:IndicatorLED,width:6,height:8,link:TreeUI.Engineering.Wire@2a40cd94,width:6,height:8,key:,rx:10,ry:8,x:322,y:339}

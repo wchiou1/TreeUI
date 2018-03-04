@@ -34,4 +34,9 @@ public class FileScannerButton extends OriginObject{
 				return true;
 		return false;
 	}
+	@Override
+	public void objectKeyPress(int mouseX, int mouseY, int key) {
+		// TODO Auto-generated method stub
+		
+	}
 }

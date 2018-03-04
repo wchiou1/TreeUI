@@ -42,5 +42,10 @@ public class VariablePanelButton extends OriginObject implements EditorImmune{
 				return true;
 		return false;
 	}
+	@Override
+	public void objectKeyPress(int mouseX, int mouseY, int key) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

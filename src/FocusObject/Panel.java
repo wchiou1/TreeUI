@@ -141,9 +141,12 @@ public class Panel extends Snappable{
 	public boolean isMoveable() {
 		return true;
 	}
+	public void preUpdate(int x,int y, int delta){
+		//TODO Put panel close and open animation logic here
+	}
 	@Override
 	public void update(int x, int y,int delta) {
-		//TODO Put panel close and open animation logic here
+		
 		for(InteractableObject io:objectList)
 			io.update(x, y,delta);
 	}

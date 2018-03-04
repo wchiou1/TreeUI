@@ -1,5 +1,6 @@
 package TreeUI;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 import focusObject.UIElement;
@@ -26,6 +27,11 @@ public class Keyhole extends UIElement{
 
 	@Override
 	public void draw(Graphics g) {
+		if(dataNode.getData(key)==0)
+			g.setColor(Color.red);
+		else
+			g.setColor(Color.blue);
+			
 		g.fillRect(x, y, 3, 6);
 		
 	}

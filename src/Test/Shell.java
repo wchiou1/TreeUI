@@ -13,8 +13,6 @@ import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.StateBasedGame;
 
 import GameObjects.GameObject;
-import GameObjects.NonPaneledGameObject;
-import GameObjects.PaneledGameObject;
 import Imported.ClassFinder;
 import TreeUI.BasicPanelButton;
 import focusObject.Panel;

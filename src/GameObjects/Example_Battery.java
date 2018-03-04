@@ -5,7 +5,7 @@ import org.newdawn.slick.Graphics;
 import aspenNetwork.ANKeyWrapper;
 import aspenNetwork.AspenNode;
 
-public class Example_Battery extends PaneledGameObject{
+public class Example_Battery extends PoweredGameObject{
 	private ANKeyWrapper powerNode;
 	private int internalPower;
 	public Example_Battery(){
@@ -29,12 +29,6 @@ public class Example_Battery extends PaneledGameObject{
 	}
 
 	@Override
-	public void update(int delta) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void draw(Graphics g) {
 		// TODO Auto-generated method stub
 		
@@ -44,6 +38,21 @@ public class Example_Battery extends PaneledGameObject{
 	public boolean isMouseOver(int x, int y) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	@Override
+	public void powerUpdate(int delta) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void objectUpdate(int x, int y, int delta) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void objectKeyPress(int mouseX, int mouseY, int key) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

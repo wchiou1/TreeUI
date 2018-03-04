@@ -11,6 +11,7 @@ import Editor.Bud;
 import Editor.EditorImmune;
 import Editor.EditorItem;
 import Editor.NodeConnector;
+import Editor.ObjectGrabber;
 import Editor.Selector;
 import GameObjects.GameObject;
 import Test.Shell;
@@ -72,6 +73,9 @@ public abstract class InteractableObject{
 			}
 			if(item instanceof NodeConnector&&this instanceof GameObject){
 				((NodeConnector)item).applyGameObject(this);
+			}
+			if(item instanceof ObjectGrabber){
+				((ObjectGrabber)item).grabObject(this);
 			}
 			//Cancel typical actions if there is an editor item
 			return item;

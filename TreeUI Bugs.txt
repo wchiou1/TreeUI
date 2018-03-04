@@ -63,9 +63,15 @@ Create right-click which will check for the specialized panel and panel wrappers
 ----FUTURE PLANS----
 We will need to move the datanetwork node to the PaneledGameObject. Disconnections should only occur between gameobjects, never between panels.
 
-----
+----Incubator Objects----
+ Need to have the variable panel be able to handle objects
+The incubator doesn't handle object within object loading properly.
+
+
 Create a button which is capable of switching game states[DONE]
 Create a new game state which is an actual "main menu"[DONE]Main menu will use the TreeUI that the demo uses for the menu[DONE]
 BUG: The panel is not rendering on startup, but the bug disappears once the oo is toggled.[The panel was at -50 -100]
 Make panel active on startup[DONE]
 The new main menu should have the demo option and an option to load the editor[DONE]
+Implement objects into the incubator
+Create a full game state save

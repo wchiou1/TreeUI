@@ -3,11 +3,9 @@ package Editor;
 import java.lang.reflect.InvocationTargetException;
 
 import Test.SuperGlobal;
-import TreeUI.InventoryPanel;
 import focusObject.Incubator;
-import focusObject.InventoryManager;
 import focusObject.Panel;
-import focusObject.TreeUIManager;
+import uiItem.*;
 
 /**
  * This is the editor class.
@@ -31,6 +29,8 @@ public class Editor{
 		//Create the editor command panel, the command panel auto-generates the variable panel and save management panel
 		EditorCommandPanel ecp = new EditorCommandPanel(inc);
 		inc.getManager().addObject(ecp);
+		inc.getManager().addItemtoInv(new Wirecutters());
+		inc.getManager().addItemtoInv(new Multitool());
 		
 	}
 	

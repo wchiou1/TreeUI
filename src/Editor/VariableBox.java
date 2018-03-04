@@ -66,6 +66,14 @@ public class VariableBox extends InputBox implements EditorImmune{
 	
 	@Override
 	public UIItem click(int x, int y,UIItem item) {
+		if(item instanceof ObjectGrabber){
+			System.out.println("ObjectGrabber detected:"+((ObjectGrabber)item).getStored());
+			//Only allow the write if the object grabber has a CHILD of the current field
+			if(((ObjectGrabber) item).getStored()!=null&&field.getType().isAssignableFrom(((ObjectGrabber) item).getStored().getClass())){
+				inc.writeParam(object.getId(), field.getName(), ((ObjectGrabber)item).getStored());
+				((ObjectGrabber)item).clearGrabbed();
+			}
+		}
 		if(!fleetingLock){
 			postfix="";
 		}

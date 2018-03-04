@@ -45,4 +45,10 @@ public class BasicPanelButton extends OriginObject{
 			g.setColor(Color.yellow);
 		g.fillRect(x, y, width, height);
 	}
+	@Override
+	public void objectKeyPress(int mouseX, int mouseY, int key) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
