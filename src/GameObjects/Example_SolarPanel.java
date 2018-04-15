@@ -1,4 +1,4 @@
-package GameObjects;
+package gameObjects;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -28,7 +28,7 @@ public class Example_SolarPanel extends PoweredGameObject{
 	}
 
 	@Override
-	public void draw(Graphics g) {
+	public void draw(Graphics g,int x, int y) {
 		//Draw the generator sprite
 		g.setColor(Color.gray);
 		g.fillOval(x, y, 40, 40);
@@ -93,12 +93,6 @@ public class Example_SolarPanel extends PoweredGameObject{
 		if(Math.abs(target_angle-angle)<1){
 			angle=target_angle;
 		}
-		
-	}
-
-	@Override
-	public void objectKeyPress(int mouseX, int mouseY, int key) {
-		// TODO Auto-generated method stub
 		
 	}
 	

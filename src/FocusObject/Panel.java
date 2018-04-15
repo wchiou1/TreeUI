@@ -8,7 +8,7 @@ import org.newdawn.slick.Input;
 
 import Editor.Bud;
 import TreeUI.Snappable;
-import uiItem.UIItem;
+import smallGameObjects.SmallGameObject;
 
 public class Panel extends Snappable{
 	public boolean active = false; //Whether the panel is active(inactive panels are invisible)
@@ -90,7 +90,7 @@ public class Panel extends Snappable{
 	 * Draws the panel borders and all UIElement
 	 */
 	@Override
-	public void draw(Graphics g) {
+	public void draw(Graphics g,int x, int y) {
 		if(!active)
 			return;
 //		g.setColor(Color.black);
@@ -108,10 +108,10 @@ public class Panel extends Snappable{
 	}
 
 	@Override
-	public UIItem click(int x, int y,UIItem item) {
+	public SmallGameObject click(int x, int y,SmallGameObject item) {
 		return item;
 	}
-	public UIItem rightClick(int x, int y, UIItem item) {
+	public SmallGameObject rightClick(int x, int y, SmallGameObject item) {
 		//When right-click is called we want to create a bud at the mouse location
 		System.out.println("PanelWrapper Right click at ("+x+","+y+")");
 		//Now to create the Bud
@@ -150,8 +150,8 @@ public class Panel extends Snappable{
 		for(InteractableObject io:objectList)
 			io.update(x, y,delta);
 	}
-	@Override
-	public void keyPress(int mouseX, int mouseY, int key) {
+	/*@Override
+	public void keyPress(int mouseX, int mouseY, int key,SmallGameObject held) {
 		if(!active)
 			return;
 		if(!locked&&key==Input.KEY_E)
@@ -159,9 +159,9 @@ public class Panel extends Snappable{
 		//Apply key action to objects in objectlist
 		for(InteractableObject io:objectList){
 			if(io.isMouseOver(x, y))
-				io.keyPress(x, y, key);
+				io.keyPress(x, y, key,held);
 		}
-	}
+	}*/
 	
 	public void setOrigin(OriginObject oo){
 		if(!virgin){

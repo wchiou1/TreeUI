@@ -5,7 +5,7 @@ import org.newdawn.slick.Graphics;
 
 import TreeUI.Indicator;
 import focusObject.UIElement;
-import uiItem.UIItem;
+import smallGameObjects.SmallGameObject;
 
 public class IndicatorLED extends Indicator{
 	public int width=6,height=8;

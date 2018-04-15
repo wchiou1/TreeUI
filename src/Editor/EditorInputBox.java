@@ -6,7 +6,7 @@ import org.newdawn.slick.Graphics;
 import GameLogic.RequiresTyping;
 import Test.Shell;
 import TreeUI.InputBox;
-import uiItem.UIItem;
+import smallGameObjects.SmallGameObject;
 
 public class EditorInputBox extends InputBox implements EditorImmune{
 	protected boolean keyLocked = false;
@@ -29,7 +29,7 @@ public class EditorInputBox extends InputBox implements EditorImmune{
 		
 	}
 	@Override
-	public UIItem click(int x, int y,UIItem item) {
+	public SmallGameObject click(int x, int y,SmallGameObject item) {
 		if(!fleetingLock)
 			text="";
 		return item;

@@ -4,8 +4,8 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 import focusObject.UIElement;
-import uiItem.Key;
-import uiItem.UIItem;
+import smallGameObjects.Key;
+import smallGameObjects.SmallGameObject;
 
 public class Keyhole extends UIElement{
 	public int pattern = -1;
@@ -26,7 +26,7 @@ public class Keyhole extends UIElement{
 	}
 
 	@Override
-	public void draw(Graphics g) {
+	public void draw(Graphics g, int x, int y) {
 		if(dataNode.getData(key)==0)
 			g.setColor(Color.red);
 		else
@@ -48,16 +48,10 @@ public class Keyhole extends UIElement{
 	}
 
 	@Override
-	public UIItem click(int x, int y, UIItem item) {
+	public SmallGameObject click(int x, int y, SmallGameObject item) {
 		if(item!=null&&((Key)item).getPattern()==pattern)//Check if the key fits
 			toggle();
 		return item;
-	}
-
-	@Override
-	public void keyPress(int mouseX, int mouseY, int key) {
-		//Doesn't do anything when you hold the button down
-		
 	}
 
 	@Override

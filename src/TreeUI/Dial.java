@@ -4,7 +4,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import GameLogic.GameMath;
 import focusObject.UIElement;
-import uiItem.UIItem;
+import smallGameObjects.SmallGameObject;
 //		270
 //	180		0
 //		90
@@ -68,7 +68,7 @@ public class Dial extends UIElement{
 	}
 
 	@Override
-	public void draw(Graphics g) {
+	public void draw(Graphics g, int x, int y) {
 		int angleTemp=angle+270;
 		g.setColor(Color.black);
 		g.fillOval(x, y, radius*2, radius*2);
@@ -85,7 +85,7 @@ public class Dial extends UIElement{
 	}
 
 	@Override
-	public UIItem click(int mouseX, int mouseY,UIItem item) {
+	public SmallGameObject click(int mouseX, int mouseY,SmallGameObject item) {
 		previousAngle=angle;
 		mouseAngle=(int)(Math.atan(1.0*(y+radius-mouseY)/(x+radius-mouseX))/Math.PI*180);
 		if(x+radius-mouseX<0)
@@ -98,11 +98,6 @@ public class Dial extends UIElement{
 		if(GameMath.dis(this.x+radius, this.y+radius, x, y)<=radius)
 			return true;
 		return false;
-	}
-	@Override
-	public void keyPress(int mouseX, int mouseY, int key) {
-		//Dials don't do anything on key presses
-		
 	}
 	
 }

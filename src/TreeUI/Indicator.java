@@ -4,7 +4,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 import focusObject.UIElement;
-import uiItem.UIItem;
+import smallGameObjects.SmallGameObject;
 
 public class Indicator extends UIElement{
 	public int width=6,height=8;
@@ -25,7 +25,7 @@ public class Indicator extends UIElement{
 	}
 
 	@Override
-	public void draw(Graphics g) {
+	public void draw(Graphics g, int x, int y) {
 		int temp=dataNode.getData(key);
 		if(temp==Integer.MIN_VALUE){
 			g.setColor(Color.gray);
@@ -50,7 +50,7 @@ public class Indicator extends UIElement{
 	}
 
 	@Override
-	public UIItem click(int x, int y,UIItem item) {
+	public SmallGameObject click(int x, int y,SmallGameObject item) {
 		//Do nothing
 		return item;
 	}
@@ -63,15 +63,9 @@ public class Indicator extends UIElement{
 		return false;
 	}
 
-
-	@Override
-	public void keyPress(int mouseX, int mouseY, int key) {
-		//Indicators do nothing on key presses
-		
-	}
-
 	@Override
 	public void update(int mouseX, int mouseY,int delta) {
 		// TODO Auto-generated method stub
 		
-	}}
+	}
+}

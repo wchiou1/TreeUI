@@ -5,7 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import Test.SuperGlobal;
 import focusObject.Incubator;
 import focusObject.Panel;
-import uiItem.*;
+import smallGameObjects.*;
 
 /**
  * This is the editor class.

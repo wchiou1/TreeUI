@@ -4,7 +4,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 import focusObject.UIElement;
-import uiItem.UIItem;
+import smallGameObjects.SmallGameObject;
 
 /**
  * This class stores a UIItem and gives the item to the hand slot
@@ -14,7 +14,7 @@ import uiItem.UIItem;
  */
 public class InventorySlot extends UIElement{
 	public int width,height;
-	protected UIItem stored;
+	protected SmallGameObject stored;
 	public InventorySlot(){
 		this.x=0;
 		this.y=0;
@@ -35,7 +35,7 @@ public class InventorySlot extends UIElement{
 	}
 
 	@Override
-	public void draw(Graphics g) {
+	public void draw(Graphics g,int x ,int y) {
 		//Draw a box and then draw the item inside
 		g.setColor(Color.lightGray);
 		g.fillRect(x, y, width, height);
@@ -44,17 +44,16 @@ public class InventorySlot extends UIElement{
 	}
 
 	@Override
-	public UIItem click(int x, int y, UIItem item) {
+	public SmallGameObject click(int x, int y, SmallGameObject item) {
+		//Apply the currently held item to what is in the slot
+		if(stored!=null)
+			stored.click(x,y,item);
+		
+		
 		//Switches the item in the stored slot, returns the item in the stored slot
-		UIItem temp=stored;
+		SmallGameObject temp=stored;
 		stored=item;
 		return temp;
-	}
-
-	@Override
-	public void keyPress(int mouseX, int mouseY, int key) {
-		// Does nothing on keypress
-		
 	}
 
 	@Override

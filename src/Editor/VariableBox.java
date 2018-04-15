@@ -10,7 +10,7 @@ import Test.Shell;
 import TreeUI.InputBox;
 import focusObject.Incubator;
 import focusObject.InteractableObject;
-import uiItem.UIItem;
+import smallGameObjects.SmallGameObject;
 
 /**
  * This UIElement will display the variables of the object it has listed
@@ -65,7 +65,7 @@ public class VariableBox extends InputBox implements EditorImmune{
 	}
 	
 	@Override
-	public UIItem click(int x, int y,UIItem item) {
+	public SmallGameObject click(int x, int y,SmallGameObject item) {
 		if(item instanceof ObjectGrabber){
 			System.out.println("ObjectGrabber detected:"+((ObjectGrabber)item).getStored());
 			//Only allow the write if the object grabber has a CHILD of the current field

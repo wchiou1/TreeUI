@@ -1,9 +1,9 @@
-package GameObjects;
+package gameObjects;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
-import uiItem.UIItem;
+import smallGameObjects.SmallGameObject;
 
 public class BasicPaneledGameObject extends GameObject{
 	public int width,height;
@@ -21,14 +21,14 @@ public class BasicPaneledGameObject extends GameObject{
 	}
 	
 	@Override
-	public void draw(Graphics g) {
+	public void draw(Graphics g,int x, int y) {
 		g.setColor(Color.black);
 		if(highlight)
 			g.setColor(Color.yellow);
 		g.fillRect(x, y, width, height);
 	}
 	@Override
-	public UIItem rightClick(int x, int y, UIItem item) {
+	public SmallGameObject rightClick(int x, int y, SmallGameObject item) {
 		return item;
 	}
 	@Override
@@ -42,9 +42,9 @@ public class BasicPaneledGameObject extends GameObject{
 		return y+height/2;
 	}
 	@Override
-	public void objectKeyPress(int mouseX, int mouseY, int key) {
+	public SmallGameObject objectKeyPress(int mouseX, int mouseY, int key,SmallGameObject held) {
 		// TODO Auto-generated method stub
-		
+		return held;
 	}
 	
 }

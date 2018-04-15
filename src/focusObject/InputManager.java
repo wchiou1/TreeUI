@@ -11,18 +11,18 @@ import org.newdawn.slick.InputListener;
 
 import Editor.EditorImmune;
 import GameLogic.RequiresTyping;
-import GameObjects.GameObject;
-import uiItem.HasOverlay;
-import uiItem.UIItem;
+import gameObjects.GameObject;
+import smallGameObjects.HasOverlay;
+import smallGameObjects.SmallGameObject;
 
 //This class will contain all interactable objects and will take in mouse input
 //This is to allow for an object to "lock" on to the mouse
 
 public class InputManager implements InputListener{
-	static Hashtable<Integer,SmartInteger> remapHash = new Hashtable<Integer,SmartInteger>();//<Input,listen>
+	static Hashtable<Integer,Integer> remapHash = new Hashtable<Integer,Integer>();//<Input,listen>
 	private RequiresTyping typingLock = null;//This will contain the object which keypresses will be forwarded
 	private int previousX,previousY;
-	private UIItem held;
+	private SmallGameObject held;
 	private boolean editor=false,inventory=false;;
 	private ArrayList<Integer> keys;
 	private InventoryManager iManager;
@@ -41,9 +41,15 @@ public class InputManager implements InputListener{
 		this.gameObjectList=gameObjectList;
 		this.stickiness=stickiness;
 		this.keys=keys;
+		addMaps();
 		previousX=0;
 		previousY=0;
 		held=null;
+	}
+	private void addMaps(){
+		for(Integer i:keys){
+			remapHash.put(i, i);
+		}
 	}
 	public void enableEditor(){
 		this.editor=true;
@@ -262,10 +268,16 @@ public class InputManager implements InputListener{
 			llock=null;
 		}
 		
+		Boolean editorKey = false;
+		if(input.isKeyDown(Input.KEY_R)){
+			editorKey=true;
+		}
 		
+		//Change this the key 'R'
 		//Process right click
 		//Right clicks will ONLY process on editor wrapper classes
-		if(input.isMouseButtonDown(1)){//If the mouse is down, check if it needs to lock an object
+		if(editorKey){
+			//If the mouse is down, check if it needs to lock an object
 			if(rlock==null){//There's no current lock yet, get a lock
 				for(InteractableObject io:uiObjectList){//Iterate through all objects
 					if(io.masterIsMouseOver(mouseX,mouseY)){
@@ -340,11 +352,15 @@ public class InputManager implements InputListener{
 		previousY=mouseY;
 		
 		InteractableObject mouseOn = getMouseOn();
+		//if(mouseOn!=null)
+			//System.out.println(mouseOn.toString());
 		
 		
 		//This code requires refactoring due to how typingInput needs to work
 		if(typingLock!=null)
 			return;//There is an object that has taken keyboard focus. We give zero shits about where the mouse is when this has happened
+		
+		//E Should move the item to the inventory/ move the item to the ground
 		
 		//Are any keys pressed?
 		boolean pressed=false;
@@ -360,24 +376,36 @@ public class InputManager implements InputListener{
 				if(mouseOn==null){
 					//Mouse is not on anything, lock onto empty
 					klock=TreeUIManager.empty;
+					//Drop whatever is in the held slot
+					//Add it to the gameobjectsList
+					System.out.println("Locked on to nothing");
+					if(held!=null){
+						held.x = mouseX;
+						held.y = mouseY;
+						gameObjectList.addFirst(held);
+						held=null;
+						if(inventory)//If the inventory is active, we want to change the active slot as well
+							iManager.overwriteActive(held);
+					}
+					//This is a bit more involved than I thought...
+					
 				}
 				else{
 					//Mouse is on something, lock it
 					System.out.println("Keyboard locked on object "+mouseOn.toString());
 					klock=mouseOn;
-					if(mouseOn instanceof OriginObject){
-						moveToFront(((OriginObject)mouseOn).getView());
-					}
 				}
 			}
-			
+			//This is a retarded implementation
 			//Test all keypresses on it
-			Enumeration<Integer> iter=remapHash.keys();
-			while(iter.hasMoreElements()){
-				int iterListen=remapHash.get(iter.nextElement()).value;
-				if(input.isKeyDown(iterListen))
-					klock.keyPress(mouseX, mouseY, iterListen);
-			}	
+			for(Integer i:keys)
+				if(input.isKeyDown(i)){
+					int remapped = remapHash.get(i);
+					held=klock.masterKeyPress(mouseX, mouseY, remapped,held);
+					gameObjectList.remove(held);
+					if(inventory)//If the inventory is active, we want to change the active slot as well
+						iManager.overwriteActive(held);
+				}
 				
 			klock.locked=true;
 		}
@@ -416,10 +444,10 @@ public class InputManager implements InputListener{
 	public void remapKey(int inputKey, int listenKey){
 		if(!remapHash.containsKey(inputKey)){
 			System.out.println("Keyboard Manager Warning: Remapped non-original key!");
-			remapHash.put(inputKey, new SmartInteger(listenKey));
+			remapHash.put(inputKey,listenKey);
 		}
 		else
-			remapHash.get(inputKey).value=listenKey;
+			remapHash.put(inputKey,listenKey);
 	}
 	
 	/**

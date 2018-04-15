@@ -12,11 +12,11 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.StateBasedGame;
 
-import GameObjects.GameObject;
 import Imported.ClassFinder;
 import TreeUI.BasicPanelButton;
 import focusObject.Panel;
 import focusObject.UIElement;
+import gameObjects.GameObject;
 
 public class Shell extends StateBasedGame{
 

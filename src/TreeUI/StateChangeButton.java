@@ -7,7 +7,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import GameLogic.GameMath;
 import Test.SuperGlobal;
 import focusObject.UIElement;
-import uiItem.UIItem;
+import smallGameObjects.SmallGameObject;
 
 public class StateChangeButton extends UIElement{
 	public int radius = 6;
@@ -33,14 +33,14 @@ public class StateChangeButton extends UIElement{
 	}
 
 	@Override
-	public void draw(Graphics g) {
+	public void draw(Graphics g,int x,int y) {
 		g.setColor(Color.darkGray);
 		g.fillOval(x, y, radius, radius);
 		
 	}
 
 	@Override
-	public UIItem click(int x, int y,UIItem item) {
+	public SmallGameObject click(int x, int y,SmallGameObject item) {
 		parent.enterState(SuperGlobal.getGameState(targetState).getID());
 		return item;
 	}
@@ -50,11 +50,6 @@ public class StateChangeButton extends UIElement{
 		if(GameMath.dis(this.x+radius/2, this.y+radius/2, x, y)<=radius/2)
 			return true;
 		return false;
-	}
-	@Override
-	public void keyPress(int mouseX, int mouseY, int key) {
-		//Buttons don't do anything when a key is pressed
-		
 	}
 	@Override
 	public void update(int mouseX, int mouseY,int delta) {

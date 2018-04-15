@@ -3,7 +3,7 @@ package focusObject;
 import org.newdawn.slick.Graphics;
 
 import TreeUI.InventoryPanel;
-import uiItem.UIItem;
+import smallGameObjects.SmallGameObject;
 
 /**
  * Handles the inventory of the player
@@ -18,7 +18,7 @@ public class InventoryManager{
 		inventory=inv;
 		inventory.setHighlight(activeSlot);
 	}
-	public void overwriteActive(UIItem item){
+	public void overwriteActive(SmallGameObject item){
 		inventory.forcePush(activeSlot, item);
 	}
 	public InventoryPanel getPanel(){
@@ -29,7 +29,7 @@ public class InventoryManager{
 	 * @param item
 	 * @return if there is room in the hotbar
 	 */
-	public boolean addItem(UIItem item){
+	public boolean addItem(SmallGameObject item){
 		System.out.println("Adding "+item);
 		//First let's set the query slot to 0
 		for(int i=0;i<inventory.size();i++){
@@ -40,14 +40,14 @@ public class InventoryManager{
 		}
 		return false;
 	}
-	public UIItem switchActiveUp(){
+	public SmallGameObject switchActiveUp(){
 		activeSlot++;
 		if(activeSlot>=inventory.size())
 			activeSlot=0;
 		inventory.setHighlight(activeSlot);
 		return getActiveItem();
 	}
-	public UIItem switchActiveDown(){
+	public SmallGameObject switchActiveDown(){
 		activeSlot--;
 		if(activeSlot<0)
 			activeSlot=inventory.size()-1;
@@ -58,7 +58,7 @@ public class InventoryManager{
 	 * Gets the current active
 	 * @return
 	 */
-	public UIItem getActiveItem(){
+	public SmallGameObject getActiveItem(){
 		return inventory.getItem(activeSlot);
 	}
 	

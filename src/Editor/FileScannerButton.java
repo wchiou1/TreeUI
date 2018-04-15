@@ -18,7 +18,7 @@ public class FileScannerButton extends OriginObject{
 		this.height = 20;
 	}
 	@Override
-	public void draw(Graphics g) {
+	public void draw(Graphics g, int x, int y) {
 		g.setColor(Color.black);
 		g.drawRect(x, y, width, height);
 		//Draw 3 lines in hamburger format
@@ -33,10 +33,5 @@ public class FileScannerButton extends OriginObject{
 			if(y>=this.y&&y<=this.y+height)
 				return true;
 		return false;
-	}
-	@Override
-	public void objectKeyPress(int mouseX, int mouseY, int key) {
-		// TODO Auto-generated method stub
-		
 	}
 }

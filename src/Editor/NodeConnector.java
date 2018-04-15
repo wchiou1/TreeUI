@@ -8,8 +8,8 @@ import org.newdawn.slick.Graphics;
 import aspenNetwork.AspenNode;
 import focusObject.Incubator;
 import focusObject.InteractableObject;
-import uiItem.HasOverlay;
-import uiItem.UIItem;
+import smallGameObjects.HasOverlay;
+import smallGameObjects.SmallGameObject;
 
 /**
  * This item will store a gameobject on the first click and connect it to another object of the second click
@@ -17,7 +17,7 @@ import uiItem.UIItem;
  * @author Wesley Chiou
  *
  */
-public class NodeConnector extends UIItem implements EditorItem,HasOverlay{
+public class NodeConnector extends SmallGameObject implements EditorItem,HasOverlay{
 	private InteractableObject stored;//Stores the gameobject so we can connect it
 	private Incubator inc;
 	public NodeConnector(Incubator inc){
@@ -79,6 +79,23 @@ public class NodeConnector extends UIItem implements EditorItem,HasOverlay{
 				g.drawLine(originX, originY, destX, destY);
 			}
 		}
+	}
+
+	@Override
+	public int getCenterX() {
+		return x+4;
+	}
+
+	@Override
+	public int getCenterY() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean isMouseOver(int x, int y) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 }

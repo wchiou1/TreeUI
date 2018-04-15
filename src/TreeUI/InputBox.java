@@ -5,7 +5,7 @@ import org.newdawn.slick.Graphics;
 
 import GameLogic.RequiresTyping;
 import Test.Shell;
-import uiItem.UIItem;
+import smallGameObjects.SmallGameObject;
 
 public class InputBox extends TextButton implements RequiresTyping{
 	protected boolean keyLocked = false;
@@ -28,7 +28,7 @@ public class InputBox extends TextButton implements RequiresTyping{
 		
 	}
 	@Override
-	public UIItem click(int x, int y,UIItem item) {
+	public SmallGameObject click(int x, int y,SmallGameObject item) {
 		if(!fleetingLock)
 			text="";
 		return item;

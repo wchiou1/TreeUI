@@ -6,14 +6,14 @@ import java.util.Hashtable;
 import org.newdawn.slick.Graphics;
 
 import aspenNetwork.AspenNode;
-import uiItem.UIItem;
+import gameObjects.GameObject;
+import smallGameObjects.SmallGameObject;
 import Editor.Bud;
 import Editor.EditorImmune;
 import Editor.EditorItem;
 import Editor.NodeConnector;
 import Editor.ObjectGrabber;
 import Editor.Selector;
-import GameObjects.GameObject;
 import Test.Shell;
 
 public abstract class InteractableObject{
@@ -61,11 +61,15 @@ public abstract class InteractableObject{
 	 * Draws the object
 	 * @param g
 	 */
-	public abstract void draw(Graphics g);
-	public UIItem rightClick(int x, int y, UIItem item){
+	public abstract void draw(Graphics g,int x, int y);
+	public void draw(Graphics g){
+		draw(g,x,y);
+	}
+	//Not sure if I really need this function
+	public SmallGameObject rightClick(int x, int y, SmallGameObject item){
 		return item;
 	}
-	public UIItem masterClick(int x, int y, UIItem item){
+	public SmallGameObject masterClick(int x, int y, SmallGameObject item){
 		if(item instanceof EditorItem&&!(this instanceof EditorImmune)){
 			//Need to handle editoritems
 			if(item instanceof Selector){
@@ -82,19 +86,28 @@ public abstract class InteractableObject{
 		}
 		return click(x,y,item);
 	}
+	//Always calls this function before keypress, this will be overwritten by classes which
+	//wish to insert code before child calls
+	public SmallGameObject masterKeyPress(int x, int y, int key, SmallGameObject held){
+		System.out.println("Default master key press invoked");
+		return objectKeyPress(x,y,key,held);
+	}
+	public SmallGameObject objectKeyPress(int x, int y, int key, SmallGameObject held){
+		return held;
+	}
 	/**
 	 * Performs actions when clicked on
 	 */
-	public UIItem click(int x, int y,UIItem item){
+	public SmallGameObject click(int x, int y,SmallGameObject item){
 		return item;
 	}
 	/**
-	 * Applies a keypress to the interactable object
+	 * Applies a keypress to the interactable object(Depreciated via objectKeyPress)
 	 * @param mouseX
 	 * @param mouseY
 	 * @param key
 	 */
-	public abstract void keyPress(int mouseX, int mouseY, int key);
+	//public abstract void keyPress(int mouseX, int mouseY, int key);
 	/**
 	 * Calls isMouseOver and stores the results in .hover for further processing
 	 * @param x

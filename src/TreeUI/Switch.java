@@ -5,7 +5,7 @@ import org.newdawn.slick.Graphics;
 
 import GameLogic.GameMath;
 import focusObject.UIElement;
-import uiItem.UIItem;
+import smallGameObjects.SmallGameObject;
 
 public class Switch extends UIElement{
 	public int width=10,height=14;
@@ -30,7 +30,7 @@ public class Switch extends UIElement{
 	}
 
 	@Override
-	public void draw(Graphics g) {
+	public void draw(Graphics g,int x,int y) {
 		g.setColor(Color.darkGray);
 		g.fillRect(x, y, width, height);
 		g.setColor(Color.white);
@@ -44,7 +44,7 @@ public class Switch extends UIElement{
 	}
 
 	@Override
-	public UIItem click(int x, int y,UIItem item) {
+	public SmallGameObject click(int x, int y,SmallGameObject item) {
 		if(up)
 			up=false;
 		else
@@ -59,10 +59,6 @@ public class Switch extends UIElement{
 			if(y>=this.y&&y<=this.y+height)
 				return true;
 		return false;
-	}
-	@Override
-	public void keyPress(int mouseX, int mouseY, int key) {
-		
 	}
 	@Override
 	public void update(int mouseX, int mouseY,int delta) {

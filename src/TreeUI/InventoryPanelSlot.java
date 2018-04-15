@@ -4,7 +4,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 import Editor.EditorImmune;
-import uiItem.UIItem;
+import smallGameObjects.SmallGameObject;
 
 public class InventoryPanelSlot extends InventorySlot implements EditorImmune{
 	public boolean highlight;
@@ -12,10 +12,10 @@ public class InventoryPanelSlot extends InventorySlot implements EditorImmune{
 		super(x, y);
 		highlight=false;
 	}
-	public UIItem getStored(){
+	public SmallGameObject getStored(){
 		return stored;
 	}
-	public void forcePush(UIItem item){
+	public void forcePush(SmallGameObject item){
 		stored=item;
 	}
 	

@@ -4,7 +4,7 @@ import TreeUI.InputBox;
 import TreeUI.TextButton;
 import focusObject.Incubator;
 import focusObject.InteractableObject;
-import uiItem.UIItem;
+import smallGameObjects.SmallGameObject;
 
 public class LoadPanelButton extends TextButton implements EditorImmune{
 	private Incubator inc;
@@ -20,7 +20,7 @@ public class LoadPanelButton extends TextButton implements EditorImmune{
 		this.text="Load Panel";
 	}
 	@Override
-	public UIItem click(int x, int y,UIItem item) {
+	public SmallGameObject click(int x, int y,SmallGameObject item) {
 		//On click, it calls 
 		if(fileNameBox.text.isEmpty()){
 			System.out.println("Error: No filename");

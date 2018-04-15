@@ -3,7 +3,7 @@ package TreeUI;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
-import uiItem.UIItem;
+import smallGameObjects.SmallGameObject;
 
 public class TextBox extends StaticText{
 	public String key="";
@@ -23,15 +23,9 @@ public class TextBox extends StaticText{
 	}
 
 	@Override
-	public UIItem click(int x, int y,UIItem item) {
+	public SmallGameObject click(int x, int y,SmallGameObject item) {
 		//Does nothing on click
 		return item;
-	}
-
-	@Override
-	public void keyPress(int mouseX, int mouseY, int key) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

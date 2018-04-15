@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
-import GameObjects.GameObject;
-import GameObjects.LightBulb;
 import focusObject.InteractableObject;
 import focusObject.SmartInteger;
+import gameObjects.GameObject;
+import gameObjects.LightBulb;
 
 public class AspenNode{
 	static int nodeCount=0;

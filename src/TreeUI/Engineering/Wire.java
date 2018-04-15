@@ -4,7 +4,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 import focusObject.UIElement;
-import uiItem.*;
+import smallGameObjects.*;
 
 public class Wire extends UIElement{
 	public String key = "";
@@ -22,7 +22,7 @@ public class Wire extends UIElement{
 	}
 
 	@Override
-	public void draw(Graphics g) {
+	public void draw(Graphics g,int x,int y) {
 		g.setColor(new Color(wireRed,wireGreen,wireBlue));
 		if(vertical){
 			if(cut){
@@ -45,18 +45,12 @@ public class Wire extends UIElement{
 		cut = !cut;
 	}
 	@Override
-	public UIItem click(int x, int y, UIItem item) {
+	public SmallGameObject click(int x, int y, SmallGameObject item) {
 		if(item instanceof Multitool&&!cut)
 			pulse = true;
 		if(item instanceof Wirecutters)
 			cutMend();
 		return item;
-	}
-
-	@Override
-	public void keyPress(int mouseX, int mouseY, int key) {
-		//Doesn't do anything when you hold the button down
-		
 	}
 
 	@Override

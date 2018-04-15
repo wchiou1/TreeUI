@@ -5,7 +5,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 import Test.Shell;
-import uiItem.UIItem;
+import smallGameObjects.SmallGameObject;
 
 
 public class TextButton extends StaticText{
@@ -16,7 +16,7 @@ public class TextButton extends StaticText{
 		this.height=20;
 	}
 	@Override
-	public UIItem click(int x, int y,UIItem item) {
+	public SmallGameObject click(int x, int y,SmallGameObject item) {
 		//Does nothing on click
 		return item;
 	}

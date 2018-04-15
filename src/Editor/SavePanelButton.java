@@ -8,7 +8,7 @@ import TreeUI.InputBox;
 import TreeUI.TextButton;
 import focusObject.Incubator;
 import focusObject.InteractableObject;
-import uiItem.UIItem;
+import smallGameObjects.SmallGameObject;
 
 public class SavePanelButton extends TextButton implements EditorImmune{
 	private Incubator inc;
@@ -24,7 +24,7 @@ public class SavePanelButton extends TextButton implements EditorImmune{
 		this.text="Save Panel";
 	}
 	@Override
-	public UIItem click(int x, int y,UIItem item) {
+	public SmallGameObject click(int x, int y,SmallGameObject item) {
 		//On click, it calls 
 		System.out.println("Getting save string...");
 		System.out.println(inc.IOScan(source.getId()));

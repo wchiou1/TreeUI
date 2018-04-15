@@ -4,7 +4,6 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 import focusObject.OriginObject;
-import uiItem.UIItem;
 
 /**
  * This class is a simple implementation of an origin object
@@ -39,16 +38,11 @@ public class BasicPanelButton extends OriginObject{
 	}
 	
 	@Override
-	public void draw(Graphics g) {
+	public void draw(Graphics g, int x, int y) {
 		g.setColor(Color.black);
 		if(highlight)
 			g.setColor(Color.yellow);
 		g.fillRect(x, y, width, height);
-	}
-	@Override
-	public void objectKeyPress(int mouseX, int mouseY, int key) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

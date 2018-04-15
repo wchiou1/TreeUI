@@ -1,4 +1,4 @@
-package GameObjects;
+package gameObjects;
 
 import org.newdawn.slick.Graphics;
 
@@ -29,7 +29,7 @@ public class Example_Battery extends PoweredGameObject{
 	}
 
 	@Override
-	public void draw(Graphics g) {
+	public void draw(Graphics g,int x, int y) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -46,11 +46,6 @@ public class Example_Battery extends PoweredGameObject{
 	}
 	@Override
 	public void objectUpdate(int x, int y, int delta) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void objectKeyPress(int mouseX, int mouseY, int key) {
 		// TODO Auto-generated method stub
 		
 	}

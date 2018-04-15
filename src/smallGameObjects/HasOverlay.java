@@ -1,4 +1,4 @@
-package uiItem;
+package smallGameObjects;
 
 import org.newdawn.slick.Graphics;
 

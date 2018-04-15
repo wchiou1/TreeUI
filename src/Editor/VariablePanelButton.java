@@ -25,7 +25,7 @@ public class VariablePanelButton extends OriginObject implements EditorImmune{
 		this.text="Variable Manager";
 	}
 	@Override
-	public void draw(Graphics g) {
+	public void draw(Graphics g, int x, int y) {
 		g.setColor(Color.black);
 		g.drawRect(x, y, width, height);
 		
@@ -41,11 +41,6 @@ public class VariablePanelButton extends OriginObject implements EditorImmune{
 			if(y>=this.y&&y<=this.y+height)
 				return true;
 		return false;
-	}
-	@Override
-	public void objectKeyPress(int mouseX, int mouseY, int key) {
-		// TODO Auto-generated method stub
-		
 	}
 	
 }

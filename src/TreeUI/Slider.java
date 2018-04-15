@@ -4,7 +4,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 import focusObject.UIElement;
-import uiItem.UIItem;
+import smallGameObjects.SmallGameObject;
 
 public class Slider extends UIElement{
 	private int length;
@@ -80,7 +80,7 @@ public class Slider extends UIElement{
 	}
 
 	@Override
-	public void draw(Graphics g) {
+	public void draw(Graphics g,int x, int y) {
 		if(vertical){
 			//Draw top end bar
 			g.setColor(Color.black);
@@ -114,7 +114,7 @@ public class Slider extends UIElement{
 	}
 
 	@Override
-	public UIItem click(int x, int y,UIItem item) {
+	public SmallGameObject click(int x, int y,SmallGameObject item) {
 		//Does nothing on click
 		return item;
 	}
@@ -125,12 +125,6 @@ public class Slider extends UIElement{
 			if(y>=this.y&&y<=this.y+height)
 				return true;
 		return false;
-	}
-
-	@Override
-	public void keyPress(int mouseX, int mouseY, int key) {
-		// TODO Auto-generated method stub
-		
 	}
 	
 }

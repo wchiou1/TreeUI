@@ -4,7 +4,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import GameLogic.GameMath;
 import focusObject.UIElement;
-import uiItem.UIItem;
+import smallGameObjects.SmallGameObject;
 
 public class IndicatorDial extends UIElement{
 	public int radius, range, angle;
@@ -33,7 +33,7 @@ public class IndicatorDial extends UIElement{
 	}
 
 	@Override
-	public void draw(Graphics g) {
+	public void draw(Graphics g, int x, int y) {
 		int tempAngle=angle+270;
 		g.setColor(Color.black);
 		g.fillOval(x, y, radius*2, radius*2);
@@ -52,7 +52,7 @@ public class IndicatorDial extends UIElement{
 	}
 
 	@Override
-	public UIItem click(int x, int y,UIItem item) {
+	public SmallGameObject click(int x, int y,SmallGameObject item) {
 		//Do nothing
 		return item;
 	}
@@ -62,11 +62,6 @@ public class IndicatorDial extends UIElement{
 		if(GameMath.dis(this.x+radius, this.y+radius, x, y)<=radius)
 			return true;
 		return false;
-	}
-	@Override
-	public void keyPress(int mouseX, int mouseY, int key) {
-		//IndicatorDials don't do anything on keypress
-		
 	}
 	
 }

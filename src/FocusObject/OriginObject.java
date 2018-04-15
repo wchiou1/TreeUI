@@ -2,7 +2,7 @@ package focusObject;
 
 import org.newdawn.slick.Input;
 
-import uiItem.UIItem;
+import smallGameObjects.SmallGameObject;
 
 public abstract class OriginObject extends UIElement{
 	protected Panel view;
@@ -27,16 +27,16 @@ public abstract class OriginObject extends UIElement{
 	public boolean isMoveable() {
 		return false;
 	}
-	@Override
+	//Panels are not opened via keys anymore
+	/*@Override
 	public final void keyPress(int mouseX, int mouseY, int key) {
 		testOpenPanel(key);
 		objectKeyPress(mouseX,mouseY,key);
 		
-	}
-	public abstract void objectKeyPress(int mouseX, int mouseY, int key);
+	}*/
 	private final void testOpenPanel(int key){
 		if(!locked){
-			if(key==Input.KEY_E){
+			/*if(key==Input.KEY_E){
 				if(view==null){
 					System.out.println("ERROR: panel not set in origin object");
 					return;
@@ -49,11 +49,11 @@ public abstract class OriginObject extends UIElement{
 					return;
 				}
 				view.openAll();
-			}
+			}*/
 		}
 	}
 	@Override
-	public UIItem click(int x, int y,UIItem item) {
+	public SmallGameObject click(int x, int y,SmallGameObject item) {
 		if(view==null){
 			System.out.println("ERROR: panel not set in origin object");
 			return item;

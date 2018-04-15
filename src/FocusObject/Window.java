@@ -5,7 +5,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 import TreeUI.Snappable;
-import uiItem.UIItem;
+import smallGameObjects.SmallGameObject;
 
 public class Window extends Snappable{
 
@@ -27,7 +27,7 @@ public class Window extends Snappable{
 		return false;
 	}
 	@Override
-	public void draw(Graphics g) {
+	public void draw(Graphics g,int x, int y) {
 		g.setColor(color);
 		g.fillRoundRect(x, y, width, height, 1);
 		g.drawString(""+lastMouseX, x, y);
@@ -40,7 +40,7 @@ public class Window extends Snappable{
 		return true;
 	}
 	@Override
-	public UIItem click(int x, int y,UIItem item) {
+	public SmallGameObject click(int x, int y,SmallGameObject item) {
 		//Do nothing
 		return null;
 	}
@@ -50,13 +50,13 @@ public class Window extends Snappable{
 		
 	}
 	@Override
-	public void keyPress(int mouseX, int mouseY, int key) {
-		//Doesn't do anything
-		
+	public SmallGameObject rightClick(int x, int y, SmallGameObject item) {
+		return item;
 	}
 	@Override
-	public UIItem rightClick(int x, int y, UIItem item) {
-		return item;
+	public SmallGameObject objectKeyPress(int x, int y, int key, SmallGameObject held) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

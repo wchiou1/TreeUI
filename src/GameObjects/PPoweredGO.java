@@ -1,11 +1,11 @@
-package GameObjects;
+package gameObjects;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 import GameLogic.GameMath;
 import aspenNetwork.ANKeyWrapper;
-import uiItem.UIItem;
+import smallGameObjects.SmallGameObject;
 
 //Powered game object which uses the picky algorithm(either turns off or on)
 public abstract class PPoweredGO extends PoweredGameObject{
@@ -74,7 +74,7 @@ public abstract class PPoweredGO extends PoweredGameObject{
 	}
 
 	@Override
-	public UIItem click(int x, int y, UIItem item) {
+	public SmallGameObject click(int x, int y, SmallGameObject item) {
 		return item;
 	}
 	

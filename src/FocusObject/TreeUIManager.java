@@ -11,7 +11,7 @@ import org.newdawn.slick.Input;
 import TreeUI.InventoryPanel;
 import TreeUI.Snappable;
 import aspenNetwork.AspenNetwork;
-import uiItem.UIItem;
+import smallGameObjects.SmallGameObject;
 
 public class TreeUIManager{
 	public static TreeUIManager master;
@@ -53,7 +53,7 @@ public class TreeUIManager{
 	public void mouseWheelMoved(int arg0){
 		inputManager.mouseWheelMoved(arg0);
 	}
-	public void addItemtoInv(UIItem item){
+	public void addItemtoInv(SmallGameObject item){
 		inventoryManager.addItem(item);
 	}
 	void enableEditor(){

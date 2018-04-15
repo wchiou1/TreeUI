@@ -1,7 +1,7 @@
 package Editor;
 
 import TreeUI.TextButton;
-import uiItem.UIItem;
+import smallGameObjects.SmallGameObject;
 
 public class GOClassButton extends TextButton implements EditorImmune{
 	private Class<?> GOClass;
@@ -18,7 +18,7 @@ public class GOClassButton extends TextButton implements EditorImmune{
 	}
 	
 	@Override
-	public UIItem click(int x, int y,UIItem item) {
+	public SmallGameObject click(int x, int y,SmallGameObject item) {
 		//On click, it morphs the origin
 		origin.morph(GOClass);
 		return item;

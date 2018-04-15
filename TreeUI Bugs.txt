@@ -1,77 +1,23 @@
-There are 3 elements that need to be saved somehow:
--The gameobjects
--The UIElements(buttons and shit on the panel)
--The Datanodes and network connections
-Each gameobject always has a datanode. Does each datanode have a gameobject? (Yes, but some gameobjects have multiple datanodes)
-Store the gameobjects(Easy, [id,type,x,y])
-Store the UIElements(Panels will)
+Implement small objects
+-Clicking on it conflicts with opening a originobject(SS13 deals with this via clicking on the object with the other while in hand)
+-Remove switching the object in the hand(Do NOT do what Minecraft does)
+-The inventory needs to get small objects from the ground somehow.
+--Small objects return themselves?
+--Yes, but an empty hand will trigger opening the smallobject
+--CONFLICT:Open hand needs to be able to grab items from slots!
+---Make exception for inventory slots maybe?
+--SOLUTION:Use key press, E will mean that user wants to access the originobject,
+Should click still access the oo? If empty hand then yes?(But what about switching hands?)
+What about making E grab items?
+SOLUTION: E to "Move" an item, click to "apply"
+Should empty click still grab items?(NO)
+ISSUE: Need a way to "Drop" an item(This will have to be done in the InputManager)(Also needs to be managed from the incubator)
+The editor panel is causing problems. Maybe remove?
+What does it affect?
+Creating new objects are handled using that thing.
 
-SOLUTION: REMOVE ALL CONSTRUCTORS FROM UIELEMENTS
-Will need to implement dynamic class reading. TreeUI will search for the class/java file it needs using a mods folder.
-The user will NOT need to modify any enums. There will be NO enum for UIElements.
-
-POTENTIAL SOLUTION: Implement an object id value and recursive down, marking ALL objects(NO REPEATS)
-Then mark all panel connections. This will also fix saving the network issue.[Maybe Not]
-
-Should the string store the entire paneltree?
-If it doesn't then I need a way to assign the panel to the originobjects in the panel.[DONE]
-
-FINAL SOLUTION: We use Strings to call the constructors(NO CLASS EXCEPT FOR THE PANEL CLASS WILL BE HARDCODED)
-All UIElements will have a (x,y) constructor. We will use newInstance/createInstance to construct the UIElements.
-Existing UIElements will be listed in an Enum which has the raw class string.
-Once a UIElement has been created, the parameters will be accessible using a <String,Object>Hashtable
-with the string being the parameter name and the object its value.
-
-KEEP IN MIND: Should panels be modifiable? What point would that serve that UIElements couldn't do?
-
-MAJOR ERROR: The panel depends on the uielement xy to be set to correctly position it.
-SOLUTION: Use rx and ry instead.
----TIME TO IMPLEMENT THE EDITOR---
-All interactable objects will have a wrapper class which responds to a right-click
-This wrapper class will accept a constructor class on creation.
-There will be a wrapper class for the incubator.(constructor class)
-There will be a hardcoded panel which will display variables.
-Do we need wrapper classes?(YES, otherwise we would need to implement a way to prevent the editor from working during normal operation)
-
-How will we make new uielements?
-	Maybe we right-click on a panel?
-		Right-click with create a placeholder object at click location, placeholder obj will have a panel attached which allows user to select what the placeholder should morph into
-How will we make new panels?
-	So hacky solution:
-		We have a hardcoded panel which covers the ENTIRE canvas. Right-click on this panel will create an origin_object with a built in panel.
-How will we modify the variables?
-	We will have a hardcoded panel.
-How will we form datanode connections?
-	I will create a connector UIItem.
-How will we disconnect datanode connections?
-	I will create a disconnector UIItem.
-ISSUE: Need to figure out how to select an element for variable modifying
-SOLUTION: Use a selector UIItem
-PROBLEM: Need to add in right-click functionality for mouse manager
-Solution-kinda: Maybe don't have right-click?
-
-MAJOR-ISSUE: Need to troubleshoot why class scanning is not working. Need to get my desktop.
-RESOLVED: There was a space in the directory
-
-How will we handle the wrappers and saving?
-	The editor will have a specialized parser which will add/remove wrappers.
-	The save file will NEVER have wrappers in it
-
-Getting an error with self-destructing saplings
-----Editor Plan----
-Create right-click which will check for the specialized panel and panel wrappers.
-----FUTURE PLANS----
-We will need to move the datanetwork node to the PaneledGameObject. Disconnections should only occur between gameobjects, never between panels.
-
-----Incubator Objects----
- Need to have the variable panel be able to handle objects
-The incubator doesn't handle object within object loading properly.
-
-
-Create a button which is capable of switching game states[DONE]
-Create a new game state which is an actual "main menu"[DONE]Main menu will use the TreeUI that the demo uses for the menu[DONE]
-BUG: The panel is not rendering on startup, but the bug disappears once the oo is toggled.[The panel was at -50 -100]
-Make panel active on startup[DONE]
-The new main menu should have the demo option and an option to load the editor[DONE]
-Implement objects into the incubator
+-Need to add tabs
+-Maybe add search?
+--Would need a scroll
 Create a full game state save
+Save network nodes

@@ -5,7 +5,7 @@ import org.newdawn.slick.Graphics;
 
 import Test.Shell;
 import focusObject.UIElement;
-import uiItem.UIItem;
+import smallGameObjects.SmallGameObject;
 
 public class StaticText extends UIElement{
 	public String text = "";
@@ -32,7 +32,7 @@ public class StaticText extends UIElement{
 	}
 
 	@Override
-	public void draw(Graphics g) {
+	public void draw(Graphics g,int x,int y) {
 		g.setColor(Color.black);
 		g.drawRect(x, y, width, height);
 		
@@ -51,19 +51,13 @@ public class StaticText extends UIElement{
 	}
 
 	@Override
-	public void keyPress(int mouseX, int mouseY, int key) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void update(int mouseX, int mouseY,int delta) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public UIItem click(int x, int y, UIItem item) {
+	public SmallGameObject click(int x, int y, SmallGameObject item) {
 		return item;
 	}
 }

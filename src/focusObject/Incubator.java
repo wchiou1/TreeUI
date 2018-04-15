@@ -13,9 +13,9 @@ import java.util.Hashtable;
 
 import Editor.EditorBasePanel;
 import GameLogic.StringUtils;
-import GameObjects.GameObject;
 import Imported.ClassFinder;
 import aspenNetwork.AspenNetwork;
+import gameObjects.GameObject;
 
 /**
  * This class will create a panel tree. How will we attach it to a origin

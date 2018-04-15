@@ -1,11 +1,11 @@
-package GameObjects;
+package gameObjects;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 import GameLogic.GameMath;
 import aspenNetwork.ANKeyWrapper;
-import uiItem.UIItem;
+import smallGameObjects.SmallGameObject;
 
 //Powered object which uses the greedy algorithm
 public class GPoweredGO extends PoweredGameObject{
@@ -61,7 +61,7 @@ public class GPoweredGO extends PoweredGameObject{
 	}
 
 	@Override
-	public void draw(Graphics g) {
+	public void draw(Graphics g, int x, int y) {
 		//Draw the lightbulb sprite
 		if(power_draw<-150){
 			g.setColor(new Color((int)Math.round(Math.abs((power_draw*1.0)/150)*255),(int)Math.round(Math.abs((power_draw*1.0)/150)*255),0));
@@ -73,7 +73,7 @@ public class GPoweredGO extends PoweredGameObject{
 	}
 
 	@Override
-	public UIItem click(int x, int y, UIItem item) {
+	public SmallGameObject click(int x, int y, SmallGameObject item) {
 		return item;
 	}
 
@@ -97,11 +97,6 @@ public class GPoweredGO extends PoweredGameObject{
 	}
 	@Override
 	public void objectUpdate(int x, int y, int delta) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void objectKeyPress(int mouseX, int mouseY, int key) {
 		// TODO Auto-generated method stub
 		
 	}

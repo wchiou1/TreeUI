@@ -1,11 +1,11 @@
-package GameObjects;
+package gameObjects;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 import GameLogic.GameMath;
 import aspenNetwork.ANKeyWrapper;
-import uiItem.UIItem;
+import smallGameObjects.SmallGameObject;
 
 public class LightBulb extends GPoweredGO{
 	public String toggleFreq="";
@@ -33,7 +33,7 @@ public class LightBulb extends GPoweredGO{
 	}
 
 	@Override
-	public UIItem click(int x, int y, UIItem item) {
+	public SmallGameObject click(int x, int y, SmallGameObject item) {
 		return item;
 	}
 

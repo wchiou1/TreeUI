@@ -1,4 +1,4 @@
-package GameObjects;
+package gameObjects;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -7,7 +7,7 @@ import org.newdawn.slick.Image;
 import GameLogic.GameMath;
 import GameLogic.ImageLoader;
 import aspenNetwork.ANKeyWrapper;
-import uiItem.UIItem;
+import smallGameObjects.SmallGameObject;
 
 public class Fan extends GPoweredGO{
 	private Image frame,blades;
@@ -38,7 +38,7 @@ public class Fan extends GPoweredGO{
 	}
 
 	@Override
-	public UIItem click(int x, int y, UIItem item) {
+	public SmallGameObject click(int x, int y, SmallGameObject item) {
 		return item;
 	}
 
@@ -59,11 +59,6 @@ public class Fan extends GPoweredGO{
 	public int getCenterY() {
 		// TODO Auto-generated method stub
 		return y+10;
-	}
-	@Override
-	public void objectKeyPress(int mouseX, int mouseY, int key) {
-		// TODO Auto-generated method stub
-		
 	}
 	
 }

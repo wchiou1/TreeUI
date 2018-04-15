@@ -4,7 +4,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 import focusObject.UIElement;
-import uiItem.UIItem;
+import smallGameObjects.SmallGameObject;
 
 public class IndicatorBar extends UIElement{
 	public boolean vertical=true;
@@ -35,7 +35,7 @@ public class IndicatorBar extends UIElement{
 	}
 
 	@Override
-	public void draw(Graphics g) {
+	public void draw(Graphics g, int x, int y) {
 		g.setColor(Color.black);
 		g.fillRect(x, y, width, height);
 		//Calculate how far the bar needs to be
@@ -59,7 +59,7 @@ public class IndicatorBar extends UIElement{
 	}
 
 	@Override
-	public UIItem click(int x, int y,UIItem item) {
+	public SmallGameObject click(int x, int y,SmallGameObject item) {
 		//IndicatorBars don't do anything on click.
 		return item;
 	}
@@ -70,12 +70,6 @@ public class IndicatorBar extends UIElement{
 			if(y>=this.y&&y<=this.y+height)
 				return true;
 		return false;
-	}
-
-	@Override
-	public void keyPress(int mouseX, int mouseY, int key) {
-		//IndicatorBars don't do anything on keypress
-		
 	}
 	@Override
 	public void update(int mouseX, int mouseY,int delta) {

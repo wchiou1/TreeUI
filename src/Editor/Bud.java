@@ -10,7 +10,7 @@ import focusObject.Incubator;
 import focusObject.OriginObject;
 import focusObject.Panel;
 import focusObject.UIElement;
-import uiItem.UIItem;
+import smallGameObjects.SmallGameObject;
 
 /**
  * This class will be used by the editor as a placeholder for a UIElement
@@ -88,7 +88,7 @@ public class Bud extends BasicPanelButton implements EditorImmune{
 	}
 	
 	@Override
-	public UIItem rightClick(int x, int y, UIItem item) {
+	public SmallGameObject rightClick(int x, int y, SmallGameObject item) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -5,7 +5,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
-import GameObjects.Generator;
+
 import TreeUI.BasicPanelButton;
 import TreeUI.Button;
 import TreeUI.Dial;
@@ -20,7 +20,8 @@ import TreeUI.PanelExit;
 import TreeUI.PowerMonitor;
 import TreeUI.Slider;
 import TreeUI.TextBox;
-import uiItem.Key;
+import gameObjects.Generator;
+import smallGameObjects.Key;
 
 public class Demo extends TreeUIGameState{
 

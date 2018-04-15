@@ -1,4 +1,4 @@
-package GameObjects;
+package gameObjects;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -6,7 +6,7 @@ import org.newdawn.slick.Image;
 
 import GameLogic.GameMath;
 import GameLogic.ImageLoader;
-import uiItem.UIItem;
+import smallGameObjects.SmallGameObject;
 
 //This class will broadcast it's power value
 
@@ -26,7 +26,7 @@ public class Generator extends PoweredGameObject{
 	}
 
 	@Override
-	public void draw(Graphics g) {
+	public void draw(Graphics g, int x, int y) {
 		//Draw the generator sprite
 		if(dataNode.getData(toggleFreq)==1||dataNode.getData(toggleFreq)==Integer.MIN_VALUE)
 			g.setColor(Color.green);
@@ -75,11 +75,6 @@ public class Generator extends PoweredGameObject{
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
-	public void objectKeyPress(int mouseX, int mouseY, int key) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 	
 }

@@ -9,7 +9,7 @@ import Editor.EditorImmune;
 import Test.SuperGlobal;
 import focusObject.Panel;
 import focusObject.UIElement;
-import uiItem.UIItem;
+import smallGameObjects.SmallGameObject;
 
 /**
  * This creates an inventory panel horizontally with the size and length auto generated
@@ -41,12 +41,12 @@ public class InventoryPanel extends Panel implements EditorImmune{
 	public int size(){
 		return slotNum;
 	}
-	public UIItem swap(int slot, UIItem item){
-		UIItem temp = getItem(slot);
+	public SmallGameObject swap(int slot, SmallGameObject item){
+		SmallGameObject temp = getItem(slot);
 		slots.get(slot).forcePush(item);
 		return temp;
 	}
-	public UIItem getItem(int slot){
+	public SmallGameObject getItem(int slot){
 		return slots.get(slot).getStored();
 	}
 	private void addSlots(){
@@ -55,7 +55,7 @@ public class InventoryPanel extends Panel implements EditorImmune{
 			addObject(slots.get(i));
 		}
 	}
-	public void forcePush(int slot, UIItem item){
+	public void forcePush(int slot, SmallGameObject item){
 		slots.get(slot).forcePush(item);
 	}
 	@Override

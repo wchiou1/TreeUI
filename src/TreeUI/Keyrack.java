@@ -4,8 +4,8 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 import focusObject.UIElement;
-import uiItem.Key;
-import uiItem.UIItem;
+import smallGameObjects.Key;
+import smallGameObjects.SmallGameObject;
 
 
 /**
@@ -27,7 +27,7 @@ public class Keyrack extends UIElement{
 	}
 
 	@Override
-	public void draw(Graphics g) {
+	public void draw(Graphics g,int x, int y) {
 		g.setColor(Color.orange);
 		g.fillRect(x, y, 10, 10);
 		if(key!=null){
@@ -37,7 +37,7 @@ public class Keyrack extends UIElement{
 	}
 
 	@Override
-	public UIItem click(int x, int y, UIItem item) {
+	public SmallGameObject click(int x, int y, SmallGameObject item) {
 		//Give a key if item is null(hand is empty)
 		if(item==null){
 			Key temp=key;
@@ -50,12 +50,6 @@ public class Keyrack extends UIElement{
 			return null;
 		}
 		return item;
-	}
-
-	@Override
-	public void keyPress(int mouseX, int mouseY, int key) {
-		//Does nothing
-		
 	}
 
 	@Override

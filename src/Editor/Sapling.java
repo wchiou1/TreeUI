@@ -1,11 +1,11 @@
 package Editor;
 
-import GameObjects.BasicPaneledGameObject;
 import focusObject.Incubator;
 import focusObject.InteractableObject;
 import focusObject.OriginObject;
 import focusObject.Panel;
-import uiItem.UIItem;
+import gameObjects.BasicPaneledGameObject;
+import smallGameObjects.SmallGameObject;
 
 /**
  * This class will be used by the editor as a placeholder for a gameobject
@@ -67,7 +67,7 @@ public class Sapling extends BasicPaneledGameObject implements EditorImmune{
 	}
 	
 	@Override
-	public UIItem rightClick(int x, int y, UIItem item) {
+	public SmallGameObject rightClick(int x, int y, SmallGameObject item) {
 		return item;
 	}
 	

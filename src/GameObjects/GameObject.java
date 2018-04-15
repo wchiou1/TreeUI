@@ -1,10 +1,9 @@
-package GameObjects;
+package gameObjects;
 
-import org.newdawn.slick.Graphics;
 
 import aspenNetwork.AspenNode;
-import focusObject.InteractableObject;
 import focusObject.OriginObject;
+import smallGameObjects.SmallGameObject;
 
 public abstract class GameObject extends OriginObject{
 	protected int id;
@@ -13,10 +12,17 @@ public abstract class GameObject extends OriginObject{
 		dataNode = new AspenNode(this);
 		System.out.println(":"+id+" "+this.getClass());
 	}
+	public SmallGameObject masterKeyPress(int x, int y, int key, SmallGameObject held){
+		return objectKeyPress(x,y,key,held);
+	}
+	public SmallGameObject objectKeyPress(int mouseX, int mouseY, int key, SmallGameObject held) {
+		//By default GameObjects do not respond to key pressed, this can be overrided if needed
+		return held;
+		
+	}
 	/**
 	 * Object declared draw function which will be called by the GameObjectManager
 	 */
-	public abstract void draw(Graphics g);
 	public abstract int getCenterX();
 	public abstract int getCenterY();
 	public AspenNode getNode(){
