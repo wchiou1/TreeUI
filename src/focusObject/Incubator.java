@@ -30,27 +30,23 @@ import gameObjects.GameObject;
 public class Incubator{
 	// private int objectCount = 0;
 	// Use the built in IO counter, don't use this pos
-	private TreeUIManager tuim;
+	//private TreeUIManager tuim;
 	private AspenNetwork dn;
+	private TreeUIManager tuim;
 	private boolean editor=false;
 
-	public Incubator(TreeUIManager tuim) {
-		this.tuim = tuim;
-		this.dn = tuim.getAspen();
+	public Incubator(TreeUIManager tuim, AspenNetwork dn) {
+		this.tuim=tuim;
+		this.dn = dn;
 	}
 
 	Hashtable<Integer, Panel> panels = new Hashtable<Integer, Panel>();
 	Hashtable<Integer, InteractableObject> objects = new Hashtable<Integer, InteractableObject>();
 
-	public TreeUIManager getManager() {
-		return tuim;
-	}
-
 	public void enableEditor(){
-		tuim.enableEditor();
 		editor=true;
 		//Create and add the EditorBasePanel
-		tuim.addGameObject(new EditorBasePanel(this));
+		//tuim.addGameObject(new EditorBasePanel(this));
 	}
 	public int addPanel() {
 		Panel p = new Panel();

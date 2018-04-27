@@ -10,6 +10,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.InputListener;
 
 import Editor.EditorImmune;
+import Editor.Sapling;
 import GameLogic.RequiresTyping;
 import gameObjects.GameObject;
 import smallGameObjects.HasOverlay;
@@ -26,6 +27,7 @@ public class InputManager implements InputListener{
 	private boolean editor=false,inventory=false;;
 	private ArrayList<Integer> keys;
 	private InventoryManager iManager;
+	private TreeUIManager tuim;
 	LinkedList<InteractableObject> uiObjectList;//Panels
 	LinkedList<InteractableObject> gameObjectList;//Gameobjects
 	Input input;
@@ -34,8 +36,9 @@ public class InputManager implements InputListener{
 	InteractableObject flock = TreeUIManager.empty;
 	InteractableObject rlock;
 	int stickiness;
-	protected InputManager(Input input,InventoryManager iManager,LinkedList<InteractableObject>gameObjectList,LinkedList<InteractableObject> uiObjectList,int stickiness,ArrayList<Integer> keys){
+	protected InputManager(Input input,TreeUIManager tuim,InventoryManager iManager,LinkedList<InteractableObject>gameObjectList,LinkedList<InteractableObject> uiObjectList,int stickiness,ArrayList<Integer> keys){
 		this.input=input;
+		this.tuim=tuim;
 		this.iManager=iManager;
 		this.uiObjectList=uiObjectList;
 		this.gameObjectList=gameObjectList;
@@ -317,8 +320,10 @@ public class InputManager implements InputListener{
 					}
 				
 				//If it's not on an object, make it the "empty" object
-				if(rlock==null)
+				if(rlock==null){
 					rlock=TreeUIManager.empty;
+					tuim.addGameObject(new Sapling(mouseX,mouseY,tuim));
+				}
 				else
 					((InteractableObject)rlock).rightClick(mouseX, mouseY,held);
 			}

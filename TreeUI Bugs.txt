@@ -1,20 +1,18 @@
-Implement small objects
--Clicking on it conflicts with opening a originobject(SS13 deals with this via clicking on the object with the other while in hand)
--Remove switching the object in the hand(Do NOT do what Minecraft does)
--The inventory needs to get small objects from the ground somehow.
---Small objects return themselves?
---Yes, but an empty hand will trigger opening the smallobject
---CONFLICT:Open hand needs to be able to grab items from slots!
----Make exception for inventory slots maybe?
---SOLUTION:Use key press, E will mean that user wants to access the originobject,
-Should click still access the oo? If empty hand then yes?(But what about switching hands?)
-What about making E grab items?
-SOLUTION: E to "Move" an item, click to "apply"
-Should empty click still grab items?(NO)
-ISSUE: Need a way to "Drop" an item(This will have to be done in the InputManager)(Also needs to be managed from the incubator)
 The editor panel is causing problems. Maybe remove?
 What does it affect?
 Creating new objects are handled using that thing.
+[TOP PRIORITY] Move object creation to the input manager
+--ISSUE: Maybe redesign Incubator to be inside of TreeUIManager?
+--TUIM stores go lists, incubator stores go lists also? Invert data flow from Incubator to TUIM. TUIM will be the master.
+--Things to consider: How to create objects which will not be saved? Only editor objects will not be saved, just use an interface
+
+Objectives:
+Invert data from from incubator to TUIM
+Add correction to incubator file write to exclude editor objects
+Potential issue with editing, existing panels don't have editing enabled
+Incubator is supposed to create objects that the TUIM then manages.
+
+TUIM will have easy to manage intuitive functions(return the object directly)
 
 -Need to add tabs
 -Maybe add search?

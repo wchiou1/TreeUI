@@ -11,6 +11,7 @@ import org.newdawn.slick.Input;
 import TreeUI.InventoryPanel;
 import TreeUI.Snappable;
 import aspenNetwork.AspenNetwork;
+import gameObjects.GameObject;
 import smallGameObjects.SmallGameObject;
 
 public class TreeUIManager{
@@ -22,6 +23,7 @@ public class TreeUIManager{
 	private LinkedList<InteractableObject> uiObjectList;
 	private LinkedList<InteractableObject> gameObjectList;
 	private Input input;
+	private Incubator inc;
 	
 	//Placeholder object to indicate that lock is on nothing
 	static InteractableObject empty=new Window(0,0,0,0,Color.green);
@@ -32,9 +34,19 @@ public class TreeUIManager{
 		uiObjectList = new LinkedList<InteractableObject>();
 		gameObjectList = new LinkedList<InteractableObject>();
 		inventoryManager = new InventoryManager(new InventoryPanel());
-		inputManager = new InputManager(input,inventoryManager,gameObjectList,uiObjectList,stickiness,keys);
+		this.inc = new Incubator(this,an);
+		inputManager = new InputManager(input,this,inventoryManager,gameObjectList,uiObjectList,stickiness,keys);
 		master=this;
 			
+	}
+	public Panel createPanel(OriginObject oo){
+		
+	}
+	public Panel createPanel(OriginObject oo,int height,int width){
+		
+	}
+	public Incubator getIncubator(){
+		return inc;
 	}
 	public AspenNetwork getAspen(){
 		return an;
@@ -57,6 +69,7 @@ public class TreeUIManager{
 		inventoryManager.addItem(item);
 	}
 	void enableEditor(){
+		inc.enableEditor();
 		inputManager.enableEditor();
 		inputManager.enableInventory();
 		addObject(inventoryManager.getPanel());
@@ -72,20 +85,20 @@ public class TreeUIManager{
 			io.update(mouseX, mouseY,delta);
 		}
 	}
-	public void removeObject(InteractableObject io){
+	void removeObject(InteractableObject io){
 		if(io==null){
 			System.out.println("Null object, error");
 		}
 		if(!uiObjectList.remove(io)&&!gameObjectList.remove(io))
 			System.out.println("Object not found, error");
 	}
-	public void addObject(InteractableObject io){
+	void addObject(InteractableObject io){
 		if(io==null){
 			System.out.println("Null object, error");
 		}
 		uiObjectList.addFirst(io);
 	}
-	public void addGameObject(InteractableObject io){
+	void addGameObject(InteractableObject io){
 		gameObjectList.addFirst(io);
 	}
 	/**

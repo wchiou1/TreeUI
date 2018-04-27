@@ -9,6 +9,7 @@ import TreeUI.BasicPanelButton;
 import focusObject.Incubator;
 import focusObject.OriginObject;
 import focusObject.Panel;
+import focusObject.TreeUIManager;
 import focusObject.UIElement;
 import smallGameObjects.SmallGameObject;
 
@@ -25,7 +26,7 @@ public class Bud extends BasicPanelButton implements EditorImmune{
 	private Incubator inc;//Incubator is required to "morph" into a savable object
 	private BudPanel BPanel;
 	private Panel branch;
-	public Bud(int x, int y, Incubator inc,Panel branch){
+	public Bud(int x, int y, TreeUIManager tuim,Panel branch){
 		this.inc=inc;
 		this.rx=x-branch.x;
 		this.ry=y-branch.y;
@@ -36,7 +37,7 @@ public class Bud extends BasicPanelButton implements EditorImmune{
 		this.branch=branch;
 		//Create the panel
 		BPanel = new BudPanel(this);
-		inc.getManager().addObject(BPanel);
+		inc.addObject(BPanel);
 		BPanel.setOrigin(this);
 	}
 	public void morph(Class<?> objectType){

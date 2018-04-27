@@ -1,9 +1,9 @@
 package Editor;
 
-import focusObject.Incubator;
 import focusObject.InteractableObject;
 import focusObject.OriginObject;
 import focusObject.Panel;
+import focusObject.TreeUIManager;
 import gameObjects.BasicPaneledGameObject;
 import smallGameObjects.SmallGameObject;
 
@@ -17,15 +17,15 @@ import smallGameObjects.SmallGameObject;
 public class Sapling extends BasicPaneledGameObject implements EditorImmune{
 	//Saplings will NEVER be made by the incubator
 	//The object the sapling turns into WILL need to be created by the incubator
-	private Incubator inc;//Incubator is required to "morph" into a savable object
+	private TreeUIManager tuim;//Incubator is required to "morph" into a savable object
 	private SaplingPanel SPanel;
-	public Sapling(int x, int y, Incubator inc){
-		this.inc=inc;
+	public Sapling(int x, int y, TreeUIManager tuim){
+		this.tuimtuim;
 		this.x=x;
 		this.y=y;
 		//Create the panel
 		SPanel = new SaplingPanel(this);
-		inc.getManager().addObject(SPanel);
+		tuim.addObject(SPanel);
 		SPanel.setOrigin(this);
 	}
 	public void morph(Class<?> objectType){
