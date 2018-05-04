@@ -6,7 +6,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
-import Editor.Editor;
+import focusObject.Editor;
 
 public class EditorState extends TreeUIGameState{
 
@@ -23,7 +23,7 @@ public class EditorState extends TreeUIGameState{
 		try{
 			width = container.getWidth();
 			height = container.getHeight();
-			Editor editor = new Editor(inc);
+			Editor editor = new Editor(im);
 			
 			
 		}catch(Exception e){

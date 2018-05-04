@@ -9,6 +9,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.InputListener;
 
+import Editor.Bud;
 import Editor.EditorImmune;
 import Editor.Sapling;
 import GameLogic.RequiresTyping;
@@ -34,7 +35,7 @@ public class InputManager implements InputListener{
 	InteractableObject klock;
 	InteractableObject llock;
 	InteractableObject flock = TreeUIManager.empty;
-	InteractableObject rlock;
+	InteractableObject editorLock;
 	int stickiness;
 	protected InputManager(Input input,TreeUIManager tuim,InventoryManager iManager,LinkedList<InteractableObject>gameObjectList,LinkedList<InteractableObject> uiObjectList,int stickiness,ArrayList<Integer> keys){
 		this.input=input;
@@ -276,32 +277,23 @@ public class InputManager implements InputListener{
 			editorKey=true;
 		}
 		
-		//Change this the key 'R'
-		//Process right click
-		//Right clicks will ONLY process on editor wrapper classes
-		if(editorKey){
-			//If the mouse is down, check if it needs to lock an object
-			if(rlock==null){//There's no current lock yet, get a lock
+		//Process editorkey
+		if(editorKey && editor){
+			//We'll use the lock system to prevent unintended behavior
+			if(editorLock==null){//There's no current lock yet, get a lock
+				//This needs to a specialized mouseOn check so we can single out panels
 				for(InteractableObject io:uiObjectList){//Iterate through all objects
 					if(io.masterIsMouseOver(mouseX,mouseY)){
 						InteractableObject temp=io;
-						//Check if it is rightclickable
-						if(editor){
-							if(io instanceof Panel){
-								temp=((Panel) io).getObject(mouseX, mouseY);
-								if(temp==null)
-									temp=io;
-							}
-							System.out.println("RMouse locked on object "+temp.toString());
-							rlock=temp;
-							break;
-						}
+						System.out.println("Editor locked on object "+temp.toString());
+						editorLock=io;
+						break;
 					}
 				}
 				
 				
 				//Didn't find it in uiobjectlist, try gameobjects
-				if(rlock==null)
+				/*if(editorLock==null)
 					for(InteractableObject io:gameObjectList){//Iterate through all objects
 						if(io.masterIsMouseOver(mouseX,mouseY)){
 							InteractableObject temp=io;
@@ -313,44 +305,48 @@ public class InputManager implements InputListener{
 										temp=io;
 								}
 								System.out.println("RMouse locked on object "+temp.toString());
-								rlock=temp;
+								editorLock=temp;
 								break;
 							}
 						}
-					}
+					}*/
 				
 				//If it's not on an object, make it the "empty" object
-				if(rlock==null){
-					rlock=TreeUIManager.empty;
+				if(editorLock==null){
+					editorLock=TreeUIManager.empty;
+				}
+				//We only want to create a sapling if it's NOT a panel!
+				if(editorLock instanceof Panel){
+					((Panel)editorLock).addObject(new Bud(mouseX,mouseY,tuim,(Panel)editorLock));
+				}
+				else{
 					tuim.addGameObject(new Sapling(mouseX,mouseY,tuim));
 				}
-				else
-					((InteractableObject)rlock).rightClick(mouseX, mouseY,held);
 			}
 			else{
 				//We already have a lock, what should we do?
 				//Unless the lock is on the basepanel, move the thing to where the mouse is
-				if(!(rlock instanceof EditorImmune)){
+				/*if(!(editorLock instanceof EditorImmune)){
 					//So we need to make sure we move it properly
 					//We will need to modify the xr and yr variables
-					if(rlock instanceof GameObject){
-						((InteractableObject)rlock).x+=mouseX-previousX;
-						((InteractableObject)rlock).y+=mouseY-previousY;
+					if(editorLock instanceof GameObject){
+						((InteractableObject)editorLock).x+=mouseX-previousX;
+						((InteractableObject)editorLock).y+=mouseY-previousY;
 					}
-					if(rlock instanceof UIElement){
-						((UIElement)rlock).rx+=mouseX-previousX;
-						((UIElement)rlock).ry+=mouseY-previousY;
+					if(editorLock instanceof UIElement){
+						((UIElement)editorLock).rx+=mouseX-previousX;
+						((UIElement)editorLock).ry+=mouseY-previousY;
 					}
-				}
+				}*/
 			}
-			rlock.locked=true;
+			editorLock.locked=true;
 		}
 		else
 		{
-			if(rlock!=null){
-				rlock.locked=false;
+			if(editorLock!=null){
+				editorLock.locked=false;
 			}
-			rlock=null;
+			editorLock=null;
 		}
 		
 		previousX=mouseX;

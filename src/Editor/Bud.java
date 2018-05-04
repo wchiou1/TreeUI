@@ -23,11 +23,11 @@ import smallGameObjects.SmallGameObject;
 public class Bud extends BasicPanelButton implements EditorImmune{
 	//Saplings will NEVER be made by the incubator
 	//The object the sapling turns into WILL need to be created by the incubator
-	private Incubator inc;//Incubator is required to "morph" into a savable object
+	private TreeUIManager tuim;
 	private BudPanel BPanel;
 	private Panel branch;
 	public Bud(int x, int y, TreeUIManager tuim,Panel branch){
-		this.inc=inc;
+		this.tuim=tuim;
 		this.rx=x-branch.x;
 		this.ry=y-branch.y;
 		this.x=x;
@@ -36,9 +36,7 @@ public class Bud extends BasicPanelButton implements EditorImmune{
 		this.height=5;
 		this.branch=branch;
 		//Create the panel
-		BPanel = new BudPanel(this);
-		inc.addObject(BPanel);
-		BPanel.setOrigin(this);
+		BPanel=tuim.createBPanel(this);
 	}
 	public void morph(Class<?> objectType){
 		if(objectType==null){
@@ -51,12 +49,7 @@ public class Bud extends BasicPanelButton implements EditorImmune{
 		System.out.println("Morphing to "+objectType);
 		//Time to morph! Let's not fuck this up...
 		//We need to first create the object
-		UIElement product;
-		try {
-			product = (UIElement)inc.getObject(inc.addUIElement(branch.getId(),objectType));
-		
-			product.rx=this.rx;
-			product.ry=this.ry;
+		UIElement product = tuim.createUIElement(objectType, branch, this.rx, this.ry);
 			
 			
 			//Check if the object is an originObject
@@ -64,18 +57,8 @@ public class Bud extends BasicPanelButton implements EditorImmune{
 				System.out.println("OriginObject detected, creating a panel");
 				
 				//Create the panel
-				Panel panel = inc.getPanel(inc.addPanel());
-				panel.enableEditing(inc);
-				
-				//Connect our new panel to our new object, use the incubator
-				inc.setOrigin(panel.getId(), product.getId());
+				tuim.createPanel((OriginObject)product);
 			}
-		
-		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
-				| NoSuchMethodException | SecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
 		//Destroy itself
 		BPanel.clearReferences();
@@ -83,16 +66,11 @@ public class Bud extends BasicPanelButton implements EditorImmune{
 	}
 	public void destroy(){
 		branch.removeObject(this);
-		inc.getManager().removeObject(BPanel);
+		tuim.removeObject(BPanel);
 		BPanel=null;
 		
 	}
 	
-	@Override
-	public SmallGameObject rightClick(int x, int y, SmallGameObject item) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	@Override
 	public boolean isMouseOver(int x, int y) {
 		if(x>=this.x&&x<=this.x+width)

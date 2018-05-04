@@ -111,13 +111,13 @@ public class Panel extends Snappable{
 	public SmallGameObject click(int x, int y,SmallGameObject item) {
 		return item;
 	}
-	public SmallGameObject rightClick(int x, int y, SmallGameObject item) {
+	/*public SmallGameObject rightClick(int x, int y, SmallGameObject item) {
 		//When right-click is called we want to create a bud at the mouse location
 		System.out.println("PanelWrapper Right click at ("+x+","+y+")");
 		//Now to create the Bud
 		addObject(new Bud(x,y,inc,this));
 		return null;
-	}
+	}*/
 	public InteractableObject getObject(int x, int y){
 		if(!active)
 			return null;

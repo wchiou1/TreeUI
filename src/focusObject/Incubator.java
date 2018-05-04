@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
-import Editor.EditorBasePanel;
 import GameLogic.StringUtils;
 import Imported.ClassFinder;
 import aspenNetwork.AspenNetwork;
@@ -48,13 +47,22 @@ public class Incubator{
 		//Create and add the EditorBasePanel
 		//tuim.addGameObject(new EditorBasePanel(this));
 	}
+	public TreeUIManager getManager(){
+		return tuim;
+	}
 	public int addPanel() {
 		Panel p = new Panel();
 		panels.put(p.getId(), p);
 		tuim.addObject(panels.get(p.getId()));
 		return p.getId();
 	}
-
+	public void removeObject(int objectID){
+		if (!objects.containsKey(objectID)) {
+			System.out.println("Error in Incubator-removeObject:ObjectID is invalid(" + objectID + ")");
+			return;
+		}
+		objects.remove(objectID);
+	}
 	public void removePanel(int panelID) {
 		if (!panels.containsKey(panelID)) {
 			System.out.println("Error in Incubator-removePanel:PanelID is invalid(" + panelID + ")");
@@ -128,8 +136,8 @@ public class Incubator{
 	 * @throws IllegalAccessException
 	 * @throws InstantiationException
 	 */
-	public int addUIElement(int panelID, Class<?> elementType) throws InstantiationException, IllegalAccessException,
-			IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+	public int addUIElement(int panelID, Class<?> elementType){
+		try{
 		// Errorcheck for panel
 		if (panelID > InteractableObject.getCount() || panelID < 0) {
 			System.out.println("Error in Incubator-addUIElement:Invalid ID(" + panelID + ")");
@@ -147,6 +155,10 @@ public class Incubator{
 		selectedPanel.addObject(newElement);
 
 		return newElement.getId();
+		}catch(Exception e){
+			e.printStackTrace();
+			return -1;
+		}
 	}
 	
 	/**

@@ -5,6 +5,7 @@ import focusObject.OriginObject;
 import focusObject.Panel;
 import focusObject.TreeUIManager;
 import gameObjects.BasicPaneledGameObject;
+import gameObjects.GameObject;
 import smallGameObjects.SmallGameObject;
 
 /**
@@ -20,13 +21,11 @@ public class Sapling extends BasicPaneledGameObject implements EditorImmune{
 	private TreeUIManager tuim;//Incubator is required to "morph" into a savable object
 	private SaplingPanel SPanel;
 	public Sapling(int x, int y, TreeUIManager tuim){
-		this.tuimtuim;
+		this.tuim=tuim;
 		this.x=x;
 		this.y=y;
 		//Create the panel
-		SPanel = new SaplingPanel(this);
-		tuim.addObject(SPanel);
-		SPanel.setOrigin(this);
+		SPanel=tuim.createSPanel(this);
 	}
 	public void morph(Class<?> objectType){
 		if(objectType==null){
@@ -40,35 +39,31 @@ public class Sapling extends BasicPaneledGameObject implements EditorImmune{
 		System.out.println("Morphing to "+objectType);
 		//Time to morph! Let's not fuck this up...
 		//We need to first create the object
-		InteractableObject product = inc.getObject(inc.addObject(objectType));
-		product.x=this.x;
-		product.y=this.y;
+		GameObject product = tuim.createGameObject(objectType, this.x, this.y);
 		
 		//Check if the object is an originObject
 		if(OriginObject.class.isAssignableFrom(objectType)){
 			System.out.println("OriginObject detected, creating and wrapping panel");
 			
 			//Create the panel
-			Panel panel = inc.getPanel(inc.addPanel());
+			Panel panel = tuim.createPanel(product);
+			/*Panel panel = inc.getPanel(inc.addPanel());
 			panel.enableEditing(inc);
 			
 			//Connect our new panel to our new object, use the incubator
 			inc.setOrigin(panel.getId(), product.getId());
+			*/
 		}
 		//Destroy itself
 		SPanel.clearReferences();
 		destroy();
 	}
 	public void destroy(){
-		inc.getManager().removeObject(this);
-		inc.getManager().removeObject(SPanel);
+		tuim.removeObject(this);
+		tuim.removeObject(SPanel);
 		SPanel=null;
 		
 	}
 	
-	@Override
-	public SmallGameObject rightClick(int x, int y, SmallGameObject item) {
-		return item;
-	}
 	
 }

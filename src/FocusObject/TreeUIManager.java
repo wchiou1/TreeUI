@@ -8,6 +8,10 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 
+import Editor.Bud;
+import Editor.BudPanel;
+import Editor.Sapling;
+import Editor.SaplingPanel;
 import TreeUI.InventoryPanel;
 import TreeUI.Snappable;
 import aspenNetwork.AspenNetwork;
@@ -24,6 +28,7 @@ public class TreeUIManager{
 	private LinkedList<InteractableObject> gameObjectList;
 	private Input input;
 	private Incubator inc;
+	private boolean editor = false;
 	
 	//Placeholder object to indicate that lock is on nothing
 	static InteractableObject empty=new Window(0,0,0,0,Color.green);
@@ -39,11 +44,46 @@ public class TreeUIManager{
 		master=this;
 			
 	}
+	public UIElement createUIElement(Class<?> type,Panel panel, int rx, int ry){
+		UIElement product = (UIElement) inc.getObject(inc.addUIElement(panel.getId(),type));
+		product.rx=rx;
+		product.ry=ry;
+		return (UIElement) product;
+	}
+	public GameObject createGameObject(Class<?> type,int x, int y){
+		InteractableObject product = inc.getObject(inc.addObject(type));
+		product.x=x;
+		product.y=y;
+		return (GameObject) product;
+	}
+	public BudPanel createBPanel(Bud bud){
+		BudPanel temp = new BudPanel(bud);
+		addObject(temp);
+		temp.setOrigin(bud);
+		return temp;
+	}
+	public SaplingPanel createSPanel(Sapling sap){
+		SaplingPanel temp = new SaplingPanel(sap);
+		addObject(temp);
+		temp.setOrigin(sap);
+		return temp;
+	}
+	public Bud createBud(Panel panel,int x, int y){
+		Bud bud = new Bud(x,y,this,panel);
+		addObject(bud);
+		return bud;
+	}
 	public Panel createPanel(OriginObject oo){
-		
+		return createPanel(oo,100,100);
 	}
 	public Panel createPanel(OriginObject oo,int height,int width){
-		
+		Panel panel = inc.getPanel(inc.addPanel());
+		panel.height = height;
+		panel.width = width;
+		if(editor)
+			panel.enableEditing(inc);
+		panel.setOrigin(oo);
+		return panel;
 	}
 	public Incubator getIncubator(){
 		return inc;
@@ -69,6 +109,8 @@ public class TreeUIManager{
 		inventoryManager.addItem(item);
 	}
 	void enableEditor(){
+		System.out.println("Editor enabled");
+		editor = true;
 		inc.enableEditor();
 		inputManager.enableEditor();
 		inputManager.enableInventory();
@@ -85,14 +127,15 @@ public class TreeUIManager{
 			io.update(mouseX, mouseY,delta);
 		}
 	}
-	void removeObject(InteractableObject io){
+	public void removeObject(InteractableObject io){
 		if(io==null){
 			System.out.println("Null object, error");
 		}
 		if(!uiObjectList.remove(io)&&!gameObjectList.remove(io))
 			System.out.println("Object not found, error");
+		inc.removeObject(io.getId());
 	}
-	void addObject(InteractableObject io){
+	public void addObject(InteractableObject io){
 		if(io==null){
 			System.out.println("Null object, error");
 		}

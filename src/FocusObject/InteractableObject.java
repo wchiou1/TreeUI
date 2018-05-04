@@ -65,10 +65,6 @@ public abstract class InteractableObject{
 	public void draw(Graphics g){
 		draw(g,x,y);
 	}
-	//Not sure if I really need this function
-	public SmallGameObject rightClick(int x, int y, SmallGameObject item){
-		return item;
-	}
 	public SmallGameObject masterClick(int x, int y, SmallGameObject item){
 		if(item instanceof EditorItem&&!(this instanceof EditorImmune)){
 			//Need to handle editoritems
@@ -89,7 +85,7 @@ public abstract class InteractableObject{
 	//Always calls this function before keypress, this will be overwritten by classes which
 	//wish to insert code before child calls
 	public SmallGameObject masterKeyPress(int x, int y, int key, SmallGameObject held){
-		System.out.println("Default master key press invoked");
+		//System.out.println("Default master key press invoked");
 		return objectKeyPress(x,y,key,held);
 	}
 	public SmallGameObject objectKeyPress(int x, int y, int key, SmallGameObject held){

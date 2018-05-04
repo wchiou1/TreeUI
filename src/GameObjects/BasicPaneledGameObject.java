@@ -27,10 +27,7 @@ public class BasicPaneledGameObject extends GameObject{
 			g.setColor(Color.yellow);
 		g.fillRect(x, y, width, height);
 	}
-	@Override
-	public SmallGameObject rightClick(int x, int y, SmallGameObject item) {
-		return item;
-	}
+	
 	@Override
 	public int getCenterX() {
 		// TODO Auto-generated method stub

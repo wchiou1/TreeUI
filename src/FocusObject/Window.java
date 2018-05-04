@@ -50,10 +50,6 @@ public class Window extends Snappable{
 		
 	}
 	@Override
-	public SmallGameObject rightClick(int x, int y, SmallGameObject item) {
-		return item;
-	}
-	@Override
 	public SmallGameObject objectKeyPress(int x, int y, int key, SmallGameObject held) {
 		// TODO Auto-generated method stub
 		return null;

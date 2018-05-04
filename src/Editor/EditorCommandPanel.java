@@ -4,6 +4,7 @@ import Test.SuperGlobal;
 import focusObject.Incubator;
 import focusObject.InteractableObject;
 import focusObject.Panel;
+import focusObject.TreeUIManager;
 
 /**
  * This panel will have small buttons to close and open the save and variable panels
@@ -12,12 +13,12 @@ import focusObject.Panel;
  *
  */
 public class EditorCommandPanel extends Panel implements EditorImmune{
-	private Incubator inc;
+	private TreeUIManager tuim;
 	private InteractableObject subject;
 	private VariablePanel vp;
 	private SaveManagementPanel smp;
-	public EditorCommandPanel(Incubator inc){
-		this.inc=inc;
+	public EditorCommandPanel(TreeUIManager tuim){
+		this.tuim=tuim;
 		this.active=true;
 		this.width=200;
 		this.height=20;
@@ -32,21 +33,21 @@ public class EditorCommandPanel extends Panel implements EditorImmune{
 		addObject(smb);
 		
 		//Create the panel which will show the variables
-		vp = new VariablePanel(inc);
-		inc.getManager().addObject(vp);
+		vp = new VariablePanel(tuim.getIncubator());
+		tuim.addObject(vp);
 		
 		//Create the panel which will manage saving and loading
-		smp = new SaveManagementPanel(inc);
-		inc.getManager().addObject(smp);
+		smp = new SaveManagementPanel(tuim.getIncubator());
+		tuim.addObject(smp);
 		
 		//Connect the panels to their buttons
 		vp.setOrigin(vpb,SuperGlobal.getWidth()-vp.width,0);
 		smp.setOrigin(smb,0,SuperGlobal.getLength()-height-smp.height);
 		
 		//Add all the objects required for editing into the inventory
-		inc.getManager().addItemtoInv(new Selector(this));//Selector needs access to the variable panel inorder to change variables displayed
-		inc.getManager().addItemtoInv(new NodeConnector(inc));//NodeConnector uses the Incubator to add network connections
-		inc.getManager().addItemtoInv(new ObjectGrabber());
+		tuim.addItemtoInv(new Selector(this));//Selector needs access to the variable panel inorder to change variables displayed
+		tuim.addItemtoInv(new NodeConnector(tuim.getIncubator()));//NodeConnector uses the Incubator to add network connections
+		tuim.addItemtoInv(new ObjectGrabber());
 		
 	}
 	
