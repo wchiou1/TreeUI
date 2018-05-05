@@ -8,7 +8,8 @@ import smallGameObjects.SmallGameObject;
 public class SaveTreeButton extends TextButton implements EditorImmune{
 	private Incubator inc;
 	private Panel source;
-	public SaveTreeButton(int x, int y,Incubator inc,Panel source){
+	private String saveType;
+	public SaveTreeButton(int x, int y, String saveType,Incubator inc,Panel source){
 		this.source=source;
 		this.rx=x;
 		this.ry=y;

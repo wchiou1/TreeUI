@@ -24,8 +24,8 @@ public class Multitool extends SmallGameObject{
 
 	@Override
 	public boolean isMouseOver(int x, int y) {
-		if(x>=this.x&&x<=this.x+5)
-			if(y>=this.y&&y<=this.y+10)
+		if(x>=this.x-1&&x<=this.x+6)
+			if(y>=this.y-1&&y<=this.y+11)
 				return true;
 		return false;
 	}

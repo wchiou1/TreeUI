@@ -11,18 +11,18 @@ import focusObject.OriginObject;
  * @author Wesley Chiou
  *
  */
-public class SaveManagementButton extends OriginObject implements EditorImmune{
+public class EditorButton extends OriginObject implements EditorImmune{
 	private int width;
 	private int height;
 	private String text;
-	public SaveManagementButton(int x, int y, int width, int height){
+	public EditorButton(String text, int x, int y, int width, int height){
 		this.x=0;
 		this.y=0;
 		this.rx=x;
 		this.ry=y;
 		this.width=width;
 		this.height=height;
-		this.text="Save Manager";
+		this.text=text;
 	}
 	@Override
 	public void draw(Graphics g,int x, int y) {
@@ -32,7 +32,6 @@ public class SaveManagementButton extends OriginObject implements EditorImmune{
 		g.setClip(x+2, y+2, width-4, height-4);
 		g.setFont(Shell.SMALL_FONT);
 		g.drawString(text, x+2, y+2);
-		
 	}
 	
 	@Override

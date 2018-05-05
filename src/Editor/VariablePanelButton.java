@@ -22,7 +22,7 @@ public class VariablePanelButton extends OriginObject implements EditorImmune{
 		this.ry=y;
 		this.width=width;
 		this.height=height;
-		this.text="Variable Manager";
+		this.text="VM";
 	}
 	@Override
 	public void draw(Graphics g, int x, int y) {

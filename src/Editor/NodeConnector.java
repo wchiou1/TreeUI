@@ -94,7 +94,11 @@ public class NodeConnector extends SmallGameObject implements EditorItem,HasOver
 
 	@Override
 	public boolean isMouseOver(int x, int y) {
-		// TODO Auto-generated method stub
+		if(x>=this.x&&x<=this.x+10)
+			if(y>=this.y&&y<=this.y+10){
+				//System.out.println("ON");
+				return true;
+			}
 		return false;
 	}
 	

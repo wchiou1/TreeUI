@@ -51,7 +51,11 @@ public class ObjectGrabber extends SmallGameObject implements EditorItem{
 
 	@Override
 	public boolean isMouseOver(int x, int y) {
-		// TODO Auto-generated method stub
+		if(x>=this.x+2&&x<=this.x+9)
+			if(y>=this.y+2&&y<=this.y+9){
+				//System.out.println("ON");
+				return true;
+			}
 		return false;
 	}
 	

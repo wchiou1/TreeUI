@@ -1,3 +1,0 @@
-98:{type:Dial,radius:20,angle:135,previousAngle:0,mouseAngle:0,lowerLimit:-1000,upperLimit:1000,key:asd,rx:38,ry:49,x:443,y:379}
-67:{type:Panel,active:true,height:100,width:100,x:405,y:330,objectList:[~98]}
-@66:{type:Example_SolarPanel,angle:0.0,target_freq:asd,delta:1,rx:0,ry:0,x:433,y:453,view:~67}

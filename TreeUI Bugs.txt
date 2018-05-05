@@ -14,6 +14,8 @@ Incubator is supposed to create objects that the TUIM then manages.
 
 TUIM will have easy to manage intuitive functions(return the object directly)
 
+ISSUE: Need to include items in the incubator otherwise you cannot modify their variables!
+
 -Need to add tabs
 -Maybe add search?
 --Would need a scroll
