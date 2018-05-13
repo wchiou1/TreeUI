@@ -1,0 +1,6 @@
+115:{type:Panel,active:false,height:100,width:100,x:284,y:129,objectList:[]}
+@114:{type:LightBulb,toggleFreq:"",powered:false,toggle:true,recordedPower:182,posPower:600,negPower:-418,toggleFreq:"",powerFreq:":P Lightbulb 115",power_draw:-209.0061842128076,greedCo:4,rx:0,ry:0,x:334,y:229,view:~115}
+103:{type:Panel,active:false,height:100,width:100,x:199,y:186,objectList:[]}
+@102:{type:Fan,angle:193.20166904466927,powered:false,toggle:true,recordedPower:182,posPower:600,negPower:-418,toggleFreq:"",powerFreq:":P Fan 103",power_draw:-209.2349302589016,greedCo:4,rx:0,ry:0,x:249,y:286,view:~103}
+91:{type:Panel,active:false,height:100,width:100,x:263,y:220,objectList:[]}
+@90:{type:Generator,toggleFreq:"",output:600,rx:0,ry:0,x:313,y:320,view:~91}

@@ -52,14 +52,20 @@ public abstract class OriginObject extends UIElement{
 			}*/
 		}
 	}
+	/**
+	 * 
+	 */
 	@Override
 	public SmallGameObject click(int x, int y,SmallGameObject item) {
+		togglePanel();
+		return item;
+	}
+	public void togglePanel(){
 		if(view==null){
 			System.out.println("ERROR: panel not set in origin object");
-			return item;
+			return;
 		}
 		view.toggle();
-		return item;
 	}
 	
 	public void dMoveTreeUI(int dx, int dy){

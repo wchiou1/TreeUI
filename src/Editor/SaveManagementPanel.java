@@ -19,13 +19,15 @@ public class SaveManagementPanel extends Panel implements EditorImmune{
 	private LoadPanelButton lpb;
 	private EditorStaticText on;
 	private EditorInputBox fn;
+	private SaveEnvironmentButton seb;
+	private LoadEnvironmentButton leb;
 	private FileScannerButton fsb;
 	private FileScannerPanel fsp;
 	public SaveManagementPanel(Incubator inc){
 		this.inc=inc;
 		this.active=false;
 		this.width=200;
-		this.height=60;
+		this.height=80;
 		this.x = SuperGlobal.getWidth()-width;
 		this.y = 0;
 		
@@ -35,10 +37,14 @@ public class SaveManagementPanel extends Panel implements EditorImmune{
 		fn = new EditorInputBox(0,20,this.width-20,20);//The subject starts null for these buttons
 		spb = new SavePanelButton(0,40,inc,null,fn);//The save panel needs to update the FileScannerPanel
 		lpb = new LoadPanelButton(80,40,inc,null,fn);
+		seb = new SaveEnvironmentButton(0,60,inc,fn);
+		leb = new LoadEnvironmentButton(80,60,inc,fn);
 		//fsp = new FileScannerPanel();
 		
 		addObject(spb);
 		addObject(lpb);
+		addObject(seb);
+		addObject(leb);
 		addObject(on);
 		addObject(fn);
 		addObject(new FileScannerButton(160,40,fn));

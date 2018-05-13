@@ -10,7 +10,6 @@ import smallGameObjects.SmallGameObject;
 public class LightBulb extends GPoweredGO{
 	public String toggleFreq="";
 	public LightBulb(){
-		powerFreq=":P Lightbulb "+id;
 		posPower = 0;
 		negPower = 0;
 	}

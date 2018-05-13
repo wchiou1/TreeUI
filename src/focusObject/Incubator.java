@@ -10,11 +10,14 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 import GameLogic.StringUtils;
 import Imported.ClassFinder;
 import aspenNetwork.AspenNetwork;
 import gameObjects.GameObject;
+import smallGameObjects.SmallGameObject;
 
 /**
  * This class will create a panel tree. How will we attach it to a origin
@@ -354,6 +357,28 @@ public class Incubator{
 		return fields;
 
 	}
+	
+	/**
+	 * This method will get the save string for ONLY PANELS
+	 * For now the filehandling is done on the UI side, I will change this when universal object saving is rolled out
+	 * @param objectID
+	 * @return
+	 * @throws IllegalAccessException 
+	 * @throws IllegalArgumentException 
+	 */
+	public String IOScanAll(){
+		//Scan ALL gameobjects!
+		String fullResult = "";
+		LinkedList<InteractableObject> gos = tuim.getGameObjects();
+		Iterator<InteractableObject> itr = gos.iterator();
+		while(itr.hasNext()){
+			InteractableObject obj = itr.next();
+			if(containsGameObject(obj.getId())){
+				fullResult += IOScan(obj.getId());
+			}
+		}
+		return fullResult;
+	}
 
 	/**
 	 * This method will get the save string for ONLY PANELS
@@ -406,14 +431,14 @@ public class Incubator{
 	    for(Field f:fields){
 	    	//First add the field name
 	    	tempSaveString+=f.getName()+":";
-
+	    	System.out.println(f.getName());
 
 	    	//Check if it's an object
 	    	if(Object.class.isAssignableFrom(f.getType())){
 	    		//It's an object, but is it a string or an array?
 	    		if(String.class.isAssignableFrom(f.getType())){
 	    			//It's a string, just treat it like a primitive
-	    			tempSaveString+=f.get(subject)+",";
+	    			tempSaveString+="\""+f.get(subject)+"\",";
 	    			continue;
 	    		}
 	    		if(Array.class.isAssignableFrom(f.getType())){
@@ -444,12 +469,14 @@ public class Incubator{
 	    }
 	    //We've processed the fields now
 	    //We need to make special exceptions for OriginObjects and Panels
-	    if(subject instanceof OriginObject){
+	    if(subject instanceof OriginObject){//Everything is an oo now, legacy test
 	    	//If it's an OriginObject, we need to read it's panel
 	    	Panel temp=((OriginObject)subject).getView();
-	    	tempSaveString+="view:~"+temp.getId()+",";
-	    	//Read the panel and put it in the table
-	    	recursiveScan(ht,temp.getId(),false);
+	    	if(temp!=null){
+		    	tempSaveString+="view:~"+temp.getId()+",";
+		    	//Read the panel and put it in the table
+		    	recursiveScan(ht,temp.getId(),false);
+	    	}
 	    }
 	    if(subject instanceof Panel){
 	    	//It's a panel, we will need to process it's objList
@@ -509,16 +536,25 @@ public class Incubator{
 		InteractableObject subject=null;
 		
 		//First check if the class exists as a gameobject or a uielement
-		if(ClassFinder.existsWithin(typestr, "GameObjects")){
+		if(ClassFinder.existsWithin(typestr, "gameObjects")){
 			//It's a gameobject
-			c = Class.forName("GameObjects."+typestr);
+			c = Class.forName("gameObjects."+typestr);
 			//We need to know if it's paneled or not
-			if(c.isAssignableFrom(GameObject.class)){
+			if(GameObject.class.isAssignableFrom(c)){
 				System.out.print("GameObject detected: "+c);
 			}
 			subject = getObject(addObject(c));
 			//System.out.println("Checking DATALINK for "+typestr+":"+subject.checkDataLink());
+		}
+		if(ClassFinder.existsWithin(typestr, "smallGameObjects")){
+			//It's a small gameobject
+			c = Class.forName("smallGameObjects."+typestr);
+			//
+			if(SmallGameObject.class.isAssignableFrom(c)){
+				System.out.print("SmallGameObject detected: "+c);
+			}
 			
+			subject = getObject(addObject(c));
 		}
 		if(ClassFinder.existsWithin(typestr, "TreeUI.Engineering")){
 			//It's a UIElement
@@ -578,15 +614,18 @@ public class Incubator{
 		//Process the fieldstr
 			//Get the actual field
 			Field field = findUnderlying(subject.getClass(),fieldstr);
-			
+			if(field==null){
+				System.out.println("ERROR: Unable to find field "+fieldstr);
+			}
 			System.out.println(field.getName()+"("+field.getType().getSimpleName()+"):"+fieldData);
 			
 			//Is it an object?
 			if(Object.class.isAssignableFrom(field.getType())){
 				//The field is an object
-
 				if(String.class.isAssignableFrom(field.getType())){
 	    			//It's a string, just treat it like a primitive
+					if(!fieldData.isEmpty())
+						fieldData = fieldData.substring(1, fieldData.length()-1);
 					writeParam(subject.getId(),fieldstr,fieldData);
 					continue;
 	    			
@@ -669,7 +708,7 @@ public class Incubator{
 			//Read the file and put each line in a hashtable
 			BufferedReader reader = new BufferedReader(new FileReader("nursery/"+fileName+".tree"));
 
-			int baseKey=-1;
+			ArrayList<Integer> baseKeys=new ArrayList<Integer>();
 			String line;
 		 
 			while((line=reader.readLine())!=null){
@@ -682,8 +721,8 @@ public class Incubator{
 					 //It has a @
 					 key = Integer.parseInt(prefix.substring(1,prefix.length()));
 					 //It's base object, set the baseKey to it
-					 baseKey=key;
-					 System.out.println("Base key identified as "+baseKey);
+					 baseKeys.add(key);
+					 System.out.println("Base key "+baseKeys.size()+" identified as "+key);
 				 }
 				 else
 					 key = Integer.parseInt(prefix);
@@ -698,7 +737,7 @@ public class Incubator{
 			}
 
 			//Check if it has a base object, if it doesn't, cancel operation
-			if(baseKey==-1){
+			if(baseKeys.isEmpty()){
 			 	System.out.println("Error, file has no base object");
 			 	return;
 		 	}
@@ -707,20 +746,24 @@ public class Incubator{
 		 	Hashtable<Integer, InteractableObject> objects = new Hashtable<Integer, InteractableObject>();
 
 		 	//Create the base object
+		 	for(Integer i:baseKeys){
+		 		//We have the base object, let's start the recursiveRead
+			 	recursiveFileRead(lines,objects,-1,i);
+		 	}
 		 	
-		 	//We have the base object, let's start the recursiveRead
-		 	recursiveFileRead(lines,objects,-1,baseKey);
 		 } catch (IOException | ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
 		}
-
+	
 	private boolean objectExists(int objectID) {
 		return objects.containsKey(objectID) || panels.containsKey(objectID);
 	}
-
+	private boolean containsGameObject(int objectID){
+		return objects.containsKey(objectID);
+	}
 	private boolean containsPanel(int panelID) {
 		return panels.containsKey(panelID);
 	}

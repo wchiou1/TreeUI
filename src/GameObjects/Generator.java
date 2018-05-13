@@ -10,12 +10,10 @@ import smallGameObjects.SmallGameObject;
 
 //This class will broadcast it's power value
 
-public class Generator extends PoweredGameObject{
-	private String powerFreq;
+public class Generator extends GPoweredGO{
 	public String toggleFreq;
 	public int output;
 	public Generator(){
-		powerFreq=":P Generator "+id;
 		output = 0;
 		toggleFreq="";
 	}
@@ -33,8 +31,6 @@ public class Generator extends PoweredGameObject{
 		else
 			g.setColor(Color.darkGray);
 		g.fillOval(x, y, 20, 20);
-		
-		
 	}
 
 	@Override
