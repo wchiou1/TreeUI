@@ -1,23 +1,4 @@
-The editor panel is causing problems. Maybe remove?
-What does it affect?
-Creating new objects are handled using that thing.
-[TOP PRIORITY] Move object creation to the input manager
---ISSUE: Maybe redesign Incubator to be inside of TreeUIManager?
---TUIM stores go lists, incubator stores go lists also? Invert data flow from Incubator to TUIM. TUIM will be the master.
---Things to consider: How to create objects which will not be saved? Only editor objects will not be saved, just use an interface
-
-Objectives:
-Invert data from from incubator to TUIM
-Add correction to incubator file write to exclude editor objects
-Potential issue with editing, existing panels don't have editing enabled
-Incubator is supposed to create objects that the TUIM then manages.
-
-TUIM will have easy to manage intuitive functions(return the object directly)
-
-ISSUE: Need to include items in the incubator otherwise you cannot modify their variables!
-
--Need to add tabs
--Maybe add search?
---Would need a scroll
-Create a full game state save
-Save network nodes
+Add a scrolldown for file loading
+add a scrolldown for object generation
+Add small objects to object generation[done]
+Create gas station example

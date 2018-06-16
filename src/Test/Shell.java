@@ -17,12 +17,14 @@ import TreeUI.BasicPanelButton;
 import focusObject.Panel;
 import focusObject.UIElement;
 import gameObjects.GameObject;
+import smallGameObjects.SmallGameObject;
 
 public class Shell extends StateBasedGame{
 
 	public static int menu = 0;
 	private static ArrayList<Class<?>> gameObjectTypes = new ArrayList<Class<?>>();
 	private static ArrayList<Class<?>> uiElementTypes = new ArrayList<Class<?>>();
+	private static ArrayList<Class<?>> smallGameObjectTypes = new ArrayList<Class<?>>();
 	public static TrueTypeFont SMALL_FONT;
 	public Shell(String name) {
 		super(name);
@@ -42,6 +44,7 @@ public class Shell extends StateBasedGame{
 		System.out.println(cls);
 		scanGOTypes();
 		scanUITypes();
+		scanSGOTypes();
 	}
 	private void scanUITypes(){
 		List<Class<?>> cls=ClassFinder.find(BasicPanelButton.class.getPackage().getName());
@@ -63,15 +66,30 @@ public class Shell extends StateBasedGame{
 				gameObjectTypes.add(type);
 		}
 	}
+	private void scanSGOTypes(){
+		List<Class<?>> cls=ClassFinder.find(SmallGameObject.class.getPackage().getName());
+		for(Class<?> type:cls){
+			//Filter out abstract objects
+			if(Modifier.isAbstract(type.getModifiers()))
+				continue;
+			if(SmallGameObject.class.isAssignableFrom(type))
+				smallGameObjectTypes.add(type);
+		}
+	}
 	
+	@SuppressWarnings("unchecked")
 	public static ArrayList<Class<?>> getUITypes(){
-		return uiElementTypes;
+		return (ArrayList<Class<?>>) uiElementTypes.clone();
 	}
 	
+	@SuppressWarnings("unchecked")
 	public static ArrayList<Class<?>> getGOTypes(){
-		return gameObjectTypes;
+		return (ArrayList<Class<?>>) gameObjectTypes.clone();
 	}
-
+	@SuppressWarnings("unchecked")
+	public static ArrayList<Class<?>> getSGOTypes(){
+		return (ArrayList<Class<?>>) smallGameObjectTypes.clone();
+	}
 	@Override
 	public void initStatesList(GameContainer container) throws SlickException {
 		container.setShowFPS(false);

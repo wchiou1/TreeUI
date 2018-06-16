@@ -24,8 +24,10 @@ public class SaplingPanel extends Panel implements EditorImmune{
 	private void createGOButtons(){
 		//First get the list of gameobjects
 		ArrayList<Class<?>> classes = Shell.getGOTypes();
+		classes.addAll(Shell.getSGOTypes());
 		//We need to adjust the height of the panel
 		this.height = (classes.size()+1)*20;
+		System.out.println(classes);
 		
 		for(int i=0;i<classes.size();i++){
 			GOClassButton tempButton = new GOClassButton(origin,classes.get(i),0,i*20);

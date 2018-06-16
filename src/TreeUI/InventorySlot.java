@@ -33,6 +33,10 @@ public class InventorySlot extends UIElement{
 	public boolean isMoveable() {
 		return false;
 	}
+	
+	public SmallGameObject getStored(){
+		return stored;
+	}
 
 	@Override
 	public void draw(Graphics g,int x ,int y) {

@@ -149,7 +149,6 @@ public class TreeUIManager{
 		}
 		if(!uiObjectList.remove(io)&&!gameObjectList.remove(io))
 			System.out.println("Object not found, error");
-		inc.removeObject(io.getId());
 	}
 	public void addObject(InteractableObject io){
 		if(io==null){
