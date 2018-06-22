@@ -14,7 +14,7 @@ import smallGameObjects.SmallGameObject;
  */
 public class InventorySlot extends UIElement{
 	public int width,height;
-	protected SmallGameObject stored;
+	public SmallGameObject stored;
 	public InventorySlot(){
 		this.x=0;
 		this.y=0;
@@ -43,21 +43,44 @@ public class InventorySlot extends UIElement{
 		//Draw a box and then draw the item inside
 		g.setColor(Color.lightGray);
 		g.fillRect(x, y, width, height);
-		if(stored!=null)
-			stored.draw(g,x,y);
+		if(stored!=null){
+			int centerX = stored.getCenterX();
+			int centerY = stored.getCenterY();
+			stored.draw(g,x+width/2-centerX,y+height/2-centerY);
+		}
+	}
+	public boolean testMouseOnStored(int mx, int my){
+		if(stored==null)
+			return false;
+		//First move the stored object
+		int tempX = stored.x;
+		int tempY = stored.y;
+		int centerX = stored.getCenterX();
+		int centerY = stored.getCenterY();
+		
+		stored.move(this.x+(width/2)-centerX, this.y+(height/2)-centerY);
+		
+		boolean result = stored.isMouseOver(mx, my);
+		
+		stored.move(tempX, tempY);
+		return result;
 	}
 
 	@Override
 	public SmallGameObject click(int x, int y, SmallGameObject item) {
+		//THIS CODE IS NOW HANDLED BY INPUTMANAGER
+		
 		//Apply the currently held item to what is in the slot
-		if(stored!=null)
-			stored.click(x,y,item);
-		
-		
-		//Switches the item in the stored slot, returns the item in the stored slot
-		SmallGameObject temp=stored;
-		stored=item;
-		return temp;
+		/*if(stored!=null&&testMouseOnStored(x,y)){
+			return stored.click(x,y,item);
+		}
+		else{
+		*/
+			//Switches the item in the stored slot, returns the item in the stored slot
+			SmallGameObject temp=stored;
+			stored=item;
+			return temp;
+		//}
 	}
 
 	@Override

@@ -33,20 +33,20 @@ public class ObjectGrabber extends SmallGameObject implements EditorItem{
 	@Override
 	public void draw(Graphics g, int x, int y) {
 		g.setColor(Color.blue);
-		g.drawLine(x+2, y+2, x+2, y+9);//Left
-		g.drawLine(x+2, y+9, x+9, y+9);//Bottom
-		g.drawLine(x+9, y+9, x+9, y+2);//Right
-		g.drawLine(x+9, y+2, x+2, y+2);//Top
+		g.drawLine(x, y, x, y+9);//Left
+		g.drawLine(x, y+9, x+9, y+9);//Bottom
+		g.drawLine(x+9, y+9, x+9, y);//Right
+		g.drawLine(x+9, y, x, y);//Top
 	}
 
 	@Override
 	public int getCenterX() {
-		return x+4;
+		return 4;
 	}
 
 	@Override
 	public int getCenterY() {
-		return y+4;
+		return 4;
 	}
 
 	@Override

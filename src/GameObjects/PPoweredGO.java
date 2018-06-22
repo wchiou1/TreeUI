@@ -72,11 +72,6 @@ public abstract class PPoweredGO extends PoweredGameObject{
 		g.fillOval(x, y, 20, 20);
 		
 	}
-
-	@Override
-	public SmallGameObject click(int x, int y, SmallGameObject item) {
-		return item;
-	}
 	
 	@Override
 	public boolean isMouseOver(int x, int y) {

@@ -13,6 +13,7 @@ import Editor.Bud;
 import Editor.EditorImmune;
 import Editor.Sapling;
 import GameLogic.RequiresTyping;
+import TreeUI.InventorySlot;
 import gameObjects.GameObject;
 import smallGameObjects.HasOverlay;
 import smallGameObjects.SmallGameObject;
@@ -207,6 +208,10 @@ public class InputManager implements InputListener{
 						if(temp instanceof OriginObject){
 							System.out.println("OriginObject clicked, displaying panel("+((OriginObject)temp).getView().x+","+((OriginObject)temp).getView().y+")");
 							moveToFront(((OriginObject)temp).getView());
+						}
+						if(temp instanceof InventorySlot){
+							if(((InventorySlot)temp).testMouseOnStored(mouseX, mouseY))
+								temp=((InventorySlot) temp).getStored();
 						}
 						//If it's movable, move it infront(Panels are movable)
 						if(temp.isMoveable()){

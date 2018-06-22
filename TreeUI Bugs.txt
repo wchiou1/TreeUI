@@ -2,3 +2,5 @@ Add a scrolldown for file loading
 add a scrolldown for object generation
 Add small objects to object generation[done]
 Create gas station example
+::Requirements
+Prevent smallObjects from creating panels, (add interface for checking)

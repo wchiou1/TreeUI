@@ -6,20 +6,18 @@ import org.newdawn.slick.Graphics;
 public class Multitool extends SmallGameObject{
 	@Override
 	public void draw(Graphics g,int x, int y) {
-		x+=2;
-		y+=3;
 		g.setColor(Color.yellow);
 		g.fillOval(x, y, 5, 10);
 	}
 
 	@Override
 	public int getCenterX() {
-		return x+3;
+		return 3;
 	}
 
 	@Override
 	public int getCenterY() {
-		return y+5;
+		return 5;
 	}
 
 	@Override

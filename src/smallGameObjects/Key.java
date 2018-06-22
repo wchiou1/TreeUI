@@ -4,11 +4,8 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 public class Key extends SmallGameObject{
-	private int pattern;
-	public Key(int pattern, String name){
-		this.name=name;
-		this.pattern=pattern;
-	}
+	public int pattern;
+	public int name;
 	public int getPattern(){
 		return pattern;
 	}
@@ -19,11 +16,11 @@ public class Key extends SmallGameObject{
 	}
 	@Override
 	public int getCenterX() {
-		return x+2;
+		return 2;
 	}
 	@Override
 	public int getCenterY() {
-		return y+3;
+		return 3;
 	}
 	@Override
 	public boolean isMouseOver(int x, int y) {

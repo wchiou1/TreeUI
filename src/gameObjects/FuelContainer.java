@@ -10,7 +10,6 @@ import TreeUI.InventorySlot;
 
 public class FuelContainer extends GameObject{
 	public int fuel;
-	public InventorySlot fuelIntake;
 	public FuelContainer(){
 		fuel = 100000;
 	}

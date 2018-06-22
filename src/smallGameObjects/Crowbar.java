@@ -13,13 +13,13 @@ public class Crowbar extends SmallGameObject{
 
 	@Override
 	public int getCenterX() {
-		return x+3;
+		return 3;
 	}
 
 	@Override
 	public int getCenterY() {
 		// TODO Auto-generated method stub
-		return y+3;
+		return 3;
 	}
 
 	@Override

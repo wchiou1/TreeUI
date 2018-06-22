@@ -456,8 +456,10 @@ public class Incubator{
 	    			InteractableObject subject2 = (InteractableObject)f.get(subject);
 	    			if(subject2==null)
 	    				tempSaveString+="~#,";
-	    			else
+	    			else{
 	    				tempSaveString+="~"+subject2.getId()+",";
+	    				recursiveScan(ht,subject2.getId(),false);
+	    			}
 	    			continue;
 	    		}
 	    		//If it's not the classes we want, throw it out.
@@ -543,7 +545,12 @@ public class Incubator{
 			if(GameObject.class.isAssignableFrom(c)){
 				System.out.print("GameObject detected: "+c);
 			}
-			subject = getObject(addObject(c));
+			//Check if it's the root so if it's not, do not add it to the environment
+			if(parentID == -1)
+				subject = getObject(addObject(c));
+			else
+				subject = tuim.createLooseGameObject(c, 0, 0);
+			
 			//System.out.println("Checking DATALINK for "+typestr+":"+subject.checkDataLink());
 		}
 		if(ClassFinder.existsWithin(typestr, "smallGameObjects")){
@@ -554,7 +561,12 @@ public class Incubator{
 				System.out.print("SmallGameObject detected: "+c);
 			}
 			
-			subject = getObject(addObject(c));
+			//Check if it's the root so if it's not, do not add it to the environment
+			if(parentID == -1)
+				subject = getObject(addObject(c));
+			else
+				subject = tuim.createLooseGameObject(c, 0, 0);
+			
 		}
 		if(ClassFinder.existsWithin(typestr, "TreeUI.Engineering")){
 			//It's a UIElement

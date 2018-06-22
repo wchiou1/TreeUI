@@ -26,18 +26,18 @@ public class Selector extends SmallGameObject implements EditorItem{
 	@Override
 	public void draw(Graphics g, int x, int y) {
 		g.setColor(Color.blue);
-		g.fillRect(x+2, y+5, 10, 4);
-		g.fillRect(x+5, y+2, 4, 10);
+		g.fillRect(x, y+3, 10, 4);
+		g.fillRect(x+3, y, 4, 10);
 	}
 
 	@Override
 	public int getCenterX() {
-		return x+5;
+		return 5;
 	}
 
 	@Override
 	public int getCenterY() {
-		return y+5;
+		return 5;
 	}
 
 	@Override

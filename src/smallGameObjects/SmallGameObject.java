@@ -31,4 +31,6 @@ public abstract class SmallGameObject extends GameObject{
 		return held;
 		
 	}
+	public abstract int getCenterX();
+	public abstract int getCenterY();
 }

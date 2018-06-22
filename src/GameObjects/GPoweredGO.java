@@ -73,11 +73,6 @@ public class GPoweredGO extends PoweredGameObject{
 	}
 
 	@Override
-	public SmallGameObject click(int x, int y, SmallGameObject item) {
-		return item;
-	}
-
-	@Override
 	public boolean isMouseOver(int x, int y) {
 		if(GameMath.dis(this.x+10, this.y+10, x, y)<=10)
 			return true;
@@ -87,13 +82,13 @@ public class GPoweredGO extends PoweredGameObject{
 	@Override
 	public int getCenterX() {
 		// TODO Auto-generated method stub
-		return x+10;
+		return 10;
 	}
 
 	@Override
 	public int getCenterY() {
 		// TODO Auto-generated method stub
-		return y+10;
+		return 10;
 	}
 	@Override
 	public void objectUpdate(int x, int y, int delta) {

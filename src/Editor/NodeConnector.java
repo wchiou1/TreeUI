@@ -83,13 +83,12 @@ public class NodeConnector extends SmallGameObject implements EditorItem,HasOver
 
 	@Override
 	public int getCenterX() {
-		return x+4;
+		return 5;
 	}
 
 	@Override
 	public int getCenterY() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 5;
 	}
 
 	@Override

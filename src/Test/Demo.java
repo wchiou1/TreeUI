@@ -40,7 +40,9 @@ public class Demo extends TreeUIGameState{
 		
 			//im.addObject(new Window(100,100,50,50,Color.blue));
 			//im.addObject(new Window(50,50,50,50,Color.red));
-			Key key1=new Key(123,"key1");
+			int key1 = inc.addObject(Key.class);
+			inc.writeParam(key1, "pattern", 123);
+			inc.writeParam(key1, "name", "key1");
 			
 			//Generator generate=new Generator(300,300);
 			//generate.setView(p);

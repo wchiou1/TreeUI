@@ -22,12 +22,12 @@ public class PumpHandle extends SmallGameObject{
 	}
 	@Override
 	public int getCenterX() {
-		return x+3;
+		return 3;
 	}
 
 	@Override
 	public int getCenterY() {
-		return y+3;
+		return 3;
 	}
 
 	@Override
