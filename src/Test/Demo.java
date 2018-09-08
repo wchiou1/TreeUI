@@ -207,7 +207,7 @@ public class Demo extends TreeUIGameState{
 			int kr1 = inc.addUIElement(p, Keyrack.class);
 			inc.writeParam(kr1, "rx", 60);
 			inc.writeParam(kr1, "ry", 5);
-			inc.writeParam(kr1, "key", key1);
+			//inc.writeParam(kr1, "key", key1);
 			
 			//InventorySlot is1=new InventorySlot(60,20);
 			//p.addObject(is1);
