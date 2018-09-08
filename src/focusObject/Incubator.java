@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Array;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -509,7 +508,7 @@ public class Incubator{
 		InteractableObject subject=null;
 		
 		//First check if the class exists as a gameobject or a uielement
-		if(ClassFinder.existsWithin(typestr, "GameObjects")){
+		if(ClassFinder.existsWithin(typestr, "gameObjects")){
 			//It's a gameobject
 			c = Class.forName("GameObjects."+typestr);
 			//We need to know if it's paneled or not

@@ -1,0 +1,4 @@
+109:{type:Panel,active:true,height:100,width:100,x:449,y:197,objectList:[~134|~167]}
+@108:{type:Generator,toggleFreq:,output:600,rx:0,ry:0,x:368,y:271,view:~109}
+167:{type:PanelExit,rx:85,ry:5,x:534,y:202}
+134:{type:StaticText,text:Test,width:30,height:20,rx:45,ry:76,x:494,y:273}

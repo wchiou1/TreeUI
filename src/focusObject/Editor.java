@@ -28,8 +28,8 @@ public class Editor{
 		//Create the editor command panel, the command panel auto-generates the variable panel and save management panel
 		EditorCommandPanel ecp = new EditorCommandPanel(tuim);
 		tuim.addObject(ecp);
-		tuim.addItemtoInv(new Wirecutters());
-		tuim.addItemtoInv(new Multitool());
+		tuim.addItemtoInv((SmallGameObject) tuim.createGameObject(Wirecutters.class, 300, 300));
+		tuim.addItemtoInv((SmallGameObject) tuim.createGameObject(Multitool.class, 300, 300));
 		
 	}
 	
