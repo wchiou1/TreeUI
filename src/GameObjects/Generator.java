@@ -6,18 +6,21 @@ import org.newdawn.slick.Image;
 
 import GameLogic.GameMath;
 import GameLogic.ImageLoader;
+import TreeUI.InventorySlot;
+import smallGameObjects.PumpHandle;
 import smallGameObjects.SmallGameObject;
 
 //This class will broadcast it's power value
 
-public class Generator extends PoweredGameObject{
-	private String powerFreq;
+public class Generator extends GPoweredGO{
 	public String toggleFreq;
 	public int output;
+	public int fuel;
+	public InventorySlot fuelIntake;
 	public Generator(){
-		powerFreq=":P Generator "+id;
 		output = 0;
 		toggleFreq="";
+		fuel = 0;
 	}
 
 	@Override
@@ -33,8 +36,6 @@ public class Generator extends PoweredGameObject{
 		else
 			g.setColor(Color.darkGray);
 		g.fillOval(x, y, 20, 20);
-		
-		
 	}
 
 	@Override
@@ -46,8 +47,18 @@ public class Generator extends PoweredGameObject{
 
 	@Override
 	public void powerUpdate(int delta) {
+		boolean on = dataNode.getData(toggleFreq)==1||dataNode.getData(toggleFreq)==Integer.MIN_VALUE;
+		boolean fueled = false;
+		if(on){
+			if(fuelIntake!=null){
+				SmallGameObject fuelHandle = fuelIntake.getStored();
+				if(fuelHandle!=null&&fuelHandle instanceof PumpHandle){
+					fueled = ((PumpHandle)fuelHandle).getFuel() == 1;
+				}
+			}
+		}
 		//Check if it's toggled on
-		if(dataNode.getData(toggleFreq)==1||dataNode.getData(toggleFreq)==Integer.MIN_VALUE){
+		if(fueled){
 			if(output<600)
 				output++;
 		}

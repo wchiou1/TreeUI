@@ -14,14 +14,14 @@ public class GPoweredGO extends PoweredGameObject{
 	public int recordedPower;
 	public int posPower;
 	public int negPower;
-	public ANKeyWrapper powerNode;
+	private ANKeyWrapper powerNode;
 	public String toggleFreq="";
 	public String powerFreq="";
 	public double power_draw;
 	public static int greedCo = 4;
 	public GPoweredGO(){
-		powerFreq=":P Lightbulb "+id;
-		powerNode = new ANKeyWrapper(getNode(),":P");
+		powerFreq=";P "+id;
+		powerNode = new ANKeyWrapper(getNode(),";P");
 		power_draw = 0;
 		posPower = 0;
 		negPower = 0;
@@ -43,7 +43,7 @@ public class GPoweredGO extends PoweredGameObject{
 				power_draw-=(200/greedCo)*Math.pow(1.0-ratio,Math.abs(power_draw/(200/greedCo)));//Increase consumption
 			}
 		}
-		else if(recordedPower<0){//There is no power on the network
+		else if(recordedPower<=0){//There is no power on the network
 			if(power_draw<0)//If this is consuming power
 				//power_draw-=Math.floor(1.0*power_draw/3);
 				power_draw++;//Reduce consumption
@@ -73,11 +73,6 @@ public class GPoweredGO extends PoweredGameObject{
 	}
 
 	@Override
-	public SmallGameObject click(int x, int y, SmallGameObject item) {
-		return item;
-	}
-
-	@Override
 	public boolean isMouseOver(int x, int y) {
 		if(GameMath.dis(this.x+10, this.y+10, x, y)<=10)
 			return true;
@@ -87,13 +82,13 @@ public class GPoweredGO extends PoweredGameObject{
 	@Override
 	public int getCenterX() {
 		// TODO Auto-generated method stub
-		return x+10;
+		return 10;
 	}
 
 	@Override
 	public int getCenterY() {
 		// TODO Auto-generated method stub
-		return y+10;
+		return 10;
 	}
 	@Override
 	public void objectUpdate(int x, int y, int delta) {

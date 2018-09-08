@@ -56,6 +56,22 @@ public class TreeUIManager{
 		product.y=y;
 		return (GameObject) product;
 	}
+	/**
+	 * Creates a gameobject which does NOT exist in the gameworld
+	 * This is to create an object to put inside another object
+	 * without having a copy generated in the gameworld
+	 * @param type
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	public GameObject createLooseGameObject(Class<?> type,int x, int y){
+		InteractableObject product = inc.getObject(inc.addObject(type));
+		product.x=x;
+		product.y=y;
+		gameObjectList.removeFirstOccurrence(product);
+		return (GameObject) product;
+	}
 	public BudPanel createBPanel(Bud bud){
 		BudPanel temp = new BudPanel(bud);
 		addObject(temp);
@@ -133,7 +149,6 @@ public class TreeUIManager{
 		}
 		if(!uiObjectList.remove(io)&&!gameObjectList.remove(io))
 			System.out.println("Object not found, error");
-		inc.removeObject(io.getId());
 	}
 	public void addObject(InteractableObject io){
 		if(io==null){

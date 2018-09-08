@@ -1,0 +1,4 @@
+93:{type:Panel,active:false,height:100,width:100,x:304,y:204,objectList:[]}
+@92:{type:Generator,toggleFreq:,output:600,rx:0,ry:0,x:354,y:304,view:~93}
+@81:{type:Wirecutters,rx:0,ry:0,x:50,y:50}
+@80:{type:Multitool,rx:0,ry:0,x:50,y:100}

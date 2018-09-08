@@ -46,7 +46,7 @@ public class Sapling extends BasicPaneledGameObject implements EditorImmune{
 			System.out.println("OriginObject detected, creating and wrapping panel");
 			
 			//Create the panel
-			Panel panel = tuim.createPanel(product);
+			tuim.createPanel(product);
 			/*Panel panel = inc.getPanel(inc.addPanel());
 			panel.enableEditing(inc);
 			

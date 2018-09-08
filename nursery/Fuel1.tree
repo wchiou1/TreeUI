@@ -1,0 +1,5 @@
+84:{type:Panel,active:false,height:100,width:100,x:349,y:318,objectList:[]}
+@83:{type:PumpHandle,source:~80,rx:0,ry:0,x:399,y:418,view:~84}
+82:{type:InventorySlot,width:20,height:20,stored:~83,rx:63,ry:28,x:243,y:334}
+81:{type:Panel,active:true,height:100,width:100,x:180,y:306,objectList:[~82]}
+80:{type:FuelContainer,fuel:100000,rx:0,ry:0,x:225,y:457,view:~81}

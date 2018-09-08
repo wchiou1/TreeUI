@@ -20,8 +20,8 @@ public abstract class PPoweredGO extends PoweredGameObject{
 	public double power_draw;
 	public static int greedCo = 4;
 	public PPoweredGO(){
-		powerFreq=":P Lightbulb "+id;
-		powerNode = new ANKeyWrapper(getNode(),":P");
+		powerFreq=";P "+id;
+		powerNode = new ANKeyWrapper(getNode(),";P");
 		power_draw = 0;
 		posPower = 0;
 		negPower = 0;
@@ -43,7 +43,7 @@ public abstract class PPoweredGO extends PoweredGameObject{
 				power_draw-=(200/greedCo)*Math.pow(1.0-ratio,Math.abs(power_draw/(200/greedCo)));//Increase consumption
 			}
 		}
-		else if(recordedPower<0){//There is no power on the network
+		else if(recordedPower<=0){//There is no power on the network
 			if(power_draw<0)//If this is consuming power
 				//power_draw-=Math.floor(1.0*power_draw/3);
 				power_draw++;//Reduce consumption
@@ -71,11 +71,6 @@ public abstract class PPoweredGO extends PoweredGameObject{
 		}
 		g.fillOval(x, y, 20, 20);
 		
-	}
-
-	@Override
-	public SmallGameObject click(int x, int y, SmallGameObject item) {
-		return item;
 	}
 	
 	@Override

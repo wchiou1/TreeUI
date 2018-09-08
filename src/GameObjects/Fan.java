@@ -13,7 +13,6 @@ public class Fan extends GPoweredGO{
 	private Image frame,blades;
 	public double angle = 0;
 	public Fan(){
-		powerFreq=":P Fan "+id;
 		frame = ImageLoader.getImage("res/TreeUI/fan_frame.png");
 		blades = ImageLoader.getImage("res/TreeUI/fan_blades.png");
 	}

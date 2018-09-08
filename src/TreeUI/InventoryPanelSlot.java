@@ -28,8 +28,11 @@ public class InventoryPanelSlot extends InventorySlot implements EditorImmune{
 		}
 		g.setColor(Color.lightGray);
 		g.fillRect(x+1, y+1, width-2, height-2);
-		if(stored!=null)
-			stored.draw(g,x,y);
+		if(stored!=null){
+			int centerX = stored.getCenterX();
+			int centerY = stored.getCenterY();
+			stored.draw(g,x+width/2-centerX,y+height/2-centerY);
+		}
 	}
 	
 }
