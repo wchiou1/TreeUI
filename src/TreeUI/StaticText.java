@@ -60,4 +60,12 @@ public class StaticText extends UIElement{
 	public SmallGameObject click(int x, int y, SmallGameObject item) {
 		return item;
 	}
+	@Override
+	protected int getWidth() {
+		return width;
+	}
+	@Override
+	protected int getHeight() {
+		return height;
+	}
 }

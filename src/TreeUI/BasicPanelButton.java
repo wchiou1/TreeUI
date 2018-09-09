@@ -11,11 +11,7 @@ import focusObject.OriginObject;
  *
  */
 public class BasicPanelButton extends OriginObject{
-	public int width,height;
-	public BasicPanelButton(){
-		this.width=10;
-		this.height=10;
-	}
+	public int width=10,height=10;
 	/*public BasicPanelButton(int x, int y){
 		//This is relative to the panel they are on
 		this.x=x;
@@ -43,6 +39,16 @@ public class BasicPanelButton extends OriginObject{
 		if(highlight)
 			g.setColor(Color.yellow);
 		g.fillRect(x, y, width, height);
+	}
+
+	@Override
+	protected int getWidth() {
+		return width;
+	}
+
+	@Override
+	protected int getHeight() {
+		return height;
 	}
 
 }

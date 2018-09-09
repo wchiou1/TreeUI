@@ -12,8 +12,10 @@ import org.newdawn.slick.Graphics;
  *
  */
 public abstract class UIElement extends InteractableObject{
-	protected transient Panel screen;
+	protected Panel screen;
 	public int rx=0,ry=0;
+	protected abstract int getWidth();
+	protected abstract int getHeight();
 	/**
 	 * Sets the parent panel and thus uses relative x and y instead of hard x and y
 	 * NOTE: If this is not called, then the object will use the hard x and y for calculations

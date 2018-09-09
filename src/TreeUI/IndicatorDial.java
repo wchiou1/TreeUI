@@ -63,5 +63,13 @@ public class IndicatorDial extends UIElement{
 			return true;
 		return false;
 	}
+	@Override
+	protected int getWidth() {
+		return radius*2;
+	}
+	@Override
+	protected int getHeight() {
+		return radius*2;
+	}
 	
 }

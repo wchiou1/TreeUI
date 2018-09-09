@@ -27,4 +27,14 @@ public class Multitool extends SmallGameObject{
 				return true;
 		return false;
 	}
+
+	@Override
+	protected int getWidth() {
+		return 6;
+	}
+
+	@Override
+	protected int getHeight() {
+		return 11;
+	}
 }

@@ -22,6 +22,7 @@ public class SaplingPanel extends Panel implements EditorImmune{
 	}
 	
 	private void createGOButtons(){
+		ArrayList<UIElement> buttons = new ArrayList<UIElement>();
 		//First get the list of gameobjects
 		ArrayList<Class<?>> classes = Shell.getGOTypes();
 		classes.addAll(Shell.getSGOTypes());
@@ -31,10 +32,11 @@ public class SaplingPanel extends Panel implements EditorImmune{
 		
 		for(int i=0;i<classes.size();i++){
 			GOClassButton tempButton = new GOClassButton(origin,classes.get(i),0,i*20);
-			addObject(tempButton);
+			buttons.add(tempButton);
 		}
 		GOClassButton tempButton = new GOClassButton(origin,null,0,classes.size()*20);
-		addObject(tempButton);
+		buttons.add(tempButton);
+		addObjects(buttons);
 		
 	}
 	public void clearReferences(){

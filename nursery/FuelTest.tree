@@ -1,0 +1,17 @@
+327:{type:Panel,active:false,height:100,width:100,x:440,y:165,objectList:[]}
+@326:{type:LightBulb,toggleFreq:"",powered:false,toggle:true,recordedPower:196,posPower:600,negPower:-404,toggleFreq:"",powerFreq:";P 327",power_draw:-202.75372040564085,greedCo:4,rx:0,ry:0,x:490,y:265,view:~327}
+309:{type:Panel,active:false,height:100,width:100,x:436,y:256,objectList:[]}
+@308:{type:Fan,angle:100.58553896606236,powered:false,toggle:true,recordedPower:196,posPower:600,negPower:-404,toggleFreq:"",powerFreq:";P 309",power_draw:-202.13077062767206,greedCo:4,rx:0,ry:0,x:486,y:356,view:~309}
+115:{type:Panel,active:false,height:100,width:100,x:208,y:176,objectList:[~147]}
+147:{type:IndicatorBar,vertical:true,width:9,height:80,range:1000000,key:"115 Fuel",rx:10,ry:10,x:218,y:186}
+@114:{type:FuelContainer,fuel:691592,fuelFreq:"115 Fuel",rx:0,ry:0,x:257,y:290,view:~115}
+114:{type:FuelContainer,fuel:691592,fuelFreq:"115 Fuel",rx:0,ry:0,x:257,y:290,view:~115}
+481:{type:IndicatorBar,vertical:true,width:9,height:80,range:1000000,key:"115 Fuel",rx:80,ry:10,x:378,y:159}
+249:{type:InventorySlot,width:20,height:20,stored:~284,rx:40,ry:70,x:338,y:219}
+147:{type:IndicatorBar,vertical:true,width:9,height:80,range:1000000,key:"115 Fuel",rx:10,ry:10,x:218,y:186}
+285:{type:Panel,active:false,height:100,width:100,x:216,y:352,objectList:[]}
+284:{type:PumpHandle,source:~114,rx:0,ry:0,x:247,y:364,view:~285}
+352:{type:Switch,width:10,height:14,key:"asd",up:false,rx:65,ry:10,x:363,y:159}
+97:{type:Panel,active:true,height:100,width:100,x:298,y:149,objectList:[~249|~352|~481]}
+@96:{type:Generator,toggleFreq:"asd",output:600,fuel:0,fuelIntake:~249,powered:false,toggle:true,recordedPower:0,posPower:0,negPower:0,toggleFreq:"",powerFreq:";P 97",power_draw:0.0,greedCo:4,rx:0,ry:0,x:344,y:298,view:~97}
+115:{type:Panel,active:false,height:100,width:100,x:208,y:176,objectList:[~147]}

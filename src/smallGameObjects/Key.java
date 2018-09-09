@@ -16,7 +16,7 @@ public class Key extends SmallGameObject{
 	}
 	@Override
 	public int getCenterX() {
-		return 2;
+		return 1;
 	}
 	@Override
 	public int getCenterY() {
@@ -28,5 +28,13 @@ public class Key extends SmallGameObject{
 			if(y>=this.y&&y<=this.y+5)
 				return true;
 		return false;
+	}
+	@Override
+	protected int getWidth() {
+		return 3;
+	}
+	@Override
+	protected int getHeight() {
+		return 5;
 	}
 }

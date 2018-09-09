@@ -13,13 +13,18 @@ import smallGameObjects.SmallGameObject;
 public class Panel extends Snappable{
 	public boolean active = false; //Whether the panel is active(inactive panels are invisible)
 	protected ArrayList<UIElement> objectList = new ArrayList<UIElement>();//List of objects that the panel must render
-	private transient Incubator inc;
+	public int offset = 0;
+	public boolean scrollX = false;
+	public boolean scrollY = false;
+	public int lowerBoundX,upperBoundX,lowerBoundY,upperBoundY;
+	private Incubator inc;
 	//The attached datanode which all UIELements
 										//will use to communicate with the datanetwork
 	protected boolean virgin = true;//If The panel has ever been opened before(used to error check setting the panel's origin object)
 	public Panel(){
 		this.width=100;
 		this.height=100;
+		recalculateBounds();
 	}
 	public Panel(int x, int y, int width, int height){
 		this.x=x;
@@ -27,6 +32,7 @@ public class Panel extends Snappable{
 		this.width=width;
 		this.height=height;
 		this.active=true;
+		recalculateBounds();
 	}
 	public void enableEditing(Incubator inc){
 		this.inc=inc;
@@ -35,7 +41,17 @@ public class Panel extends Snappable{
 		return objectList;
 	}
 	public boolean removeObject(UIElement io){
-		return objectList.remove(io);
+		boolean result = objectList.remove(io);
+		recalculateBounds();
+		return result;
+	}
+	public void addObjects(ArrayList<UIElement> ios){
+		for(UIElement uie:ios){
+			uie.setDataLink(dataNode);
+			objectList.add(uie);
+			uie.setScreen(this);
+		}
+		recalculateBounds();
 	}
 	/**
 	 * Adds an interactable object and uses the x and y as position delta from panel x and y
@@ -46,6 +62,32 @@ public class Panel extends Snappable{
 		io.setDataLink(dataNode);
 		objectList.add(io);
 		io.setScreen(this);
+		recalculateBounds();
+	}
+	public void recalculateBounds(){
+		System.out.println("Recalculating");
+		int lowerX=0,upperX=width;
+		int lowerY=0,upperY=height;
+		//Iterate through all uielements
+		for(UIElement element:objectList){
+			//Test for lower bounds
+			if(element.rx<lowerX){
+				lowerX = element.rx;
+			}
+			if(element.rx+element.getWidth()>upperX){
+				upperX = element.rx+element.getHeight();
+			}
+			if(element.ry<lowerY){
+				lowerY = element.ry;
+			}
+			if(element.ry+element.getHeight()>upperY){
+				upperY = element.ry+element.getHeight();
+			}
+		}
+		lowerBoundX = lowerX;
+		upperBoundX = upperX;
+		lowerBoundY = lowerY;
+		upperBoundY = upperY;
 	}
 	/**
 	 * Toggles the panel open and closed using the active boolean

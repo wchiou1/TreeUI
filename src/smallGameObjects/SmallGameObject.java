@@ -1,7 +1,5 @@
 package smallGameObjects;
 
-import org.newdawn.slick.Graphics;
-
 import gameObjects.GameObject;
 
 /**
@@ -15,14 +13,39 @@ public abstract class SmallGameObject extends GameObject{
 		return name;
 	}
 	@Override
-	public SmallGameObject masterKeyPress(int x, int y, int key, SmallGameObject held){
-		//Move the small object if their held is empty
-		System.out.println("SmallObject key pressed");
-		if(held==null){
-			//Need to remove this from the incubator
-			//This will be done in the InputManager
-			return this;//Looks like this is not good practice.
+	public SmallGameObject click(int x, int y,SmallGameObject item) {
+		if(item!=null&&item.id==this.id){
+			//If the item is itself, open the panel
+			togglePanel(x,y,item);
+			return item;
 		}
+		else if(item!=null){
+			//If the item is not null, apply item
+			return sgoClick(x,y,item);
+		}
+		else{
+			//If the item is null return self
+			return this;
+		}
+	}
+	/**
+	 * Function which is called when a smallobject is applied to this object
+	 * Defaults to doing nothing
+	 * @param x
+	 * @param y
+	 * @param item
+	 * @return
+	 */
+	protected SmallGameObject sgoClick(int x, int y, SmallGameObject item){
+		return item;
+	}
+	@Override
+	protected boolean panelOpenCondition(int x, int y, SmallGameObject item){
+		return item.id==this.id;
+	}
+	@Override
+	public SmallGameObject masterKeyPress(int x, int y, int key, SmallGameObject held){
+
 		return objectKeyPress(x,y,key,held);
 	}
 	@Override

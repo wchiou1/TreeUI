@@ -60,4 +60,12 @@ public class EditorStaticText extends UIElement implements EditorImmune{
 	public SmallGameObject click(int x, int y, SmallGameObject item) {
 		return item;
 	}
+	@Override
+	protected int getWidth() {
+		return width;
+	}
+	@Override
+	protected int getHeight() {
+		return height;
+	}
 }

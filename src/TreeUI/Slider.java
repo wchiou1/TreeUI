@@ -126,5 +126,13 @@ public class Slider extends UIElement{
 				return true;
 		return false;
 	}
+	@Override
+	protected int getWidth() {
+		return width;
+	}
+	@Override
+	protected int getHeight() {
+		return height;
+	}
 	
 }

@@ -53,21 +53,39 @@ public abstract class OriginObject extends UIElement{
 		}
 	}
 	/**
+	 * Default click event toggles the panel
+	 * This is overwritten in smallGameObject to limit toggling only when the item is held(If the item that is given is itself)
 	 * 
 	 */
 	@Override
 	public SmallGameObject click(int x, int y,SmallGameObject item) {
-		togglePanel();
+		togglePanel(x,y,item);
 		return item;
 	}
-	public void togglePanel(){
+	public boolean existsPanel(){
+		return view==null;
+	}
+	public void togglePanel(int x, int y, SmallGameObject item){
 		if(view==null){
-			System.out.println("ERROR: panel not set in origin object");
+			//If there is no panel, just ignore
 			return;
 		}
-		view.toggle();
+		if(!view.isActive()&&panelOpenCondition(x,y,item)){
+			//The panel is open
+			view.open();
+		}
+		else{
+			view.close();
+		}
 	}
-	
+	/**
+	 * Function which is called when attempting to open a panel
+	 * Logic can be overrided to "lock" a panel
+	 * @return
+	 */
+	protected boolean panelOpenCondition(int x, int y, SmallGameObject item){
+		return true;
+	}
 	public void dMoveTreeUI(int dx, int dy){
 		dmove(dx,dy);
 		view.dMoveTreeUI(dx,dy);

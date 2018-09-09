@@ -10,8 +10,10 @@ import TreeUI.InventorySlot;
 
 public class FuelContainer extends GameObject{
 	public int fuel;
+	public String fuelFreq;
 	public FuelContainer(){
 		fuel = 100000;
+		fuelFreq = ""+id+" Fuel";
 	}
 
 	@Override
@@ -39,7 +41,10 @@ public class FuelContainer extends GameObject{
 			return true;
 		return false;
 	}
-
+	@Override
+	public void update(int x, int y, int delta){
+		dataNode.changeData(fuelFreq, fuel);
+	}
 	@Override
 	public int getCenterX() {
 		return x+10;
@@ -48,5 +53,15 @@ public class FuelContainer extends GameObject{
 	@Override
 	public int getCenterY() {
 		return y+10;
+	}
+
+	@Override
+	protected int getWidth() {
+		return 20;
+	}
+
+	@Override
+	protected int getHeight() {
+		return 20;
 	}
 }

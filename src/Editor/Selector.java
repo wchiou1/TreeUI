@@ -4,6 +4,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 import focusObject.InteractableObject;
+import focusObject.Panel;
 import smallGameObjects.SmallGameObject;
 
 public class Selector extends SmallGameObject implements EditorItem{
@@ -18,6 +19,9 @@ public class Selector extends SmallGameObject implements EditorItem{
 	}
 	
 	public void setNewSubject(InteractableObject io){
+		if(io instanceof Panel){
+			((Panel)io).recalculateBounds();
+		}
 		System.out.println("Set variable panel to object "+io);
 		ecp.setObject(io);
 		ecp.openVPanel();
@@ -49,6 +53,16 @@ public class Selector extends SmallGameObject implements EditorItem{
 				return true;
 			}
 		return false;
+	}
+
+	@Override
+	protected int getWidth() {
+		return 10;
+	}
+
+	@Override
+	protected int getHeight() {
+		return 10;
 	}
 	
 }

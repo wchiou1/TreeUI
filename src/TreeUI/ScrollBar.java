@@ -6,18 +6,9 @@ import org.newdawn.slick.Graphics;
 import focusObject.UIElement;
 import smallGameObjects.SmallGameObject;
 
-public class Indicator extends UIElement{
-	public int width=6,height=8;
-	public String key = "";
-	/*
-	public Indicator(int x, int y,String key){
-		this.x=x;
-		this.y=y;
-		width=6;
-		height=8;
-		this.key=key;
-	}
-	*/
+public class ScrollBar extends UIElement{
+	public boolean vertical=true;
+	public int width=9,height=100,range=100;
 
 	@Override
 	public boolean isMoveable() {
@@ -26,32 +17,12 @@ public class Indicator extends UIElement{
 
 	@Override
 	public void draw(Graphics g, int x, int y) {
-		int temp=dataNode.getData(key);
-		if(temp==Integer.MIN_VALUE){
-			g.setColor(Color.gray);
-			g.fillRect(x, y, width, height);
-			return;
-		}
-		switch(temp){
-		case 0:{
-			g.setColor(Color.red); break;
-		}
-		case 1:{
-			g.setColor(Color.blue); break;
-		}
-		case 2:{
-			g.setColor(Color.green); break;
-		}
-		default:{
-			g.setColor(Color.gray);
-		}
-		}
-		g.fillRect(x, y, width, height);
+		
 	}
 
 	@Override
 	public SmallGameObject click(int x, int y,SmallGameObject item) {
-		//Do nothing
+		
 		return item;
 	}
 
@@ -62,10 +33,8 @@ public class Indicator extends UIElement{
 				return true;
 		return false;
 	}
-
 	@Override
 	public void update(int mouseX, int mouseY,int delta) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -78,4 +47,5 @@ public class Indicator extends UIElement{
 	protected int getHeight() {
 		return height;
 	}
+	
 }

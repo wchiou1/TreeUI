@@ -1,12 +1,14 @@
 package Editor;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 
 import Test.SuperGlobal;
 import TreeUI.StaticText;
 import focusObject.Incubator;
 import focusObject.InteractableObject;
 import focusObject.Panel;
+import focusObject.UIElement;
 
 /**
  * This panel will display the variables of the object it has stored
@@ -31,14 +33,31 @@ public class VariablePanel extends Panel implements EditorImmune{
 		objectList.clear();
 		Field[] fields;
 		try {
+			ArrayList<UIElement> elements = new ArrayList<UIElement>();
 			fields = inc.getFields(io.getId());
+			if(fields==null){
+				this.height = 40;
+				elements.add(new EditorStaticText(0,0,180,20,io.getClass().getSimpleName()));
+				if(io instanceof EditorImmune){
+					elements.add(new EditorStaticText(0,20,180,20,"Immune Object-Access Denied"));
+				}
+				else if(io instanceof EditorItem){
+					elements.add(new EditorStaticText(0,20,180,20,"Editor Item-Access Denied"));
+				}
+				else{
+					elements.add(new EditorStaticText(0,20,180,20,"Object not in Incubator"));
+				}
+				addObjects(elements);
+				return;
+			}
 			//First, change the height of this panel to fit all the boxes
 			this.height = (fields.length+1)*20;
 			
-			addObject(new EditorStaticText(0,0,180,20,""+io.getId()+" "+io.getClass().getSimpleName()));
+			elements.add(new EditorStaticText(0,0,180,20,""+io.getId()+" "+io.getClass().getSimpleName()));
 			//We got the fields, let's create the boxes
 			for(int i=0;i<fields.length;i++)
-				addObject(new VariableBox(0,(i+1)*20,inc,fields[i],io));
+				elements.add(new VariableBox(0,(i+1)*20,inc,fields[i],io));
+			addObjects(elements);
 			//If it's a panel, give the option to save and load
 			/*if(subject instanceof Panel){
 				addObject(new SavePanelButton(0,(fields.length+1)*20,inc,(Panel)subject));

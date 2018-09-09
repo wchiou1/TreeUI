@@ -51,12 +51,22 @@ public class ObjectGrabber extends SmallGameObject implements EditorItem{
 
 	@Override
 	public boolean isMouseOver(int x, int y) {
-		if(x>=this.x+2&&x<=this.x+9)
-			if(y>=this.y+2&&y<=this.y+9){
+		if(x>=this.x&&x<=this.x+9)
+			if(y>=this.y&&y<=this.y+9){
 				//System.out.println("ON");
 				return true;
 			}
 		return false;
+	}
+
+	@Override
+	protected int getWidth() {
+		return 9;
+	}
+
+	@Override
+	protected int getHeight() {
+		return 9;
 	}
 	
 }

@@ -43,5 +43,13 @@ public class BasicPaneledGameObject extends GameObject{
 		// TODO Auto-generated method stub
 		return held;
 	}
+	@Override
+	protected int getWidth() {
+		return width;
+	}
+	@Override
+	protected int getHeight() {
+		return height;
+	}
 	
 }

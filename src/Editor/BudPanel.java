@@ -22,6 +22,7 @@ public class BudPanel extends Panel implements EditorImmune{
 	}
 	
 	private void createUIButtons(){
+		ArrayList<UIElement> buttons = new ArrayList<UIElement>();
 		//First get the list of gameobjects
 		ArrayList<Class<?>> classes = Shell.getUITypes();
 		//We need to adjust the height of the panel
@@ -29,10 +30,11 @@ public class BudPanel extends Panel implements EditorImmune{
 		
 		for(int i=0;i<classes.size();i++){
 			UIClassButton tempButton = new UIClassButton(origin,classes.get(i),0,i*20);
-			addObject(tempButton);
+			buttons.add(tempButton);
 		}
 		UIClassButton tempButton = new UIClassButton(origin,null,0,classes.size()*20);
-		addObject(tempButton);
+		buttons.add(tempButton);
+		addObjects(buttons);
 		
 	}
 	public void clearReferences(){

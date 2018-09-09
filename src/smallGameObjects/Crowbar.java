@@ -29,4 +29,14 @@ public class Crowbar extends SmallGameObject{
 				return true;
 		return false;
 	}
+
+	@Override
+	protected int getWidth() {
+		return 5;
+	}
+
+	@Override
+	protected int getHeight() {
+		return 5;
+	}
 }

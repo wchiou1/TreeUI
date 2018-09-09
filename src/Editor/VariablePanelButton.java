@@ -42,5 +42,13 @@ public class VariablePanelButton extends OriginObject implements EditorImmune{
 				return true;
 		return false;
 	}
+	@Override
+	protected int getWidth() {
+		return width;
+	}
+	@Override
+	protected int getHeight() {
+		return height;
+	}
 	
 }

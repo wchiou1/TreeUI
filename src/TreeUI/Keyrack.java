@@ -64,5 +64,15 @@ public class Keyrack extends UIElement{
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	protected int getWidth() {
+		return 10;
+	}
+
+	@Override
+	protected int getHeight() {
+		return 10;
+	}
 	
 }

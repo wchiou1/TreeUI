@@ -10,11 +10,9 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.InputListener;
 
 import Editor.Bud;
-import Editor.EditorImmune;
 import Editor.Sapling;
 import GameLogic.RequiresTyping;
-import TreeUI.InventorySlot;
-import gameObjects.GameObject;
+import TreeUI.ItemStorage;
 import smallGameObjects.HasOverlay;
 import smallGameObjects.SmallGameObject;
 
@@ -62,6 +60,10 @@ public class InputManager implements InputListener{
 	public void enableInventory(){
 		//If you enable the inventory, be prepared to lose any item in the handslot
 		this.inventory=true;
+	}
+	public void setHeld(SmallGameObject item){
+		held = item;
+		gameObjectList.remove(held);
 	}
 	/**
 	 * 
@@ -205,13 +207,17 @@ public class InputManager implements InputListener{
 								temp=io;
 						}
 						//If it's an origin object, ensure that the panel is on top
-						if(temp instanceof OriginObject){
+						if(temp instanceof OriginObject&&((OriginObject)temp).existsPanel()){
 							System.out.println("OriginObject clicked, displaying panel("+((OriginObject)temp).getView().x+","+((OriginObject)temp).getView().y+")");
 							moveToFront(((OriginObject)temp).getView());
 						}
-						if(temp instanceof InventorySlot){
-							if(((InventorySlot)temp).testMouseOnStored(mouseX, mouseY))
-								temp=((InventorySlot) temp).getStored();
+						//We want special logic for inventory slot, make it so the object is 
+						if(temp instanceof ItemStorage){
+							ItemStorage isTemp = (ItemStorage)temp;
+							System.out.println(isTemp.testMouseOnStored(mouseX, mouseY));
+							if(isTemp.testMouseOnStored(mouseX, mouseY)&&held!=null){
+								temp=((ItemStorage) temp).getStored();
+							}
 						}
 						//If it's movable, move it infront(Panels are movable)
 						if(temp.isMoveable()){
@@ -220,7 +226,7 @@ public class InputManager implements InputListener{
 						System.out.println("LMouse locked on object "+temp.toString());
 						flock.fleetingLock=false;
 						llock=temp;
-						held=temp.masterClick(mouseX, mouseY,held);
+						setHeld(temp.masterClick(mouseX, mouseY,held));
 						if(inventory)//If the inventory is active, we want to change the active slot as well
 							iManager.overwriteActive(held);
 						break;
@@ -244,7 +250,7 @@ public class InputManager implements InputListener{
 							System.out.println("LMouse locked on object "+temp.toString());
 							flock.fleetingLock=false;
 							llock=temp;
-							held=temp.masterClick(mouseX, mouseY,held);
+							setHeld(temp.masterClick(mouseX, mouseY,held));
 							if(inventory)//If the inventory is active, we want to change the active slot as well
 								iManager.overwriteActive(held);
 							break;
@@ -402,9 +408,9 @@ public class InputManager implements InputListener{
 					klock=mouseOn;
 				}
 			}
-			//This is a retarded implementation
+			//This is a retarded implementation(Use events goddamn)
 			//Test all keypresses on it
-			for(Integer i:keys)
+			/*for(Integer i:keys)
 				if(input.isKeyDown(i)){
 					int remapped = remapHash.get(i);
 					held=klock.masterKeyPress(mouseX, mouseY, remapped,held);
@@ -412,7 +418,7 @@ public class InputManager implements InputListener{
 					if(inventory)//If the inventory is active, we want to change the active slot as well
 						iManager.overwriteActive(held);
 				}
-				
+			*/
 			klock.locked=true;
 		}
 		else{

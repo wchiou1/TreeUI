@@ -100,5 +100,15 @@ public class NodeConnector extends SmallGameObject implements EditorItem,HasOver
 			}
 		return false;
 	}
+
+	@Override
+	protected int getWidth() {
+		return 10;
+	}
+
+	@Override
+	protected int getHeight() {
+		return 10;
+	}
 	
 }

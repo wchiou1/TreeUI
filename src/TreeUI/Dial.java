@@ -99,5 +99,13 @@ public class Dial extends UIElement{
 			return true;
 		return false;
 	}
+	@Override
+	protected int getWidth() {
+		return radius;
+	}
+	@Override
+	protected int getHeight() {
+		return radius;
+	}
 	
 }

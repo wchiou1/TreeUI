@@ -49,5 +49,15 @@ public class Example_Battery extends PoweredGameObject{
 		// TODO Auto-generated method stub
 		
 	}
+	@Override
+	protected int getWidth() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	protected int getHeight() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
 }
