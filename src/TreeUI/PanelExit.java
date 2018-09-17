@@ -43,15 +43,4 @@ public class PanelExit extends UIElement{
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
-	protected int getWidth() {
-		return width;
-	}
-
-	@Override
-	protected int getHeight() {
-		return height;
-	}
-	
 }

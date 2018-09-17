@@ -66,13 +66,13 @@ public class MainMenu extends TreeUIGameState{
 			//p.addObject(new StaticText(40,38,"Editor"));
 			int st2 = inc.addUIElement(p, StaticText.class);
 			inc.writeParam(st2, "rx", 30);
-			inc.writeParam(st2, "ry", 38);
+			inc.writeParam(st2, "ry", 40);
 			inc.writeParam(st2, "text", "Editor");
 			
 			//p.addObject(new StateChangeButton(parent,0,20,20,"Demo"));
 			int scb1 = inc.addUIElement(p, StateChangeButton.class);
 			inc.writeParam(scb1, "rx", 8);
-			inc.writeParam(scb1, "ry", 22);
+			inc.writeParam(scb1, "ry", 24);
 			inc.writeParam(scb1, "radius", 15);
 			inc.writeParam(scb1, "targetState", "Demo");
 			

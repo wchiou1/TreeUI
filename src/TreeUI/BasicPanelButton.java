@@ -41,14 +41,4 @@ public class BasicPanelButton extends OriginObject{
 		g.fillRect(x, y, width, height);
 	}
 
-	@Override
-	protected int getWidth() {
-		return width;
-	}
-
-	@Override
-	protected int getHeight() {
-		return height;
-	}
-
 }

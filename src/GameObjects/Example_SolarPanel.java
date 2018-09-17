@@ -96,14 +96,5 @@ public class Example_SolarPanel extends PoweredGameObject{
 		
 	}
 
-	@Override
-	protected int getWidth() {
-		return 20;
-	}
-
-	@Override
-	protected int getHeight() {
-		return 20;
-	}
 	
 }

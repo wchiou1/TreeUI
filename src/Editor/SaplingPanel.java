@@ -57,7 +57,7 @@ public class SaplingPanel extends Panel implements EditorImmune{
 		
 		for(UIElement io:objectList){
 			g.setClip(x+2, y+2, width-4, height-4);
-			io.UDraw(g);
+			io.UDraw(g,0,0);
 		}
 		g.clearClip();
 	}

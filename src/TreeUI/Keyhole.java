@@ -66,15 +66,5 @@ public class Keyhole extends UIElement{
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
-	protected int getWidth() {
-		return 3;
-	}
-
-	@Override
-	protected int getHeight() {
-		return 6;
-	}
 	
 }

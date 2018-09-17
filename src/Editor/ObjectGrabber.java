@@ -58,15 +58,5 @@ public class ObjectGrabber extends SmallGameObject implements EditorItem{
 			}
 		return false;
 	}
-
-	@Override
-	protected int getWidth() {
-		return 9;
-	}
-
-	@Override
-	protected int getHeight() {
-		return 9;
-	}
 	
 }

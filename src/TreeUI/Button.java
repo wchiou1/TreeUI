@@ -62,15 +62,5 @@ public class Button extends UIElement{
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
-	protected int getWidth() {
-		return radius;
-	}
-
-	@Override
-	protected int getHeight() {
-		return radius;
-	}
 	
 }

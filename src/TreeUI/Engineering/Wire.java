@@ -65,15 +65,4 @@ public class Wire extends UIElement{
 		if(pulse&&!locked)
 			pulse = false;
 	}
-
-	@Override
-	protected int getWidth() {
-		return 0;
-	}
-
-	@Override
-	protected int getHeight() {
-		return 0;
-	}
-	
 }

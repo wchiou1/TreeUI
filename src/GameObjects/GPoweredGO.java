@@ -95,12 +95,4 @@ public class GPoweredGO extends PoweredGameObject{
 		// TODO Auto-generated method stub
 		
 	}
-	@Override
-	protected int getWidth() {
-		return 20;
-	}
-	@Override
-	protected int getHeight() {
-		return 20;
-	}
 }

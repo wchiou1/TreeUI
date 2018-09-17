@@ -68,20 +68,5 @@ public class InventoryPanel extends Panel implements EditorImmune{
 		}
 		System.out.println();
 	}
-	@Override
-	public void draw(Graphics g){
-		
-		//TODO Draw a panel and then draw the inventory slots
-		g.setColor(Color.gray);
-		g.fillRoundRect(x, y, width, height, 2);
-		g.setColor(Color.white);
-		g.fillRoundRect(x+2, y+2, width-4, height-4, 2);
-		
-		g.setClip(x+2, y+2, width-4, height-4);
-
-		for(UIElement io:objectList)
-			io.UDraw(g);
-		g.clearClip();
-	}
 	
 }

@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 
@@ -32,9 +33,9 @@ public class TreeUIManager{
 	
 	//Placeholder object to indicate that lock is on nothing
 	static InteractableObject empty=new Window(0,0,0,0,Color.green);
-	public TreeUIManager(Input input,ArrayList<Integer> keys, AspenNetwork an, int stickiness){
+	public TreeUIManager(GameContainer container,ArrayList<Integer> keys, AspenNetwork an, int stickiness){
 		this.stickiness=stickiness;
-		this.input=input;
+		this.input=container.getInput();
 		this.an=an;
 		uiObjectList = new LinkedList<InteractableObject>();
 		gameObjectList = new LinkedList<InteractableObject>();
@@ -43,6 +44,9 @@ public class TreeUIManager{
 		inputManager = new InputManager(input,this,inventoryManager,gameObjectList,uiObjectList,stickiness,keys);
 		master=this;
 			
+	}
+	public static void addClipLayer(int x, int y, int width,int height){
+		
 	}
 	public UIElement createUIElement(Class<?> type,Panel panel, int rx, int ry){
 		UIElement product = (UIElement) inc.getObject(inc.addUIElement(panel.getId(),type));

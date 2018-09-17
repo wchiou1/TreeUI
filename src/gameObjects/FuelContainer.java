@@ -55,13 +55,4 @@ public class FuelContainer extends GameObject{
 		return y+10;
 	}
 
-	@Override
-	protected int getWidth() {
-		return 20;
-	}
-
-	@Override
-	protected int getHeight() {
-		return 20;
-	}
 }

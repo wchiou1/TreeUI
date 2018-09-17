@@ -34,12 +34,4 @@ public class FileScannerButton extends OriginObject{
 				return true;
 		return false;
 	}
-	@Override
-	protected int getWidth() {
-		return width;
-	}
-	@Override
-	protected int getHeight() {
-		return height;
-	}
 }

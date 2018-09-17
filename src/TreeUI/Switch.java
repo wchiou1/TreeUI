@@ -68,15 +68,4 @@ public class Switch extends UIElement{
 			dataNode.changeData(key, 1);
 		
 	}
-
-	@Override
-	protected int getWidth() {
-		return width;
-	}
-
-	@Override
-	protected int getHeight() {
-		return height;
-	}
-	
 }

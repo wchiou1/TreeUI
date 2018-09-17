@@ -35,7 +35,6 @@ public class EditorStaticText extends UIElement implements EditorImmune{
 	public void draw(Graphics g, int x, int y) {
 		g.setColor(Color.black);
 		g.drawRect(x, y, width, height);
-		
 		g.setClip(x+2, y+2, width-4, height-4);
 		g.setFont(Shell.SMALL_FONT);
 		g.drawString(text, x+2, y+2);
@@ -59,13 +58,5 @@ public class EditorStaticText extends UIElement implements EditorImmune{
 	@Override
 	public SmallGameObject click(int x, int y, SmallGameObject item) {
 		return item;
-	}
-	@Override
-	protected int getWidth() {
-		return width;
-	}
-	@Override
-	protected int getHeight() {
-		return height;
 	}
 }

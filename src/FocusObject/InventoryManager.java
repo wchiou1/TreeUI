@@ -1,7 +1,5 @@
 package focusObject;
 
-import org.newdawn.slick.Graphics;
-
 import TreeUI.InventoryPanel;
 import smallGameObjects.SmallGameObject;
 
@@ -11,12 +9,14 @@ import smallGameObjects.SmallGameObject;
  * @author Wesley
  */
 public class InventoryManager{
+	public static InventoryManager master;
 	private InventoryPanel inventory;
 	int activeSlot;
 	public InventoryManager(InventoryPanel inv){
 		activeSlot=0;
 		inventory=inv;
 		inventory.setHighlight(activeSlot);
+		master = this;
 	}
 	public void overwriteActive(SmallGameObject item){
 		inventory.forcePush(activeSlot, item);

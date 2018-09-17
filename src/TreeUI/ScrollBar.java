@@ -37,15 +37,4 @@ public class ScrollBar extends UIElement{
 	public void update(int mouseX, int mouseY,int delta) {
 		
 	}
-
-	@Override
-	protected int getWidth() {
-		return width;
-	}
-
-	@Override
-	protected int getHeight() {
-		return height;
-	}
-	
 }

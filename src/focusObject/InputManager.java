@@ -10,6 +10,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.InputListener;
 
 import Editor.Bud;
+import Editor.EditorImmune;
 import Editor.Sapling;
 import GameLogic.RequiresTyping;
 import TreeUI.ItemStorage;
@@ -194,6 +195,7 @@ public class InputManager implements InputListener{
 		
 		
 		//Testing for mouse clicks
+		//NOTE TO SELF: use mouseOn instead of custom code here, moveToFron should be done on originObject
 		if(input.isMouseButtonDown(0)){//If the mouse is down, check if it needs to lock an object
 			if(llock==null){//There's no current lock yet, get a lock
 				for(InteractableObject io:uiObjectList){//Iterate through all objects
@@ -327,11 +329,13 @@ public class InputManager implements InputListener{
 					editorLock=TreeUIManager.empty;
 				}
 				//We only want to create a sapling if it's NOT a panel!
-				if(editorLock instanceof Panel){
-					((Panel)editorLock).addObject(new Bud(mouseX,mouseY,tuim,(Panel)editorLock));
-				}
-				else{
-					tuim.addGameObject(new Sapling(mouseX,mouseY,tuim));
+				if(!(editorLock instanceof EditorImmune)){
+					if(editorLock instanceof Panel){
+						((Panel)editorLock).addObject(new Bud(mouseX,mouseY,tuim,(Panel)editorLock));
+					}
+					else{
+						tuim.addGameObject(new Sapling(mouseX,mouseY,tuim));
+					}
 				}
 			}
 			else{

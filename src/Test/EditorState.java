@@ -25,7 +25,6 @@ public class EditorState extends TreeUIGameState{
 			height = container.getHeight();
 			Editor editor = new Editor(im);
 			
-			
 		}catch(Exception e){
 			e.printStackTrace();
 		}

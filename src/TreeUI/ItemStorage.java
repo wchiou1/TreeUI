@@ -69,14 +69,6 @@ public abstract class ItemStorage extends UIElement{
 		return false;
 	}
 	@Override
-	protected int getWidth() {
-		return width;
-	}
-	@Override
-	protected int getHeight() {
-		return height;
-	}
-	@Override
 	public void update(int mouseX, int mouseY,int delta) {
 		// TODO Auto-generated method stub
 		

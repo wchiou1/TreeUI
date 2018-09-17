@@ -28,8 +28,8 @@ public class Bud extends BasicPanelButton implements EditorImmune{
 	private Panel branch;
 	public Bud(int x, int y, TreeUIManager tuim,Panel branch){
 		this.tuim=tuim;
-		this.rx=x-branch.x;
-		this.ry=y-branch.y;
+		this.rx=x-branch.x+branch.offsetX;
+		this.ry=y-branch.y+branch.offsetY;
 		this.x=x;
 		this.y=y;
 		this.width=5;

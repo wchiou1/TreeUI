@@ -69,13 +69,4 @@ public class Indicator extends UIElement{
 		
 	}
 
-	@Override
-	protected int getWidth() {
-		return width;
-	}
-
-	@Override
-	protected int getHeight() {
-		return height;
-	}
 }
