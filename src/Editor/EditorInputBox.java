@@ -36,7 +36,7 @@ public class EditorInputBox extends InputBox implements EditorImmune{
 	}
 	
 	@Override
-	public void draw(Graphics g) {
+	public void draw(Graphics g, int x, int y) {
 		g.setColor(Color.black);
 		g.drawRect(x, y, width, height);
 		

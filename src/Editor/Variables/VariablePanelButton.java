@@ -1,8 +1,9 @@
-package Editor;
+package Editor.Variables;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
+import Editor.EditorImmune;
 import Test.Shell;
 import focusObject.OriginObject;
 

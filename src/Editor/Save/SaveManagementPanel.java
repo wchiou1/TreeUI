@@ -1,5 +1,10 @@
-package Editor;
+package Editor.Save;
 
+import Editor.EditorImmune;
+import Editor.EditorInputBox;
+import Editor.EditorStaticText;
+import Editor.FileScannerButton;
+import Editor.FileScannerPanel;
 import Test.SuperGlobal;
 import TreeUI.InputBox;
 import TreeUI.StaticText;

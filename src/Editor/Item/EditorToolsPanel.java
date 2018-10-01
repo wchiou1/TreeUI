@@ -1,5 +1,6 @@
-package Editor;
+package Editor.Item;
 
+import Editor.EditorImmune;
 import Test.SuperGlobal;
 import TreeUI.InputBox;
 import TreeUI.InventoryPanelSlot;

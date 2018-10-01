@@ -1,41 +1,40 @@
-package Editor;
+package Editor.Tree;
 
 import java.util.ArrayList;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
+import Editor.EditorImmune;
 import Test.Shell;
 import focusObject.Panel;
 import focusObject.UIElement;
 
-public class SaplingPanel extends Panel implements EditorImmune{
-	private Sapling origin;
-	public SaplingPanel(Sapling origin){
+public class BudPanel extends Panel implements EditorImmune{
+	private Bud origin;
+	public BudPanel(Bud origin){
 		this.active=true;
 		this.origin=origin;
 		//We need to create all the buttons related to the gameobjects
 		//Where will we get the list from? Look in shell
 
-		createGOButtons();
-
+		createUIButtons();
 	}
 	
-	private void createGOButtons(){
+	private void createUIButtons(){
 		ArrayList<UIElement> buttons = new ArrayList<UIElement>();
 		//First get the list of gameobjects
-		ArrayList<Class<?>> classes = Shell.getGOTypes();
-		classes.addAll(Shell.getSGOTypes());
+		ArrayList<Class<?>> classes = Shell.getUITypes();
 		//We need to adjust the height of the panel
 		this.height = (classes.size()+1)*20;
-		System.out.println(classes);
 		
 		for(int i=0;i<classes.size();i++){
-			GOClassButton tempButton = new GOClassButton(origin,classes.get(i),0,i*20);
+			UIClassButton tempButton = new UIClassButton(origin,classes.get(i),0,i*20);
 			buttons.add(tempButton);
 		}
-		GOClassButton tempButton = new GOClassButton(origin,null,0,classes.size()*20);
+		UIClassButton tempButton = new UIClassButton(origin,null,0,classes.size()*20);
 		buttons.add(tempButton);
+		addObject(new EditorSearchBox(0,0,80,20,buttons));
 		addObjects(buttons);
 		
 	}
@@ -44,7 +43,7 @@ public class SaplingPanel extends Panel implements EditorImmune{
 		objectList=null;
 	}
 	
-	@Override
+	/*@Override
 	public void draw(Graphics g) {
 		if(!active)
 			return;
@@ -60,5 +59,5 @@ public class SaplingPanel extends Panel implements EditorImmune{
 			io.UDraw(g,0,0);
 		}
 		g.clearClip();
-	}
+	}*/
 }

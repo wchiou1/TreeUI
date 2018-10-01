@@ -1,10 +1,12 @@
-package Editor;
+package Editor.Variables;
 
 import java.lang.reflect.Field;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
+import Editor.EditorImmune;
+import Editor.Item.ObjectGrabber;
 import GameLogic.StringUtils;
 import Test.Shell;
 import TreeUI.InputBox;
@@ -103,7 +105,7 @@ public class VariableBox extends InputBox implements EditorImmune{
 	}
 	
 	@Override
-	public void draw(Graphics g) {
+	public void draw(Graphics g, int x, int y) {
 		if(!error)
 			g.setColor(Color.black);
 		else

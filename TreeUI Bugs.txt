@@ -2,4 +2,8 @@ Add a scrolldown for file loading
 add a scrolldown for object generation
 Add small objects to object generation[done]
 Create gas station example
-Create scrollbar for panels
+Create scrollbar for panels[done]
+
+TODO:
+Sort classes by name
+Reorder class buttons by name

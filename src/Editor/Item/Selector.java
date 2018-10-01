@@ -1,8 +1,9 @@
-package Editor;
+package Editor.Item;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
+import Editor.EditorCommandPanel;
 import focusObject.InteractableObject;
 import focusObject.Panel;
 import smallGameObjects.SmallGameObject;

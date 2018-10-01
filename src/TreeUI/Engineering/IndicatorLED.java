@@ -12,7 +12,7 @@ public class IndicatorLED extends Indicator{
 	public Wire link;
 
 	@Override
-	public void draw(Graphics g) {
+	public void draw(Graphics g, int x, int y) {
 		if(link!=null&&link.pulse)
 			g.setColor(Color.yellow);
 		else

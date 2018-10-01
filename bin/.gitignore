@@ -1,10 +1,5 @@
 /Editor/
-/GameLogic/
-/Imported/
-/Test/
-/TreeUI/
-/aspenNetwork/
 /focusObject/
+/TreeUI/
 /gameObjects/
-/smallGameObjects/
-/world/
+/Test/

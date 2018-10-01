@@ -4,7 +4,6 @@ package focusObject;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
-import TreeUI.Snappable;
 import smallGameObjects.SmallGameObject;
 
 public class Window extends Snappable{

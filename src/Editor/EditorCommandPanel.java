@@ -1,5 +1,11 @@
 package Editor;
 
+import Editor.Item.EditorToolsPanel;
+import Editor.Item.NodeConnector;
+import Editor.Item.ObjectGrabber;
+import Editor.Item.Selector;
+import Editor.Save.SaveManagementPanel;
+import Editor.Variables.VariablePanel;
 import Test.SuperGlobal;
 import focusObject.Incubator;
 import focusObject.InteractableObject;
@@ -63,14 +69,14 @@ public class EditorCommandPanel extends Panel implements EditorImmune{
 		
 	}
 	
-	void openVPanel(){
+	public void openVPanel(){
 		vp.open();
 	}
 	void openSPanel(){
 		smp.open();
 	}
 	
-	void setObject(InteractableObject io){
+	public void setObject(InteractableObject io){
 		subject = io;
 		//Let's make sure out panels know that a new element has been selected
 		vp.setObject(io);

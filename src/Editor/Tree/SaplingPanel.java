@@ -1,39 +1,45 @@
-package Editor;
+package Editor.Tree;
 
+import java.util.List;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
+import Editor.EditorImmune;
 import Test.Shell;
 import focusObject.Panel;
 import focusObject.UIElement;
 
-public class BudPanel extends Panel implements EditorImmune{
-	private Bud origin;
-	public BudPanel(Bud origin){
+public class SaplingPanel extends Panel implements EditorImmune{
+	private Sapling origin;
+	public SaplingPanel(Sapling origin){
 		this.active=true;
 		this.origin=origin;
 		//We need to create all the buttons related to the gameobjects
 		//Where will we get the list from? Look in shell
 
-		createUIButtons();
+		createGOButtons();
 
 	}
 	
-	private void createUIButtons(){
+	private void createGOButtons(){
 		ArrayList<UIElement> buttons = new ArrayList<UIElement>();
 		//First get the list of gameobjects
-		ArrayList<Class<?>> classes = Shell.getUITypes();
+		ArrayList<Class<?>> classes = Shell.getGOTypes();
+		classes.addAll(Shell.getSGOTypes());
 		//We need to adjust the height of the panel
-		this.height = (classes.size()+1)*20;
+		this.height = (classes.size()+2)*20;
+		System.out.println(classes);
 		
 		for(int i=0;i<classes.size();i++){
-			UIClassButton tempButton = new UIClassButton(origin,classes.get(i),0,i*20);
+			GOClassButton tempButton = new GOClassButton(origin,classes.get(i),0,i*20+20);
 			buttons.add(tempButton);
 		}
-		UIClassButton tempButton = new UIClassButton(origin,null,0,classes.size()*20);
+		GOClassButton tempButton = new GOClassButton(origin,null,0,classes.size()*20+20);
 		buttons.add(tempButton);
+		addObject(new EditorSearchBox(0,0,80,20,buttons));
 		addObjects(buttons);
 		
 	}
@@ -42,7 +48,7 @@ public class BudPanel extends Panel implements EditorImmune{
 		objectList=null;
 	}
 	
-	@Override
+	/*@Override
 	public void draw(Graphics g) {
 		if(!active)
 			return;
@@ -58,5 +64,5 @@ public class BudPanel extends Panel implements EditorImmune{
 			io.UDraw(g,0,0);
 		}
 		g.clearClip();
-	}
+	}*/
 }

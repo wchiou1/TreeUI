@@ -1,8 +1,11 @@
-package Editor;
+package Editor.Variables;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
+import Editor.EditorImmune;
+import Editor.EditorStaticText;
+import Editor.Item.EditorItem;
 import Test.SuperGlobal;
 import TreeUI.StaticText;
 import focusObject.Incubator;

@@ -28,7 +28,7 @@ public class Fan extends GPoweredGO{
 	}
 
 	@Override
-	public void draw(Graphics g) {
+	public void draw(Graphics g,int x, int y) {
 		//Draw the lightbulb sprite
 		frame.draw(x,y,20,20);
 		blades.setRotation(Math.round(angle));

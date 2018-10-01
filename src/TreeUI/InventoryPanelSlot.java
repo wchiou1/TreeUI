@@ -20,7 +20,7 @@ public class InventoryPanelSlot extends InventorySlot implements EditorImmune{
 	}
 	
 	@Override
-	public void draw(Graphics g) {
+	public void draw(Graphics g, int x, int y) {
 		//Draw a box and then draw the item inside
 		if(highlight){
 			g.setColor(Color.black);

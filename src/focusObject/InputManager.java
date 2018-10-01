@@ -9,9 +9,9 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.InputListener;
 
-import Editor.Bud;
 import Editor.EditorImmune;
-import Editor.Sapling;
+import Editor.Tree.Bud;
+import Editor.Tree.Sapling;
 import GameLogic.RequiresTyping;
 import TreeUI.ItemStorage;
 import smallGameObjects.HasOverlay;
@@ -195,86 +195,9 @@ public class InputManager implements InputListener{
 		
 		
 		//Testing for mouse clicks
-		//NOTE TO SELF: use mouseOn instead of custom code here, moveToFron should be done on originObject
+		//NOTE TO SELF: use mouseOn instead of custom code here, moveToFront should be done in originObject
 		if(input.isMouseButtonDown(0)){//If the mouse is down, check if it needs to lock an object
-			if(llock==null){//There's no current lock yet, get a lock
-				for(InteractableObject io:uiObjectList){//Iterate through all objects
-					if(io.masterIsMouseOver(mouseX,mouseY)){
-						InteractableObject temp=io;
-						//If it's a panel, check inside the panel for click logic
-						//move to the front is handled by general object handling
-						if(io instanceof Panel){
-							temp=((Panel) io).getObject(mouseX, mouseY);
-							if(temp==null)
-								temp=io;
-						}
-						//If it's an origin object, ensure that the panel is on top
-						if(temp instanceof OriginObject&&((OriginObject)temp).existsPanel()){
-							System.out.println("OriginObject clicked, displaying panel("+((OriginObject)temp).getView().x+","+((OriginObject)temp).getView().y+")");
-							moveToFront(((OriginObject)temp).getView());
-						}
-						//We want special logic for inventory slot, make it so the object is 
-						if(temp instanceof ItemStorage){
-							ItemStorage isTemp = (ItemStorage)temp;
-							System.out.println(isTemp.testMouseOnStored(mouseX, mouseY));
-							if(isTemp.testMouseOnStored(mouseX, mouseY)&&held!=null){
-								temp=((ItemStorage) temp).getStored();
-							}
-						}
-						//If it's movable, move it infront(Panels are movable)
-						if(temp.isMoveable()){
-							moveToFront(io);
-						}
-						System.out.println("LMouse locked on object "+temp.toString());
-						flock.fleetingLock=false;
-						llock=temp;
-						setHeld(temp.masterClick(mouseX, mouseY,held));
-						if(inventory)//If the inventory is active, we want to change the active slot as well
-							iManager.overwriteActive(held);
-						break;
-					}
-				}
-				
-				if(llock==null)//We didn't find an object, try gameobjects
-					for(InteractableObject io:gameObjectList){//Iterate through all objects
-						if(io.masterIsMouseOver(mouseX,mouseY)){
-							InteractableObject temp=io;
-							if(io instanceof Panel){
-								temp=((Panel) io).getObject(mouseX, mouseY);
-								if(temp==null)
-									temp=io;
-							}
-							if(temp instanceof OriginObject)
-								moveToFront(((OriginObject)temp).getView());
-							if(temp.isMoveable()){
-								moveToFront(io);
-							}
-							System.out.println("LMouse locked on object "+temp.toString());
-							flock.fleetingLock=false;
-							llock=temp;
-							setHeld(temp.masterClick(mouseX, mouseY,held));
-							if(inventory)//If the inventory is active, we want to change the active slot as well
-								iManager.overwriteActive(held);
-							break;
-						}
-					}
-				//If it's not on an object, make it the "empty" object
-				if(llock==null)
-					llock=TreeUIManager.empty;
-				flock=llock;
-				flock.fleetingLock=true;
-				setTypingLock(llock);
-			}
-			else{
-				//Move the object if it is set to movable
-				if(llock.isMoveable()){
-					//If it is a panel, then let's do some snapping!
-					llock.dmove(mouseX-previousX, mouseY-previousY);
-				}
-			}
-			//Let the object know that it has been locked on(If there is no object, it will lock on to the empty object)
-			llock.locked=true;
-			
+			processLeftClick(mouseX,mouseY);
 		}
 		else
 		{
@@ -432,7 +355,51 @@ public class InputManager implements InputListener{
 			klock=null;
 		}
 	}
-	
+	private void processLeftClick(int mouseX,int mouseY){
+		if(llock==null){//There's no current lock yet, get a lock
+			InteractableObject temp = getMouseOn();
+			if(temp==null)
+				return;
+			//If it's an origin object, ensure that the panel is on top
+			if(temp instanceof OriginObject&&((OriginObject)temp).existsPanel()){
+				System.out.println("OriginObject clicked, displaying panel("+((OriginObject)temp).getView().x+","+((OriginObject)temp).getView().y+")");
+				moveToFront(((OriginObject)temp).getView());
+			}
+			//We want special logic for inventory slot, make it so the object is 
+			if(temp instanceof ItemStorage){
+				ItemStorage isTemp = (ItemStorage)temp;
+				System.out.println(isTemp.testMouseOnStored(mouseX, mouseY));
+				if(isTemp.testMouseOnStored(mouseX, mouseY)&&held!=null){
+					temp=((ItemStorage) temp).getStored();
+				}
+			}
+			//If it's movable, move it infront(Panels are movable)
+			if(temp.isMoveable()){
+				moveToFront(temp);
+			}
+			System.out.println("LMouse locked on object "+temp.toString());
+			flock.fleetingLock=false;
+			llock=temp;
+			setHeld(temp.masterClick(mouseX, mouseY,held));
+			if(inventory)//If the inventory is active, we want to change the active slot as well
+				iManager.overwriteActive(held);
+			//If it's not on an object, make it the "empty" object
+			if(llock==null)
+				llock=TreeUIManager.empty;
+			flock=llock;
+			flock.fleetingLock=true;
+			setTypingLock(llock);
+		}
+		else{
+			//Move the object if it is set to movable
+			if(llock.isMoveable()){
+				//If it is a panel, then let's do some snapping!
+				llock.dmove(mouseX-previousX, mouseY-previousY);
+			}
+		}
+		//Let the object know that it has been locked on(If there is no object, it will lock on to the empty object)
+		llock.locked=true;
+	}
 	/**
 	 * This function is called everytime the leftmouse is pressed, it gets the object that the mouse was over
 	 * @param newLock

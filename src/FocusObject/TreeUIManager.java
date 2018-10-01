@@ -9,12 +9,11 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 
-import Editor.Bud;
-import Editor.BudPanel;
-import Editor.Sapling;
-import Editor.SaplingPanel;
+import Editor.Tree.Bud;
+import Editor.Tree.BudPanel;
+import Editor.Tree.Sapling;
+import Editor.Tree.SaplingPanel;
 import TreeUI.InventoryPanel;
-import TreeUI.Snappable;
 import aspenNetwork.AspenNetwork;
 import gameObjects.GameObject;
 import smallGameObjects.SmallGameObject;
@@ -259,11 +258,15 @@ public class TreeUIManager{
 		it=uiObjectList.descendingIterator();
 		while(it.hasNext()){
 			InteractableObject temp=it.next();
+			if(!temp.show)
+				continue;
 			//Check if the object is locked by the mouseManager
 			if(temp.equals(inputManager.llock)&&inputManager.llock instanceof Snappable)
 				drawPanelSnap(g,temp);
 			else
 				temp.draw(g);
+			
+				
 		}
 		
 		//Have the mouseManager draw the "held" item last along with it's overlay

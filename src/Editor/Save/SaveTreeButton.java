@@ -1,5 +1,6 @@
-package Editor;
+package Editor.Save;
 
+import Editor.EditorImmune;
 import TreeUI.TextButton;
 import focusObject.Incubator;
 import focusObject.Panel;

@@ -3,6 +3,8 @@ package Test;
 import java.awt.Font;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Hashtable;
 import java.util.List;
 
 import org.newdawn.slick.AppGameContainer;
@@ -48,22 +50,42 @@ public class Shell extends StateBasedGame{
 	}
 	private void scanUITypes(){
 		List<Class<?>> cls=ClassFinder.find(BasicPanelButton.class.getPackage().getName());
+		Hashtable<String,Class<?>> classes = new Hashtable<String,Class<?>>();
+		ArrayList<String> classNames = new ArrayList<String>();
 		for(Class<?> type:cls){
 			//Filter out abstract objects
 			if(Modifier.isAbstract(type.getModifiers()))
 				continue;
-			if(UIElement.class.isAssignableFrom(type))
-				uiElementTypes.add(type);
+			if(UIElement.class.isAssignableFrom(type)){
+				classes.put(type.getSimpleName(), type);
+				classNames.add(type.getSimpleName());
+			}
+		}
+		Collections.sort(classNames);
+		System.out.println(classNames);
+		for(String cn:classNames){
+			Class<?> type = classes.get(cn);
+			uiElementTypes.add(type);
 		}
 	}
 	private void scanGOTypes(){
 		List<Class<?>> cls=ClassFinder.find(GameObject.class.getPackage().getName());
+		Hashtable<String,Class<?>> classes = new Hashtable<String,Class<?>>();
+		ArrayList<String> classNames = new ArrayList<String>();
 		for(Class<?> type:cls){
 			//Filter out abstract objects
 			if(Modifier.isAbstract(type.getModifiers()))
 				continue;
-			if(GameObject.class.isAssignableFrom(type))
-				gameObjectTypes.add(type);
+			if(GameObject.class.isAssignableFrom(type)){
+				classes.put(type.getSimpleName(), type);
+				classNames.add(type.getSimpleName());
+			}
+		}
+		Collections.sort(classNames);
+		System.out.println(classNames);
+		for(String cn:classNames){
+			Class<?> type = classes.get(cn);
+			gameObjectTypes.add(type);
 		}
 	}
 	private void scanSGOTypes(){

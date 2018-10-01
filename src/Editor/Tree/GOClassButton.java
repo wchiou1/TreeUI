@@ -1,5 +1,6 @@
-package Editor;
+package Editor.Tree;
 
+import Editor.EditorImmune;
 import TreeUI.TextButton;
 import smallGameObjects.SmallGameObject;
 

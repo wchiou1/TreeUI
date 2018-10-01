@@ -8,17 +8,18 @@ import org.newdawn.slick.Graphics;
 import aspenNetwork.AspenNode;
 import gameObjects.GameObject;
 import smallGameObjects.SmallGameObject;
-import Editor.Bud;
 import Editor.EditorImmune;
-import Editor.EditorItem;
-import Editor.NodeConnector;
-import Editor.ObjectGrabber;
-import Editor.Selector;
+import Editor.Item.EditorItem;
+import Editor.Item.NodeConnector;
+import Editor.Item.ObjectGrabber;
+import Editor.Item.Selector;
+import Editor.Tree.Bud;
 import Test.Shell;
 
 public abstract class InteractableObject{
 	protected static int count = 0;
 	public int x=0,y=0;
+	public boolean show = true;
 	protected transient AspenNode dataNode;
 	protected boolean locked=false;
 	protected boolean keyLock=false;//For when you "click" on an object using a key press
@@ -62,7 +63,7 @@ public abstract class InteractableObject{
 	 * @param g
 	 */
 	public abstract void draw(Graphics g,int x, int y);
-	public void draw(Graphics g){
+	public final void draw(Graphics g){
 		draw(g,x,y);
 	}
 	public SmallGameObject masterClick(int x, int y, SmallGameObject item){
@@ -111,6 +112,8 @@ public abstract class InteractableObject{
 	 * @return
 	 */
 	public boolean masterIsMouseOver(int x, int y){
+		if(!this.show)
+			return false;
 		this.hover = isMouseOver(x,y);
 		return this.hover;
 	}

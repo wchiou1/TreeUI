@@ -20,7 +20,7 @@ public class LightBulb extends GPoweredGO{
 	}
 
 	@Override
-	public void draw(Graphics g) {
+	public void draw(Graphics g,int x ,int y) {
 		//Draw the lightbulb sprite
 		if(power_draw<-150){
 			g.setColor(new Color((int)Math.round(Math.abs((power_draw*1.0)/150)*255),(int)Math.round(Math.abs((power_draw*1.0)/150)*255),0));

@@ -1,5 +1,6 @@
-package Editor;
+package Editor.Tree;
 
+import Editor.EditorImmune;
 import focusObject.InteractableObject;
 import focusObject.OriginObject;
 import focusObject.Panel;

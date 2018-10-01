@@ -1,5 +1,8 @@
-package Editor;
+package Editor.Tree;
 
+import org.newdawn.slick.Graphics;
+
+import Editor.EditorImmune;
 import TreeUI.TextButton;
 import smallGameObjects.SmallGameObject;
 

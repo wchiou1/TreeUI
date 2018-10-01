@@ -6,8 +6,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 
-import Editor.Bud;
-import TreeUI.Snappable;
+import Editor.Tree.Bud;
 import smallGameObjects.SmallGameObject;
 
 public class Panel extends Snappable{
@@ -20,7 +19,7 @@ public class Panel extends Snappable{
 	public int barSize=0,buttonSize = 3;
 	public boolean scrolling = false;
 	private Incubator inc;
-	//The attached datanode which all UIELements
+	//The attached datanode which all UIElements
 										//will use to communicate with the datanetwork
 	protected boolean virgin = true;//If The panel has ever been opened before(used to error check setting the panel's origin object)
 	public Panel(){
@@ -104,19 +103,23 @@ public class Panel extends Snappable{
 	 * Draws the panel borders and all UIElement
 	 */
 	@Override
-	public void draw(Graphics g,int x, int y) {
+	public final void draw(Graphics g,int x, int y) {
 		if(!active)
 			return;
+		drawPanel(g,x,y);
+		drawScrollBars(g,x,y);
+		drawUIElements(g,x,y);
+		
+		g.clearClip();
+	}
+	protected void drawPanel(Graphics g,int x, int y){
 		g.setColor(Color.gray);
 		g.fillRoundRect(x, y, width, height, 2);
 		g.setColor(Color.white);
 		g.fillRoundRect(x+2, y+2, width-4, height-4, 2);
-		
-		int drawX = 0;
-		int drawY = 0;
-		
+	}
+	protected void drawScrollBars(Graphics g,int x, int y){
 		if(scrollX){
-			drawX = -offsetX;
 			
 			g.setColor(Color.black);
 			//Draw left scroll button
@@ -134,7 +137,6 @@ public class Panel extends Snappable{
 			
 		}
 		if(scrollY){
-			drawY = -offsetY;
 			
 			g.setColor(Color.black);
 			//Draw top scroll button
@@ -159,11 +161,22 @@ public class Panel extends Snappable{
 			
 			
 		}
+	}
+	protected final void drawUIElements(Graphics g,int x, int y){
+		int drawX = 0;
+		int drawY = 0;
+		if(scrollX){
+			drawX = -offsetX;
+		}
+		if(scrollY){
+			drawY = -offsetY;
+		}
 		for(UIElement uie:objectList){
+			if(!uie.show)
+				continue;
 			g.setClip(x+2, y+2, width-4, height-4);
 			uie.UDraw(g,drawX,drawY);
 		}
-		g.clearClip();
 	}
 	public boolean mouseOnScrollBars(int x, int y){
 		//Check if the scrollbars were clicked

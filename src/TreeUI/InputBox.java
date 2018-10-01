@@ -35,7 +35,7 @@ public class InputBox extends TextButton implements RequiresTyping{
 	}
 	
 	@Override
-	public void draw(Graphics g) {
+	public void draw(Graphics g, int x, int y) {
 		g.setColor(Color.black);
 		g.drawRect(x, y, width, height);
 		

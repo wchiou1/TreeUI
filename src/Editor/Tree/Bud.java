@@ -1,10 +1,11 @@
-package Editor;
+package Editor.Tree;
 
 import java.lang.reflect.InvocationTargetException;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
+import Editor.EditorImmune;
 import TreeUI.BasicPanelButton;
 import focusObject.Incubator;
 import focusObject.OriginObject;
@@ -77,12 +78,5 @@ public class Bud extends BasicPanelButton implements EditorImmune{
 			if(y>=this.y&&y<=this.y+height)
 				return true;
 		return false;
-	}
-	@Override
-	public void draw(Graphics g) {
-		g.setColor(Color.black);
-		if(highlight)
-			g.setColor(Color.yellow);
-		g.fillRect(x, y, width, height);
 	}
 }
