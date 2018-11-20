@@ -33,14 +33,16 @@ public class Shell extends StateBasedGame{
 		SuperGlobal.setShell(this);
 		SuperGlobal.setGameState("MainMenu", new MainMenu(this));
 		SuperGlobal.setGameState("Demo", new Demo(this));
-		SuperGlobal.setGameState("Editor", new EditorState(this));
+		SuperGlobal.setGameState("Editor Server", new EditorState(this,true));
+		SuperGlobal.setGameState("Editor Client", new EditorState(this,false));
 		
 		//int shipID=Integer.parseInt(JOptionPane.showInputDialog("Enter your shipID:"));
 		//this.addState(new SBLobby());
 		//this.addState(new SBBuild(shipID));
 		this.addState(SuperGlobal.getGameState("MainMenu"));
 		this.addState(SuperGlobal.getGameState("Demo"));
-		this.addState(SuperGlobal.getGameState("Editor"));
+		this.addState(SuperGlobal.getGameState("Editor Server"));
+		this.addState(SuperGlobal.getGameState("Editor Client"));
 		
 		List<Class<?>> cls=ClassFinder.find(Shell.class.getPackage().getName());
 		System.out.println(cls);

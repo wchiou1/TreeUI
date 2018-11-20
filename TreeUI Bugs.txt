@@ -7,3 +7,31 @@ Create scrollbar for panels[done]
 TODO:
 Sort classes by name
 Reorder class buttons by name
+OBJECT SPAWNING NEEDS TO BE BASED ON SAVED OBJECTS, NOT CONSTRUCTORS!!!
+High Priority:
+Be able to place where a loaded tree is.
+
+Theory:
+Use the incubator to send synchronization data for multiplayer
+
+Server sends everything to client
+Server will only update around the client location
+Server will receive mouse clicks and process using incubator
+Server will yield to client for the interaction and active object
+Server will create an inventory manager for each player.
+
+Client sends mouse clicks(Not coords, just what was in the hand, what was clicked on)
+Client sends vars of active object except pointers
+Client sends vars of interaction object except pointers
+Client will DISABLE object creation to avoid conflicts with server
+Client TreeUIManager will check thread if it should allow object creation or block
+Client will REFUSE to update interaction and active object
+
+ISSUE: When an object is picked up, need to have a process to remove it from the ground
+SOLUTION: Mouse click will handle that, simulate mouse click, object is removed from ground. Keep track of players inventory
+
+How to keep track of players inventory?
+Socket manager will need to keep track of it
+Use the incubator maybe?
+Other player inventory will be tracked via hidden inventory panels
+The server will create an inventory manager for each player

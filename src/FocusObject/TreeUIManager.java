@@ -1,5 +1,6 @@
 package focusObject;
 
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -13,12 +14,15 @@ import Editor.Tree.Bud;
 import Editor.Tree.BudPanel;
 import Editor.Tree.Sapling;
 import Editor.Tree.SaplingPanel;
+import Multiplayer.ClientPacket;
+import Multiplayer.ServerPacket;
+import Multiplayer.SocketHandler;
 import TreeUI.InventoryPanel;
 import aspenNetwork.AspenNetwork;
 import gameObjects.GameObject;
 import smallGameObjects.SmallGameObject;
 
-public class TreeUIManager{
+public class TreeUIManager implements SocketHandler{
 	public static TreeUIManager master;
 	private int stickiness;//How far the mouse delta has to be before a suggested snap is abandoned
 	private AspenNetwork an;
@@ -42,10 +46,14 @@ public class TreeUIManager{
 		this.inc = new Incubator(this,an);
 		inputManager = new InputManager(input,this,inventoryManager,gameObjectList,uiObjectList,stickiness,keys);
 		master=this;
-			
 	}
-	public static void addClipLayer(int x, int y, int width,int height){
-		
+	/**
+	 * Adds a prebuilt object to the incubator so it can be tracked for saving
+	 * @param io
+	 * @return
+	 */
+	public InteractableObject addObjectToIncubator(InteractableObject io){
+		return io;
 	}
 	public UIElement createUIElement(Class<?> type,Panel panel, int rx, int ry){
 		UIElement product = (UIElement) inc.getObject(inc.addUIElement(panel.getId(),type));
@@ -145,6 +153,14 @@ public class TreeUIManager{
 		for(InteractableObject io:gameObjectList){
 			io.update(mouseX, mouseY,delta);
 		}
+		
+		if(TreeUIMultiplayer.isServer()){
+			distributeObjectPackets();
+		}
+	}
+	public void distributeObjectPackets(){
+		//We want to iterate through all objects and send a packet to all connected users
+		
 	}
 	public void removeObject(InteractableObject io){
 		if(io==null){
@@ -274,5 +290,30 @@ public class TreeUIManager{
 		
 		
 		
+	}
+	@Override
+	public void handleObject(InetAddress source, Object readObj) {
+		//All traffic goes through this function
+		synchronized(this){
+			
+			if(TreeUIMultiplayer.isServer()){
+				handleClientPacket(source,readObj);
+			}
+			else{
+				handleServerPacket(source,readObj);
+			}
+			
+			
+		}
+	}
+	
+	private void handleClientPacket(InetAddress source,Object readObj){
+		ClientPacket temp = (ClientPacket)readObj;
+		System.out.println("Received "+temp.type+" Client Packet");
+		
+	}
+	private void handleServerPacket(InetAddress source,Object readObj){
+		ServerPacket temp = (ServerPacket)readObj;
+		System.out.println("Received "+temp.type+" Server Packet");
 	}
 }

@@ -1,5 +1,8 @@
 /Editor/
-/focusObject/
-/TreeUI/
-/gameObjects/
+/GameLogic/
+/Imported/
 /Test/
+/focusObject/
+/Multiplayer/
+/gameObjects/
+/TreeUI/

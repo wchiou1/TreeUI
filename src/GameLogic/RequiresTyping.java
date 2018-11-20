@@ -1,7 +1,7 @@
 package GameLogic;
 
 /**
- * This class identifies classes which would like to receive universal keypresses
+ * This interface identifies classes which would like to receive universal keypresses
  * The object will be forwarded key presses if it has a fleetingLock from the InputManager
  * @author Wesley Chiou
  *

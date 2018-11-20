@@ -52,20 +52,20 @@ public class Incubator{
 	public TreeUIManager getManager(){
 		return tuim;
 	}
-	public int addPanel() {
+	public synchronized int addPanel() {
 		Panel p = new Panel();
 		panels.put(p.getId(), p);
 		tuim.addObject(panels.get(p.getId()));
 		return p.getId();
 	}
-	public void removeObject(int objectID){
+	public synchronized void removeObject(int objectID){
 		if (!objects.containsKey(objectID)) {
 			System.out.println("Error in Incubator-removeObject:ObjectID is invalid(" + objectID + ")");
 			return;
 		}
 		objects.remove(objectID);
 	}
-	public void removePanel(int panelID) {
+	public synchronized void removePanel(int panelID) {
 		if (!panels.containsKey(panelID)) {
 			System.out.println("Error in Incubator-removePanel:PanelID is invalid(" + panelID + ")");
 			return;
@@ -93,7 +93,7 @@ public class Incubator{
 		return objects.get(objectID);
 	}
 
-	public int addObject(Class<?> objectType) {
+	public synchronized int addObject(Class<?> objectType) {
 
 		Object newObject;
 		try {
@@ -138,7 +138,7 @@ public class Incubator{
 	 * @throws IllegalAccessException
 	 * @throws InstantiationException
 	 */
-	public int addUIElement(int panelID, Class<?> elementType){
+	public synchronized int addUIElement(int panelID, Class<?> elementType){
 		try{
 		// Errorcheck for panel
 		if (panelID > InteractableObject.getCount() || panelID < 0) {
@@ -175,7 +175,7 @@ public class Incubator{
 	 * @throws IllegalAccessException
 	 * @throws InstantiationException
 	 */
-	public int addUIElement(int panelID, int elementID) throws InstantiationException, IllegalAccessException,
+	public synchronized int addUIElement(int panelID, int elementID) throws InstantiationException, IllegalAccessException,
 			IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		// Errorcheck for panel
 		if (panelID > InteractableObject.getCount() || panelID < 0) {
@@ -226,7 +226,7 @@ public class Incubator{
 	 * @param objectID
 	 * @param param
 	 */
-	public void writeParam(int objectID, String param, Object arg) {
+	public synchronized void writeParam(int objectID, String param, Object arg) {
 		// Check if the thing is contained in either hashtable
 		if (!objectExists(objectID)) {
 			System.out.println("Error in Incubator-writeParam:Invalid ObjectID(" + objectID + ")");
@@ -283,7 +283,7 @@ public class Incubator{
 	/**
 	 * 
 	 */
-	public void connectNodes(int objectID1, int objectID2) {
+	public synchronized void connectNodes(int objectID1, int objectID2) {
 		// Check object1
 		if (!objectExists(objectID1)) {
 			System.out.println("Error in Incubator-connectDataNetworkNodes:Invalid ObjectID(" + objectID1 + ")");
@@ -318,7 +318,7 @@ public class Incubator{
 	 * @param panelID
 	 * @param originID
 	 */
-	public void setOrigin(int panelID, int originID) {
+	public synchronized void setOrigin(int panelID, int originID) {
 		if (!containsPanel(panelID)) {
 			System.out.println("Error in Incubator-setOrigin:NOT A Panel(" + panelID + ")");
 			return;
@@ -358,14 +358,14 @@ public class Incubator{
 	}
 	
 	/**
-	 * This method will get the save string for ONLY PANELS
+	 * This method will get the save string for THE ENTIRE ENVIRONMENT
 	 * For now the filehandling is done on the UI side, I will change this when universal object saving is rolled out
 	 * @param objectID
 	 * @return
 	 * @throws IllegalAccessException 
 	 * @throws IllegalArgumentException 
 	 */
-	public String IOScanAll(){
+	public synchronized String IOScanAll(){
 		//Scan ALL gameobjects!
 		String fullResult = "";
 		LinkedList<InteractableObject> gos = tuim.getGameObjects();
@@ -380,14 +380,14 @@ public class Incubator{
 	}
 
 	/**
-	 * This method will get the save string for ONLY PANELS
+	 * This method will get the save string for ONLY THE OBJECT
 	 * For now the filehandling is done on the UI side, I will change this when universal object saving is rolled out
 	 * @param objectID
 	 * @return
 	 * @throws IllegalAccessException 
 	 * @throws IllegalArgumentException 
 	 */
-	public String IOScan(int objectID){
+	public synchronized String IOScan(int objectID){
 		Hashtable<Integer,String> strings = new Hashtable<Integer,String>();
 		try {
 			recursiveScan(strings,objectID,true);
@@ -690,7 +690,7 @@ public class Incubator{
 	    			writeParam(subject.getId(),fieldstr,null);
 	    			continue;
 	    		}
-	    		//This this is not a supported object,but we'll try to add the object in anyway...
+	    		//This is not a supported object,but we'll try to add the object in anyway...
 	    		System.out.println("WARNING: Not an InteractableObject, attempting general object insert for "+fieldstr);
 	    		writeParam(subject.getId(),fieldstr,recursiveFileRead(lines,objects,objectID,Integer.parseInt(fieldData.substring(1))));
 	    		continue;
@@ -710,7 +710,7 @@ public class Incubator{
 	 * @param fileName
 	 * @param objectID
 	 */
-	public void readFileToObject(String fileName){
+	public synchronized void readFileToObject(String fileName){
 		
 		//Create new hashtable for the lines
 		Hashtable<Integer, String> lines = new Hashtable<Integer, String>();

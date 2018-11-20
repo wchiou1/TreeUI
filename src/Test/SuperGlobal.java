@@ -9,6 +9,8 @@ public class SuperGlobal{
 	private static boolean set=false;
 	private static Hashtable<String,BasicGameState> gameStates=new Hashtable<String,BasicGameState>();
 	private static Shell shell;
+	public static String ip;
+	public static int port;
 	public static void setGameState(String name,BasicGameState state){
 		gameStates.put(name, state);
 	}

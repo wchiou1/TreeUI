@@ -7,23 +7,34 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 import focusObject.Editor;
+import focusObject.TreeUIMultiplayer;
 
 public class EditorState extends TreeUIGameState{
 
 	int width;
 	int height;
-	public EditorState(Shell parent){
+	boolean server;
+	public EditorState(Shell parent,boolean server){
 		super(parent);
 		this.parent=parent;
+		this.server = server;
 	}
 	@Override
-	public void init(GameContainer container, StateBasedGame arg1)
+	public void enter(GameContainer container, StateBasedGame arg1)
 			throws SlickException {
 		super.init(container,arg1);
 		try{
+			System.out.println(this.getClass().getSimpleName());
 			width = container.getWidth();
 			height = container.getHeight();
 			Editor editor = new Editor(im);
+			if(server){
+				TreeUIMultiplayer.startServer(im, 2004);
+			}
+			else{
+				String ip = SuperGlobal.ip;
+				TreeUIMultiplayer.startClient(im, ip, 2004);
+			}
 			
 		}catch(Exception e){
 			e.printStackTrace();
@@ -58,7 +69,9 @@ public class EditorState extends TreeUIGameState{
 
 	@Override
 	public int getID() {
-		return 2;
+		if(server)
+			return 2;
+		return 3;
 	}
 
 }

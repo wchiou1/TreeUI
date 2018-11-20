@@ -11,6 +11,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import TreeUI.InputBox;
 import TreeUI.StateChangeButton;
 import TreeUI.StaticText;
 import aspenNetwork.AspenNetwork;
@@ -39,7 +40,7 @@ public class MainMenu extends TreeUIGameState{
 			
 			
 			//masterOO=new BasicPaneledGameObject(300,400,10,10);
-			int masterOO = inc.addObject(BasicPaneledGameObject.class);
+			int masterOO = inc.addObject(MainMenuOrigin.class);
 			inc.writeParam(masterOO, "x", 300);
 			inc.writeParam(masterOO, "y", 400);
 			inc.writeParam(masterOO, "width", 10);
@@ -50,8 +51,8 @@ public class MainMenu extends TreeUIGameState{
 			int p = inc.addPanel();
 			inc.writeParam(p, "x", -50);
 			inc.writeParam(p, "y", -100);
-			inc.writeParam(p, "width", 100);
-			inc.writeParam(p, "height", 100);
+			inc.writeParam(p, "width", 150);
+			inc.writeParam(p, "height", 200);
 			
 			//p.setOrigin(masterOO);
 			//im.addObject(masterOO);
@@ -63,25 +64,55 @@ public class MainMenu extends TreeUIGameState{
 			inc.writeParam(st1, "ry", 20);
 			inc.writeParam(st1, "text", "Demo");
 			
-			//p.addObject(new StaticText(40,38,"Editor"));
-			int st2 = inc.addUIElement(p, StaticText.class);
-			inc.writeParam(st2, "rx", 30);
-			inc.writeParam(st2, "ry", 40);
-			inc.writeParam(st2, "text", "Editor");
-			
 			//p.addObject(new StateChangeButton(parent,0,20,20,"Demo"));
 			int scb1 = inc.addUIElement(p, StateChangeButton.class);
 			inc.writeParam(scb1, "rx", 8);
-			inc.writeParam(scb1, "ry", 24);
+			inc.writeParam(scb1, "ry", 22);
 			inc.writeParam(scb1, "radius", 15);
 			inc.writeParam(scb1, "targetState", "Demo");
+			
+			//p.addObject(new StaticText(40,38,"Editor"));
+			int st2 = inc.addUIElement(p, StaticText.class);
+			inc.writeParam(st2, "rx", 30);
+			inc.writeParam(st2, "ry", 42);
+			inc.writeParam(st2, "text", "Editor Server");
+			
 			
 			//p.addObject(new StateChangeButton(parent,0,38,20,"Editor"));
 			int scb2 = inc.addUIElement(p, StateChangeButton.class);
 			inc.writeParam(scb2, "rx", 8);
-			inc.writeParam(scb2, "ry", 42);
+			inc.writeParam(scb2, "ry", 44);
 			inc.writeParam(scb2, "radius", 15);
-			inc.writeParam(scb2, "targetState", "Editor");
+			inc.writeParam(scb2, "targetState", "Editor Server");
+			
+			int ip_input = inc.addUIElement(p, InputBox.class);
+			inc.writeParam(ip_input, "rx", 8);
+			inc.writeParam(ip_input, "ry", 64);
+			inc.writeParam(ip_input, "text", "127.0.0.1");
+			inc.writeParam(ip_input, "allowText", false);
+			inc.writeParam(ip_input, "allowSymbols", true);
+			
+			int port_input = inc.addUIElement(p, InputBox.class);
+			inc.writeParam(port_input, "rx", 8);
+			inc.writeParam(port_input, "ry", 84);
+			inc.writeParam(port_input, "text", "2004");
+			inc.writeParam(port_input, "allowText", false);
+			
+			//p.addObject(new StaticText(40,38,"Editor"));
+			int st3 = inc.addUIElement(p, StaticText.class);
+			inc.writeParam(st3, "rx", 30);
+			inc.writeParam(st3, "ry", 106);
+			inc.writeParam(st3, "text", "Editor Client");
+			
+			//p.addObject(new StateChangeButton(parent,0,38,20,"Editor"));
+			int scb3 = inc.addUIElement(p, StateChangeButton.class);
+			inc.writeParam(scb3, "rx", 8);
+			inc.writeParam(scb3, "ry", 108);
+			inc.writeParam(scb3, "radius", 15);
+			inc.writeParam(scb3, "targetState", "Editor Client");
+			
+			inc.writeParam(masterOO, "ip_input", inc.getObject(ip_input));
+			inc.writeParam(masterOO, "port_input", inc.getObject(port_input));
 		}catch(Exception e){
 			e.printStackTrace();
 		}

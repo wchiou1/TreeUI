@@ -36,7 +36,6 @@ public class StaticText extends UIElement{
 		g.setColor(Color.black);
 		g.drawRect(x, y, width, height);
 		
-		g.setClip(x+2, y+2, width-4, height-4);
 		g.setFont(Shell.SMALL_FONT);
 		g.drawString(text, x+2, y+2);
 		

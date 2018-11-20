@@ -9,6 +9,9 @@ import smallGameObjects.SmallGameObject;
 
 public class InputBox extends TextButton implements RequiresTyping{
 	protected boolean keyLocked = false;
+	public boolean allowSymbols = false;
+	public boolean allowText = true;
+	public boolean allowNumbers = true;
 	public InputBox(){
 		this.x=0;
 		this.y=0;
@@ -60,13 +63,20 @@ public class InputBox extends TextButton implements RequiresTyping{
 	public void processUniversalKeyPress(int key, char c) {
 		//System.out.println(key+":"+c+"|"+(int)c);
 		int code = (int)c;
+		System.out.println(code);
 		if(key==14){
 			if(text.length()!=0)
 				text=text.substring(0, text.length()-1);
 		}
-		else if((code>=65&&code<=90)||(code>=97&&code<=122)||code>=48&&code<=57){
+		else if(allowText&&((code>=65&&code<=90)||(code>=97&&code<=122))){
 			text+=c;
-		}	
+		}
+		else if(allowNumbers&&(code>=48&&code<=57)){
+			text+=c;
+		}
+		else if(allowSymbols&&code==46){
+			text+=c;
+		}
 	}
 	
 }
