@@ -1,5 +1,6 @@
 package focusObject;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -17,6 +18,7 @@ import Editor.Tree.SaplingPanel;
 import Multiplayer.ClientPacket;
 import Multiplayer.ServerPacket;
 import Multiplayer.SocketHandler;
+import Multiplayer.SocketManager;
 import TreeUI.InventoryPanel;
 import aspenNetwork.AspenNetwork;
 import gameObjects.GameObject;
@@ -309,7 +311,19 @@ public class TreeUIManager implements SocketHandler{
 	
 	private void handleClientPacket(InetAddress source,Object readObj){
 		ClientPacket temp = (ClientPacket)readObj;
-		System.out.println("Received "+temp.type+" Client Packet");
+		String type = temp.type;
+		System.out.println("Received "+type+" Client Packet");
+		try {
+			if(type=="NEW"){
+				int id = TreeUIMultiplayer.newConnection(source);
+				
+				SocketManager.sendTCPPacket(source, id);
+				
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	private void handleServerPacket(InetAddress source,Object readObj){

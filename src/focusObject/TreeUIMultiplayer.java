@@ -3,6 +3,7 @@ package focusObject;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 import Multiplayer.ClientPacket;
 import Multiplayer.SocketManager;
@@ -19,7 +20,17 @@ import Multiplayer.TCPPacketListenerThread;
 public class TreeUIMultiplayer{
 	private static boolean server = false;//Client mode assumed
 	private static TreeUIManager tuim;
+	private static int connectionInc = 0;
+	private static Hashtable<Integer,InetAddress> connectionMap = new Hashtable<Integer,InetAddress>();
 	private static ArrayList<Thread> threads = new ArrayList<Thread>();//Needs to keep all network threads
+	public static Hashtable<Integer, InetAddress> getConnectionMap(){
+		return connectionMap;
+	}
+	public static int newConnection(InetAddress connection){
+		connectionInc++;
+		connectionMap.put(connectionInc, connection);
+		return connectionInc;
+	}
 	public static boolean isServer(){
 		return server;
 	}
@@ -46,7 +57,7 @@ public class TreeUIMultiplayer{
 			//handle server to client transition
 			handleServerToClient();
 		}
-		System.out.println("Connecting to "+ip+":"+port);
+		System.out.println("Connecting to "+ip+":"+port+" ...");
 		//Start threads for client
 		server = false;
 		tuim = t;
@@ -61,6 +72,23 @@ public class TreeUIMultiplayer{
 		
 		InetAddress inet = tcpl.getAddress();
 		SocketManager.sendTCPPacket(inet, new ClientPacket("NEW",inet));
+		System.out.println("Connection Established");
+	}
+	public static void sendTCPPacket(InetAddress target,Object send){
+		try {
+			SocketManager.sendTCPPacket(target, send);
+		} catch (IOException e) {
+			System.err.println("Failed to send TCP Packet");
+			e.printStackTrace();
+		}
+	}
+	public static void sendUDPPacket(InetAddress target,int port,Object send){
+		try {
+			SocketManager.sendUDPPacket(target,port, send);
+		} catch (IOException e) {
+			System.err.println("Failed to send TCP Packet");
+			e.printStackTrace();
+		}
 	}
 	private static void handleClientToServer(){
 		
