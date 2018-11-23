@@ -19,6 +19,7 @@ public class ObjectGrabber extends SmallGameObject implements EditorItem{
 	public void grabObject(InteractableObject io){
 		System.out.println("Storing:"+io);
 		//If there is not stored object, get it
+		clearGrabbed();
 		if(stored==null){
 			stored=io;
 			return;
