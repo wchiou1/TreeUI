@@ -20,6 +20,10 @@ Server will receive mouse clicks and process using incubator
 Server will yield to client for the interaction and active object
 Server will create an inventory manager for each player.
 
+Need to generate a packet for each object
+Use reflection to generate the packet
+Avoid grabbing pointers for now
+
 Client sends mouse clicks(Not coords, just what was in the hand, what was clicked on)
 Client sends vars of active object except pointers
 Client sends vars of interaction object except pointers

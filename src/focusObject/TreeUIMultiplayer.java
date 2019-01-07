@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 
 import Multiplayer.ClientPacket;
+import Multiplayer.ServerPacket;
 import Multiplayer.SocketManager;
 import Multiplayer.TCPPacketListenerThread;
 
@@ -51,6 +52,7 @@ public class TreeUIMultiplayer{
 		//Start the TCP Listener
 		Thread tcpl = SocketManager.startTCPConnectionListener(t,port);
 		threads.add(tcpl);
+		System.out.println("Server Initialized");
 	}
 	public static void startClient(TreeUIManager t,String ip,int port) throws IOException{
 		if(server == true){
@@ -91,10 +93,10 @@ public class TreeUIMultiplayer{
 		}
 	}
 	private static void handleClientToServer(){
-		
+		System.out.println("Transitioning from client to server");
 	}
 	private static void handleServerToClient(){
-		
+		System.out.println("Transitioning from server to client");
 	}
 	public static void changeGameState(TreeUIManager t){
 		tuim = t;
@@ -103,4 +105,15 @@ public class TreeUIMultiplayer{
 		
 		
 	}
+	public static Hashtable<Class<?>,String> getSerializedObject(InteractableObject io){
+		//Use reflection to generate a serialization object
+		
+		System.out.println(io.getClass());
+		return null;
+		
+	}
+	public static void setSerializedObject(Hashtable<Class<?>,String> sobj){
+		
+	}
 }
+

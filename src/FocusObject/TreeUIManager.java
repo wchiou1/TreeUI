@@ -11,6 +11,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 
+import Editor.EditorImmune;
 import Editor.Tree.Bud;
 import Editor.Tree.BudPanel;
 import Editor.Tree.Sapling;
@@ -162,6 +163,22 @@ public class TreeUIManager implements SocketHandler{
 	}
 	public void distributeObjectPackets(){
 		//We want to iterate through all objects and send a packet to all connected users
+		for(InteractableObject io:uiObjectList){
+			//test if it's an editor object?
+			if(io instanceof EditorImmune){
+				continue;
+			}
+			TreeUIMultiplayer.getSerializedObject(io);
+		}
+		
+		for(InteractableObject io:gameObjectList){
+			if(io instanceof EditorImmune){
+				continue;
+			}
+			TreeUIMultiplayer.getSerializedObject(io);
+		}
+		
+		//
 		
 	}
 	public void removeObject(InteractableObject io){

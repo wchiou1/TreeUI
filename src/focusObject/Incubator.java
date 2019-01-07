@@ -93,7 +93,7 @@ public class Incubator{
 		return objects.get(objectID);
 	}
 
-	public synchronized int addObject(Class<?> objectType) {
+	public synchronized int addObject(Class<?> objectType){
 
 		Object newObject;
 		try {

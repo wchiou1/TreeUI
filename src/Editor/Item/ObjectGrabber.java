@@ -10,7 +10,6 @@ import smallGameObjects.SmallGameObject;
  * This item will store a gameobject on the first click and connect it to another object of the second click
  * It will be activated using Ctrl within the editor
  * @author Wesley Chiou
- *
  */
 public class ObjectGrabber extends SmallGameObject implements EditorItem{
 	private InteractableObject stored;//Stores the gameobject so we can use it as an argument
