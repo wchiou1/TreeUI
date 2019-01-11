@@ -369,7 +369,11 @@ public class TreeUIManager implements SocketHandler{
 		}
 		case "SYNC":{
 			//The sync packet should have an id
-			System.out.println("Sync packet from "+source.getHostAddress()+" for object "+((Hashtable<String,String>)temp.packet).get("id"));
+			ArrayList<Hashtable<String,String>> distro_data = (ArrayList<Hashtable<String,String>>)temp.packet;
+			for(Hashtable<String,String> io_data:distro_data){
+				System.out.println("Sync packet from "+source.getHostAddress()+" for object "+io_data.get("id"));
+			}
+			
 			break;
 		}
 		default:{
