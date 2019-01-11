@@ -3,6 +3,7 @@ package focusObject;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -36,10 +37,12 @@ public class TreeUIManager implements SocketHandler{
 	private Input input;
 	private Incubator inc;
 	private boolean editor = false;
-	
+	private int port;
+	private int clientID = -1;
 	//Placeholder object to indicate that lock is on nothing
 	static InteractableObject empty=new Window(0,0,0,0,Color.green);
 	public TreeUIManager(GameContainer container,ArrayList<Integer> keys, AspenNetwork an, int stickiness){
+		this.port = port;
 		this.stickiness=stickiness;
 		this.input=container.getInput();
 		this.an=an;
@@ -162,23 +165,32 @@ public class TreeUIManager implements SocketHandler{
 		}
 	}
 	public void distributeObjectPackets(){
-		//We want to iterate through all objects and send a packet to all connected users
-		for(InteractableObject io:uiObjectList){
-			//test if it's an editor object?
-			if(io instanceof EditorImmune){
-				continue;
+		try {
+			ArrayList<Hashtable<String,String>> distributionArray = new ArrayList<Hashtable<String,String>>();
+			//We want to iterate through all objects and send a packet to all connected users
+			for(InteractableObject io:uiObjectList){
+				//test if it's an editor object?
+				if(io instanceof EditorImmune){
+					continue;
+				}
+				distributionArray.add(TreeUIMultiplayer.getSerializedObject(io));
+				
 			}
-			TreeUIMultiplayer.getSerializedObject(io);
-		}
-		
-		for(InteractableObject io:gameObjectList){
-			if(io instanceof EditorImmune){
-				continue;
+			
+			for(InteractableObject io:gameObjectList){
+				if(io instanceof EditorImmune){
+					continue;
+				}
+				distributionArray.add(TreeUIMultiplayer.getSerializedObject(io));
 			}
-			TreeUIMultiplayer.getSerializedObject(io);
+			
+			//Send it
+			TreeUIMultiplayer.sendUDPPacketAll(new ServerPacket("SYNC",distributionArray));
+			
+		} catch (IllegalArgumentException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
-		//
 		
 	}
 	public void removeObject(InteractableObject io){
@@ -334,7 +346,7 @@ public class TreeUIManager implements SocketHandler{
 			if(type=="NEW"){
 				int id = TreeUIMultiplayer.newConnection(source);
 				
-				SocketManager.sendTCPPacket(source, id);
+				SocketManager.sendTCPPacket(source, new ServerPacket("INIT",id));//Send the id back
 				
 			}
 		} catch (IOException e) {
@@ -345,6 +357,25 @@ public class TreeUIManager implements SocketHandler{
 	}
 	private void handleServerPacket(InetAddress source,Object readObj){
 		ServerPacket temp = (ServerPacket)readObj;
+		String type = temp.type;
 		System.out.println("Received "+temp.type+" Server Packet");
+		switch(type){
+		case "INIT":{
+			int id = (int) temp.packet;
+			//This is the client's identifier
+			clientID = id;
+			System.out.println("Got client id of "+id);
+			break;
+		}
+		case "SYNC":{
+			//The sync packet should have an id
+			System.out.println("Sync packet from "+source.getHostAddress()+" for object "+((Hashtable<String,String>)temp.packet).get("id"));
+			break;
+		}
+		default:{
+			System.out.println("Unhandled server packet of type "+type);
+		}
+		}
+		
 	}
 }
