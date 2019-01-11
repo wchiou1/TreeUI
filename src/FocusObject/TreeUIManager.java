@@ -343,7 +343,7 @@ public class TreeUIManager implements SocketHandler{
 		String type = temp.type;
 		System.out.println("Received "+type+" Client Packet");
 		try {
-			if(type=="NEW"){
+			if(type.equals("NEW")){
 				int id = TreeUIMultiplayer.newConnection(source);
 				
 				SocketManager.sendTCPPacket(source, new ServerPacket("INIT",id));//Send the id back

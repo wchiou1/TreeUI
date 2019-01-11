@@ -53,6 +53,9 @@ public class TreeUIMultiplayer{
 		Thread udpl = SocketManager.startUDPListener(t,port);
 		threads.add(udpl);
 		
+		//Start the UDP Sender
+		SocketManager.startUDPSender();
+		
 		//Start the TCP Listener
 		Thread tcpl = SocketManager.startTCPConnectionListener(t,port);
 		threads.add(tcpl);
@@ -72,6 +75,9 @@ public class TreeUIMultiplayer{
 		//Start the UDP Listener
 		Thread udpl = SocketManager.startUDPListener(t,port);
 		threads.add(udpl);
+		
+		//Start the UDP Sender
+		SocketManager.startUDPSender();
 		
 		//Start the TCP Listener
 		TCPPacketListenerThread tcpl = SocketManager.startTCPPacketListener(t,ip,port);
