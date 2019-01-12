@@ -3,6 +3,7 @@ package focusObject;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -372,6 +373,11 @@ public class TreeUIManager implements SocketHandler{
 			ArrayList<Hashtable<String,String>> distro_data = (ArrayList<Hashtable<String,String>>)temp.packet;
 			for(Hashtable<String,String> io_data:distro_data){
 				System.out.println("Sync packet from "+source.getHostAddress()+" for object "+io_data.get("id"));
+				Enumeration<String> iter = io_data.keys();
+				while(iter.hasMoreElements()){
+					System.out.print(iter.nextElement()+",");
+				}
+				System.out.println("");
 			}
 			
 			break;
