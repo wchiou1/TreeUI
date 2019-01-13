@@ -30,6 +30,9 @@ public abstract class InteractableObject{
 		id=count;
 		count++;
 	}
+	void setId(int new_id){
+		id = new_id;
+	}
 	public int getId(){
 		return id;
 	}

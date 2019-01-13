@@ -6,27 +6,28 @@ import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-import Editor.Variables.VariableBox;
 import Multiplayer.ClientPacket;
-import Multiplayer.ServerPacket;
+import Multiplayer.SocketHandler;
 import Multiplayer.SocketManager;
 import Multiplayer.TCPPacketListenerThread;
 
 
 /**
  * This class will manage the threads and network migrate and state
- * This class will handle game state migration by accessing the network
- * threads and overwriting their handler
+ * This class will handle game state migration by changing a static object
+ * which is refered to when handling packets
  * @author Wesley
  *
  */
-public class TreeUIMultiplayer{
+public class TreeUIMultiplayer implements SocketHandler{
+	private static TreeUIMultiplayer handler = new TreeUIMultiplayer();
 	private static boolean server = false;//Client mode assumed
 	private static TreeUIManager tuim;
 	private static int connectionInc = 0;
 	private static int storedPort;
 	private static Hashtable<Integer,InetAddress> connectionMap = new Hashtable<Integer,InetAddress>();
 	private static ArrayList<Thread> threads = new ArrayList<Thread>();//Needs to keep all network threads
+	private TreeUIMultiplayer(){};
 	public static Hashtable<Integer, InetAddress> getConnectionMap(){
 		return connectionMap;
 	}
@@ -38,6 +39,9 @@ public class TreeUIMultiplayer{
 	public static boolean isServer(){
 		return server;
 	}
+	public static void setTuim(TreeUIManager new_tuim){
+		tuim=new_tuim;
+	}
 	public static void startServer(TreeUIManager t,int port) throws IOException{
 		if(server == false){
 			//handle client to server transition
@@ -46,18 +50,18 @@ public class TreeUIMultiplayer{
 		System.out.println("Starting Server");
 		//Start server threads
 		server = true;
-		tuim = t;
+		setTuim(t);
 		storedPort = port;
 		
 		//Start the UDP Listener
-		Thread udpl = SocketManager.startUDPListener(t,port);
+		Thread udpl = SocketManager.startUDPListener(TreeUIMultiplayer.handler,port);
 		threads.add(udpl);
 		
 		//Start the UDP Sender
 		SocketManager.startUDPSender();
 		
 		//Start the TCP Listener
-		Thread tcpl = SocketManager.startTCPConnectionListener(t,port);
+		Thread tcpl = SocketManager.startTCPConnectionListener(TreeUIMultiplayer.handler,port);
 		threads.add(tcpl);
 		System.out.println("Server Initialized");
 	}
@@ -69,18 +73,18 @@ public class TreeUIMultiplayer{
 		System.out.println("Connecting to "+ip+":"+port+" ...");
 		//Start threads for client
 		server = false;
-		tuim = t;
+		setTuim(t);
 		storedPort = port;
 		
 		//Start the UDP Listener
-		Thread udpl = SocketManager.startUDPListener(t,port);
+		Thread udpl = SocketManager.startUDPListener(TreeUIMultiplayer.handler,port);
 		threads.add(udpl);
 		
 		//Start the UDP Sender
 		SocketManager.startUDPSender();
 		
 		//Start the TCP Listener
-		TCPPacketListenerThread tcpl = SocketManager.startTCPPacketListener(t,ip,port);
+		TCPPacketListenerThread tcpl = SocketManager.startTCPPacketListener(TreeUIMultiplayer.handler,ip,port);
 		threads.add(tcpl);
 		
 		InetAddress inet = tcpl.getAddress();
@@ -123,15 +127,23 @@ public class TreeUIMultiplayer{
 	private static void handleServerToClient(){
 		System.out.println("Transitioning from server to client");
 	}
-	public static void changeGameState(TreeUIManager t){
-		tuim = t;
-		//Overwrite the handlers for the TCP Packet Threads
-		SocketManager.changeTCPHandlers(t);
-		
+	public void handleObject(InetAddress address, Object readObj) {
+		//All traffic goes through this function
+		synchronized(this){
+			
+			if(TreeUIMultiplayer.isServer()){
+				TreeUIMultiplayer.tuim.handleClientPacket(address,readObj);
+			}
+			else{
+				TreeUIMultiplayer.tuim.handleServerPacket(address,readObj);
+			}
+			
+			
+		}
 		
 	}
 	public static Hashtable<String,String> getSerializedObject(InteractableObject io) throws IllegalArgumentException, IllegalAccessException{
-		
+		//Global logic for packets goes here(panel synchronization)
 		Hashtable<String,String> serializedObj = new Hashtable<String,String>();
 		
 		//Use reflection to generate a serialization object
@@ -146,7 +158,9 @@ public class TreeUIMultiplayer{
 			serializedObj.put(f.getName(),f.get(io).toString());
 		}
 		
+		serializedObj.put("type", io.getClass().getName());
 		//Hopefully hashtables are serializable
+		System.out.println(serializedObj);
 		return serializedObj;
 		
 	}
@@ -154,9 +168,20 @@ public class TreeUIMultiplayer{
 	 * Uses the currently set tree ui manager to overwrite the variables from a serialized object
 	 * @param sobj
 	 */
-	public static void setSerializedObject(Hashtable<String,String> sobj){
+	public static void setSerializedObject(int id,Hashtable<String,String> sobj){
+		//Global logic for packets goes here(panel synchronization)
+		//TODO Only create new panels if the type is panel, ignore if the panel is already made
+		
 		Incubator inc = tuim.getIncubator();
-		System.out.println(sobj.get("id"));
+		//Check if the object exists in the incubator
+		InteractableObject io = inc.getEither(id);
+		if(io==null){
+			//If it doesn't exist, create the object
+			
+		}
+		
+		System.out.println(sobj);
 	}
+	
 }
 

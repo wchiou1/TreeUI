@@ -13,6 +13,8 @@ import java.util.Hashtable;
 
 /**
  * Library to send objects, read objects, setup connections, setup listeners using UDP, TCP
+ * Supports different handlers for different connections
+ * Allows direct access to the threads for low level meddling
  * @author Wesley
  *
  */

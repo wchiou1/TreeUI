@@ -19,6 +19,8 @@ Server will only update around the client location
 Server will receive mouse clicks and process using incubator
 Server will yield to client for the interaction and active object
 Server will create an inventory manager for each player.
+Server will mark which objects need updating based on if they were interacted with
+Server will send a dtg packet to control simulation speed, dtg will be raw dtg and sent via udp
 
 Need to generate a packet for each object
 Use reflection to generate the packet
@@ -28,6 +30,7 @@ Client sends mouse clicks(Not coords, just what was in the hand, what was clicke
 Client sends vars of active object except pointers
 Client sends vars of interaction object except pointers
 Client will DISABLE object creation to avoid conflicts with server
+Client will need to be able to create objects with set ids(Add functionality to incubator)
 Client TreeUIManager will check thread if it should allow object creation or block
 Client will REFUSE to update interaction and active object
 
@@ -39,3 +42,20 @@ Socket manager will need to keep track of it
 Use the incubator maybe?
 Other player inventory will be tracked via hidden inventory panels
 The server will create an inventory manager for each player
+
+DONE
+Change tuimultiplayer handler to tuimultipler instead of tuimanager[DONE]
+	All packets should go through the tuimultiplayer handler before being forwarded to the tuimanager[DONE]
+
+TODO:
+tuimultiplayer
+	Don't set fields which don't exist
+	Add panel logic in sso in tuimultiplayer(don't update panels)
+	Create and set object ids when creating new objects from packets
+InputManager
+	Clicks for clients should send tcp packets with id of object clicked and id of object held
+	Interactions should send udp sync packets for the server and tell the tuim to ignore sync packets for interacted objects
+TUIM
+	Identify thread and block object creation if it is the client(Only server can create objects)
+	
+

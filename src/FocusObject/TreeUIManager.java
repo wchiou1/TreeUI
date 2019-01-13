@@ -20,14 +20,13 @@ import Editor.Tree.Sapling;
 import Editor.Tree.SaplingPanel;
 import Multiplayer.ClientPacket;
 import Multiplayer.ServerPacket;
-import Multiplayer.SocketHandler;
 import Multiplayer.SocketManager;
 import TreeUI.InventoryPanel;
 import aspenNetwork.AspenNetwork;
 import gameObjects.GameObject;
 import smallGameObjects.SmallGameObject;
 
-public class TreeUIManager implements SocketHandler{
+public class TreeUIManager{
 	public static TreeUIManager master;
 	private int stickiness;//How far the mouse delta has to be before a suggested snap is abandoned
 	private AspenNetwork an;
@@ -38,12 +37,10 @@ public class TreeUIManager implements SocketHandler{
 	private Input input;
 	private Incubator inc;
 	private boolean editor = false;
-	private int port;
 	private int clientID = -1;
 	//Placeholder object to indicate that lock is on nothing
 	static InteractableObject empty=new Window(0,0,0,0,Color.green);
 	public TreeUIManager(GameContainer container,ArrayList<Integer> keys, AspenNetwork an, int stickiness){
-		this.port = port;
 		this.stickiness=stickiness;
 		this.input=container.getInput();
 		this.an=an;
@@ -167,14 +164,14 @@ public class TreeUIManager implements SocketHandler{
 	}
 	public void distributeObjectPackets(){
 		try {
-			ArrayList<Hashtable<String,String>> distributionArray = new ArrayList<Hashtable<String,String>>();
+			Hashtable<Integer,Hashtable<String,String>> distributionArray = new Hashtable<Integer,Hashtable<String,String>>();
 			//We want to iterate through all objects and send a packet to all connected users
 			for(InteractableObject io:uiObjectList){
 				//test if it's an editor object?
 				if(io instanceof EditorImmune){
 					continue;
 				}
-				distributionArray.add(TreeUIMultiplayer.getSerializedObject(io));
+				distributionArray.put(io.getId(),TreeUIMultiplayer.getSerializedObject(io));
 				
 			}
 			
@@ -182,7 +179,7 @@ public class TreeUIManager implements SocketHandler{
 				if(io instanceof EditorImmune){
 					continue;
 				}
-				distributionArray.add(TreeUIMultiplayer.getSerializedObject(io));
+				distributionArray.put(io.getId(),TreeUIMultiplayer.getSerializedObject(io));
 			}
 			
 			//Send it
@@ -323,23 +320,8 @@ public class TreeUIManager implements SocketHandler{
 		
 		
 	}
-	@Override
-	public void handleObject(InetAddress source, Object readObj) {
-		//All traffic goes through this function
-		synchronized(this){
-			
-			if(TreeUIMultiplayer.isServer()){
-				handleClientPacket(source,readObj);
-			}
-			else{
-				handleServerPacket(source,readObj);
-			}
-			
-			
-		}
-	}
 	
-	private void handleClientPacket(InetAddress source,Object readObj){
+	void handleClientPacket(InetAddress source,Object readObj){
 		ClientPacket temp = (ClientPacket)readObj;
 		String type = temp.type;
 		System.out.println("Received "+type+" Client Packet");
@@ -356,7 +338,8 @@ public class TreeUIManager implements SocketHandler{
 		}
 		
 	}
-	private void handleServerPacket(InetAddress source,Object readObj){
+	void handleServerPacket(InetAddress source,Object readObj){
+		//Gamestate dependent logic goes here("lobby verses playground")
 		ServerPacket temp = (ServerPacket)readObj;
 		String type = temp.type;
 		System.out.println("Received "+temp.type+" Server Packet");
@@ -370,15 +353,20 @@ public class TreeUIManager implements SocketHandler{
 		}
 		case "SYNC":{
 			//The sync packet should have an id
-			ArrayList<Hashtable<String,String>> distro_data = (ArrayList<Hashtable<String,String>>)temp.packet;
-			for(Hashtable<String,String> io_data:distro_data){
-				System.out.println("Sync packet from "+source.getHostAddress()+" for object "+io_data.get("id"));
-				Enumeration<String> iter = io_data.keys();
-				while(iter.hasMoreElements()){
-					System.out.print(iter.nextElement()+",");
-				}
-				System.out.println("");
+			Hashtable<Integer,Hashtable<String,String>> distro_data = (Hashtable<Integer,Hashtable<String,String>>)temp.packet;
+			Enumeration<Integer> keys = distro_data.keys();
+			while(keys.hasMoreElements()){
+				int id = keys.nextElement();
+				System.out.println("Object ID="+id);
+				TreeUIMultiplayer.setSerializedObject(id, distro_data.get(id));
 			}
+			
+			//Check if the id already exists
+			//Verify the class type
+			//Modify variables using the setSerializedObject from tuimultiplayer
+			//What about panels? Panels will be clientside, but they still need to be created...
+			//Panels will be created and attached via set ids, Tuim should not worry about panels, just call setSerialize
+			
 			
 			break;
 		}
