@@ -47,11 +47,16 @@ DONE
 Change tuimultiplayer handler to tuimultipler instead of tuimanager[DONE]
 	All packets should go through the tuimultiplayer handler before being forwarded to the tuimanager[DONE]
 
-TODO:
+TEST
 tuimultiplayer
-	Don't set fields which don't exist
-	Add panel logic in sso in tuimultiplayer(don't update panels)
-	Create and set object ids when creating new objects from packets
+	Don't set fields which don't exist[TEST]
+	Add panel logic in sso in tuimultiplayer(don't update panels)[TEST]
+	
+Incubator
+	Update object fields[TEST]
+	Create and set object ids when creating new objects from packets[TEST]
+
+TODO:
 InputManager
 	Clicks for clients should send tcp packets with id of object clicked and id of object held
 	Interactions should send udp sync packets for the server and tell the tuim to ignore sync packets for interacted objects

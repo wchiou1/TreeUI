@@ -128,17 +128,24 @@ public class TreeUIMultiplayer implements SocketHandler{
 		System.out.println("Transitioning from server to client");
 	}
 	public void handleObject(InetAddress address, Object readObj) {
-		//All traffic goes through this function
-		synchronized(this){
-			
-			if(TreeUIMultiplayer.isServer()){
-				TreeUIMultiplayer.tuim.handleClientPacket(address,readObj);
+		try {
+			//All traffic goes through this function
+			synchronized(this){
+				
+				if(TreeUIMultiplayer.isServer()){
+					TreeUIMultiplayer.tuim.handleClientPacket(address,readObj);
+				}
+				else{
+					
+						TreeUIMultiplayer.tuim.handleServerPacket(address,readObj);
+					
+				}
+				
+				
 			}
-			else{
-				TreeUIMultiplayer.tuim.handleServerPacket(address,readObj);
-			}
-			
-			
+		} catch (IllegalArgumentException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 	}
@@ -159,26 +166,46 @@ public class TreeUIMultiplayer implements SocketHandler{
 		}
 		
 		serializedObj.put("type", io.getClass().getName());
-		//Hopefully hashtables are serializable
 		System.out.println(serializedObj);
+		//Hopefully hashtables are serializable
 		return serializedObj;
 		
 	}
 	/**
 	 * Uses the currently set tree ui manager to overwrite the variables from a serialized object
 	 * @param sobj
+	 * @throws IllegalAccessException 
+	 * @throws IllegalArgumentException 
 	 */
-	public static void setSerializedObject(int id,Hashtable<String,String> sobj){
+	public static void setSerializedObject(int id,Hashtable<String,String> sobj) throws IllegalArgumentException, IllegalAccessException{
 		//Global logic for packets goes here(panel synchronization)
 		//TODO Only create new panels if the type is panel, ignore if the panel is already made
 		
 		Incubator inc = tuim.getIncubator();
 		//Check if the object exists in the incubator
 		InteractableObject io = inc.getEither(id);
-		if(io==null){
-			//If it doesn't exist, create the object
+		//Get the class object
+		
+		if(io!=null){
+			String sobj_type = sobj.get("type");
+			//If it exists, check if it's a panel, ignore panels
+			if(sobj_type.equals("focusObject.Panel")){
+				return;
+			}		
 			
 		}
+		else{
+			//Create the object
+			String sobj_type = sobj.get("type");
+			//If it exists, check if it's a panel, ignore panels
+			if(sobj_type.equals("focusObject.Panel")){
+				//If it's a panel, overwrite the open value and position
+				sobj.remove("open");
+				sobj.remove("rx");
+				sobj.remove("ry");
+			}
+		}
+		inc.updateObjectFromSerial(id,sobj);
 		
 		System.out.println(sobj);
 	}

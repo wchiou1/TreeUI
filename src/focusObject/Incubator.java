@@ -94,6 +94,9 @@ public class Incubator{
 	}
 
 	public synchronized int addObject(Class<?> objectType){
+		return addObject(-1,objectType);
+	}
+	public synchronized int addObject(int id,Class<?> objectType){
 
 		Object newObject;
 		try {
@@ -110,8 +113,15 @@ public class Incubator{
 				// Add the datanode to the datanodenetwork
 				dn.add(((GameObject) newObject).getNode());
 			}
-			int objId = ((InteractableObject) newObject).getId();
-			objects.put(new Integer(objId), (InteractableObject) newObject);
+			
+			InteractableObject io = (InteractableObject)newObject;
+			
+			if(id!=-1){
+				io.setId(id);
+			}
+			
+			int objId = io.getId();
+			objects.put(new Integer(objId), io);
 			if (newObject instanceof GameObject)
 				tuim.addGameObject(objects.get(objId));
 			else
@@ -339,6 +349,63 @@ public class Incubator{
 		}
 
 		selectedPanel.setOrigin((OriginObject) selectedObject);
+	}
+	
+	/**
+	 * Takes in a serializedObject and updates the object with that id
+	 * Creates a new object if that object doesn't exist yet
+	 * @param id
+	 * @param sobj
+	 */
+	public void updateObjectFromSerial(int id,Hashtable<String,String> sobj){
+		String sobj_type = sobj.get("type");
+		System.out.println("Updating object "+id+"("+sobj_type+")");
+		InteractableObject io = getEither(id);
+		if(io!=null){
+			//Object exists, update it
+	
+			String inc_type = io.getClass().getName();
+			
+			//Check if the type is the same, if it's not, report an error
+			if(!inc_type.equals(sobj_type)){
+				System.err.println("Type mismatch (Local: "+inc_type+" ,Remote: "+sobj_type+"), packet for "+id+" ignored");
+				return;
+			}
+			
+			try {
+				Field[] fields= getFields(id);
+			
+				for(Field f: fields){
+					String field_name = f.getName();
+					if(sobj.containsKey(field_name)){
+						String value = sobj.get(field_name);
+						writeParam(id,field_name,value);
+					}
+				}
+			} catch (IllegalArgumentException | IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		else{
+			
+			//Object dne, create it and update it
+			try {
+				System.out.println("Creating object "+id+"("+sobj_type+")");
+			
+				Class<?> c = Class.forName(sobj_type);
+				
+				addObject(id,c);
+				
+				updateObjectFromSerial(id,sobj);
+				
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 	}
 
 	public Field[] getFields(int objectID) throws IllegalArgumentException, IllegalAccessException {

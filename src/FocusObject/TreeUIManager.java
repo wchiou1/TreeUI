@@ -59,13 +59,13 @@ public class TreeUIManager{
 	public InteractableObject addObjectToIncubator(InteractableObject io){
 		return io;
 	}
-	public UIElement createUIElement(Class<?> type,Panel panel, int rx, int ry){
+	public UIElement createUIElement(Class<?> type,Panel panel, int rx, int ry){check if server thread
 		UIElement product = (UIElement) inc.getObject(inc.addUIElement(panel.getId(),type));
 		product.rx=rx;
 		product.ry=ry;
 		return (UIElement) product;
 	}
-	public GameObject createGameObject(Class<?> type,int x, int y){
+	public GameObject createGameObject(Class<?> type,int x, int y){check if server thread
 		InteractableObject product = inc.getObject(inc.addObject(type));
 		product.x=x;
 		product.y=y;
@@ -80,7 +80,7 @@ public class TreeUIManager{
 	 * @param y
 	 * @return
 	 */
-	public GameObject createLooseGameObject(Class<?> type,int x, int y){
+	public GameObject createLooseGameObject(Class<?> type,int x, int y){check if server thread
 		InteractableObject product = inc.getObject(inc.addObject(type));
 		product.x=x;
 		product.y=y;
@@ -338,7 +338,7 @@ public class TreeUIManager{
 		}
 		
 	}
-	void handleServerPacket(InetAddress source,Object readObj){
+	void handleServerPacket(InetAddress source,Object readObj) throws IllegalArgumentException, IllegalAccessException{
 		//Gamestate dependent logic goes here("lobby verses playground")
 		ServerPacket temp = (ServerPacket)readObj;
 		String type = temp.type;
@@ -360,13 +360,6 @@ public class TreeUIManager{
 				System.out.println("Object ID="+id);
 				TreeUIMultiplayer.setSerializedObject(id, distro_data.get(id));
 			}
-			
-			//Check if the id already exists
-			//Verify the class type
-			//Modify variables using the setSerializedObject from tuimultiplayer
-			//What about panels? Panels will be clientside, but they still need to be created...
-			//Panels will be created and attached via set ids, Tuim should not worry about panels, just call setSerialize
-			
 			
 			break;
 		}
