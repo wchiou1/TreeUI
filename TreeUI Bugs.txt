@@ -55,12 +55,13 @@ tuimultiplayer
 Incubator
 	Update object fields[TEST]
 	Create and set object ids when creating new objects from packets[TEST]
+TUIM
+	Identify thread(???)(Just check the Tuimulti var!) and block object creation if it is the client(Only server can create objects)[TEST]
 
 TODO:
 InputManager
 	Clicks for clients should send tcp packets with id of object clicked and id of object held
 	Interactions should send udp sync packets for the server and tell the tuim to ignore sync packets for interacted objects
-TUIM
-	Identify thread and block object creation if it is the client(Only server can create objects)
+
 	
 

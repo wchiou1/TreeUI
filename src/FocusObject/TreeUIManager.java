@@ -59,13 +59,19 @@ public class TreeUIManager{
 	public InteractableObject addObjectToIncubator(InteractableObject io){
 		return io;
 	}
-	public UIElement createUIElement(Class<?> type,Panel panel, int rx, int ry){check if server thread
+	public UIElement createUIElement(Class<?> type,Panel panel, int rx, int ry){
+		if(!TreeUIMultiplayer.isServer()){
+			return null;
+		}
 		UIElement product = (UIElement) inc.getObject(inc.addUIElement(panel.getId(),type));
 		product.rx=rx;
 		product.ry=ry;
 		return (UIElement) product;
 	}
-	public GameObject createGameObject(Class<?> type,int x, int y){check if server thread
+	public GameObject createGameObject(Class<?> type,int x, int y){
+		if(!TreeUIMultiplayer.isServer()){
+			return null;
+		}
 		InteractableObject product = inc.getObject(inc.addObject(type));
 		product.x=x;
 		product.y=y;
@@ -80,7 +86,10 @@ public class TreeUIManager{
 	 * @param y
 	 * @return
 	 */
-	public GameObject createLooseGameObject(Class<?> type,int x, int y){check if server thread
+	public GameObject createLooseGameObject(Class<?> type,int x, int y){
+		if(!TreeUIMultiplayer.isServer()){
+			return null;
+		}
 		InteractableObject product = inc.getObject(inc.addObject(type));
 		product.x=x;
 		product.y=y;
