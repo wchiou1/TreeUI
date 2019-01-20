@@ -166,6 +166,11 @@ public class TreeUIMultiplayer implements SocketHandler{
 		}
 		
 		serializedObj.put("type", io.getClass().getName());
+		
+		if(io.getClass().getName().equals("focusObject.Panel")){
+			Handle panel special logic
+			
+		}
 		//Hopefully hashtables are serializable
 		return serializedObj;
 		
@@ -202,6 +207,9 @@ public class TreeUIMultiplayer implements SocketHandler{
 				sobj.remove("open");
 				sobj.remove("rx");
 				sobj.remove("ry");
+				
+				We need to know what object this panel is attached to
+				
 			}
 		}
 		inc.updateObjectFromSerial(id,sobj);
