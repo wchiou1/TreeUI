@@ -65,6 +65,7 @@ TODO:
 InputManager
 	Clicks for clients should send tcp packets with id of object clicked and id of object held
 	Interactions should send udp sync packets for the server and tell the tuim to ignore sync packets for interacted objects
-
+tuimultiplayer
+	Add specialized panel creation for origin objects
 	
 
