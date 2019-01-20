@@ -166,7 +166,6 @@ public class TreeUIMultiplayer implements SocketHandler{
 		}
 		
 		serializedObj.put("type", io.getClass().getName());
-		System.out.println(serializedObj);
 		//Hopefully hashtables are serializable
 		return serializedObj;
 		

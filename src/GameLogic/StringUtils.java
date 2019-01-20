@@ -1,7 +1,10 @@
 package GameLogic;
 
 public class StringUtils{
-	public static boolean isNumeric(String s) {  
+	public static boolean isInteger(String s) {  
+	    return s != null && s.matches("[-+]?\\d*");  
+	}
+	public static boolean isDouble(String s) {  
 	    return s != null && s.matches("[-+]?\\d*\\.?\\d+");  
 	}
 	public static boolean isBoolean(String s){

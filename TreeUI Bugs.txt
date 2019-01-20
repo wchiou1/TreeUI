@@ -26,7 +26,7 @@ Need to generate a packet for each object
 Use reflection to generate the packet
 Avoid grabbing pointers for now
 
-Client sends mouse clicks(Not coords, just what was in the hand, what was clicked on)
+Client sends mouse clicks(Not coords, needs relative coords, just what was in the hand, what was clicked on)
 Client sends vars of active object except pointers
 Client sends vars of interaction object except pointers
 Client will DISABLE object creation to avoid conflicts with server
@@ -36,6 +36,9 @@ Client will REFUSE to update interaction and active object
 
 ISSUE: When an object is picked up, need to have a process to remove it from the ground
 SOLUTION: Mouse click will handle that, simulate mouse click, object is removed from ground. Keep track of players inventory
+
+ISSUE: Creating objects in the editor needs to work for clients
+[NON-ISSUE]: Saplings and Buds are synced, this is non issue(Mouse clicks will need to be relative to their targets)
 
 How to keep track of players inventory?
 Socket manager will need to keep track of it

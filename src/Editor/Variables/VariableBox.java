@@ -61,7 +61,9 @@ public class VariableBox extends InputBox implements EditorImmune{
 	
 	private void isError(){
 		if(field.getType()==int.class)
-			error = !StringUtils.isNumeric(postfix);
+			error = !StringUtils.isInteger(postfix);
+		if(field.getType()==double.class)
+			error = !StringUtils.isDouble(postfix);
 		if(field.getType()==boolean.class)
 			error = !StringUtils.isBoolean(postfix);
 	}

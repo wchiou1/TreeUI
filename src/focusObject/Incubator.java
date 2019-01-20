@@ -255,8 +255,17 @@ public class Incubator{
 			if (arg instanceof String) {
 				String stringArg = (String) arg;
 				if (superField.getType() == int.class) {
-					if (StringUtils.isNumeric(stringArg)) {
+					if (StringUtils.isInteger(stringArg)) {
 						superField.set(io, Integer.parseInt(stringArg));
+					} else {
+						System.out.println(
+								stringArg + " failed errorchecking for type " + superField.getType().getSimpleName());
+					}
+					return;
+				}
+				if(superField.getType() == double.class){
+					if (StringUtils.isDouble(stringArg)) {
+						superField.set(io, Double.parseDouble(stringArg));
 					} else {
 						System.out.println(
 								stringArg + " failed errorchecking for type " + superField.getType().getSimpleName());
