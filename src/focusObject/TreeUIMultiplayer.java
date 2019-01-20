@@ -205,8 +205,6 @@ public class TreeUIMultiplayer implements SocketHandler{
 			}
 		}
 		inc.updateObjectFromSerial(id,sobj);
-		
-		System.out.println(sobj);
 	}
 	
 }

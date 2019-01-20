@@ -368,7 +368,7 @@ public class Incubator{
 	 */
 	public void updateObjectFromSerial(int id,Hashtable<String,String> sobj){
 		String sobj_type = sobj.get("type");
-		System.out.println("Updating object "+id+"("+sobj_type+")");
+		//System.out.println("Updating object "+id+"("+sobj_type+")");
 		InteractableObject io = getEither(id);
 		if(io!=null){
 			//Object exists, update it

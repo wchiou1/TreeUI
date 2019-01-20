@@ -351,7 +351,6 @@ public class TreeUIManager{
 		//Gamestate dependent logic goes here("lobby verses playground")
 		ServerPacket temp = (ServerPacket)readObj;
 		String type = temp.type;
-		System.out.println("Received "+temp.type+" Server Packet");
 		switch(type){
 		case "INIT":{
 			int id = (int) temp.packet;
@@ -366,7 +365,6 @@ public class TreeUIManager{
 			Enumeration<Integer> keys = distro_data.keys();
 			while(keys.hasMoreElements()){
 				int id = keys.nextElement();
-				System.out.println("Object ID="+id);
 				TreeUIMultiplayer.setSerializedObject(id, distro_data.get(id));
 			}
 			

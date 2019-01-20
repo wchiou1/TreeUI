@@ -18,6 +18,9 @@ public abstract class OriginObject extends UIElement{
 	public void open(){
 		if(view!=null)
 			view.open();
+		else{
+			System.out.println("No view");
+		}
 	}
 	public void openAll(){
 		view.openAll();

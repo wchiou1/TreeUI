@@ -362,7 +362,6 @@ public class InputManager implements InputListener{
 				return;
 			//If it's an origin object, ensure that the panel is on top
 			if(temp instanceof OriginObject&&((OriginObject)temp).existsPanel()){
-				System.out.println("OriginObject clicked, displaying panel("+((OriginObject)temp).getView().x+","+((OriginObject)temp).getView().y+")");
 				moveToFront(((OriginObject)temp).getView());
 			}
 			//We want special logic for inventory slot, make it so the object is 
