@@ -351,15 +351,15 @@ public class Incubator{
 			}
 			
 			//If it's an int for the object, assume it's an incubator id
-			if(InteractableObject.class.isAssignableFrom(arg.getClass())){
-				superField.set(io, arg);
+			if(InteractableObject.class.isAssignableFrom(superField.getClass())){
+				if(int.class == arg.getClass()){
+					writeParamPointer(objectID,param,(int)arg);
+				}
+				else if(String.class == arg.getClass()){
+					writeParamPointer(objectID,param,Integer.parseInt((String)arg));
+				}
 			}
-			else if(int.class == arg.getClass()){
-				writeParamPointer(objectID,param,(int)arg);
-			}
-			else if(String.class == arg.getClass()){
-				writeParamPointer(objectID,param,Integer.parseInt((String)arg));
-			}
+			superField.set(io, arg);
 			
 		} catch (IllegalArgumentException | IllegalAccessException e) {
 			// TODO Auto-generated catch block
