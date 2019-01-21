@@ -67,5 +67,9 @@ InputManager
 	Interactions should send udp sync packets for the server and tell the tuim to ignore sync packets for interacted objects
 tuimultiplayer
 	Add specialized panel creation for origin objects
+	Add nosync interface to identify objects which should be ignored by the server distro(panels go in this category)
+	Serialize object will handle pointers by using incubator ids
+	Objects which don't exist yet will be specifically requested by the client via tcp(this is how panels will be synced)
+	TUIM will keep a table of objects and their params which still need objects
 	
 

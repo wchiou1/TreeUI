@@ -35,6 +35,9 @@ public class Incubator{
 	private AspenNetwork dn;
 	private TreeUIManager tuim;
 	private boolean editor=false;
+	//PointPromises contains links to objects which are "promised" to be made
+	//<promised_id<source_id,source_param>>
+	private Hashtable<Integer,Hashtable<Integer,String>> pointerPromises = new Hashtable<Integer,Hashtable<Integer,String>>();
 
 	public Incubator(TreeUIManager tuim, AspenNetwork dn) {
 		this.tuim=tuim;
@@ -121,6 +124,9 @@ public class Incubator{
 			}
 			
 			int objId = io.getId();
+			
+			fulfillPointerPromise(objId);
+			
 			objects.put(new Integer(objId), io);
 			if (newObject instanceof GameObject)
 				tuim.addGameObject(objects.get(objId));
@@ -135,7 +141,9 @@ public class Incubator{
 		}
 
 	}
-
+	public synchronized int addUIElement(int panelID, Class<?> objectType){
+		return addUIElement(-1,panelID,objectType);
+	}
 	/**
 	 * Adds a UIElement of given type to the panel with objectID given, error
 	 * checks if object is of type Panel
@@ -148,7 +156,7 @@ public class Incubator{
 	 * @throws IllegalAccessException
 	 * @throws InstantiationException
 	 */
-	public synchronized int addUIElement(int panelID, Class<?> elementType){
+	public synchronized int addUIElement(int elementID,int panelID, Class<?> elementType){
 		try{
 		// Errorcheck for panel
 		if (panelID > InteractableObject.getCount() || panelID < 0) {
@@ -163,7 +171,7 @@ public class Incubator{
 
 		Panel selectedPanel = panels.get(panelID);
 
-		UIElement newElement = createUIElement(elementType);
+		UIElement newElement = createUIElement(elementID,elementType);
 		selectedPanel.addObject(newElement);
 
 		return newElement.getId();
@@ -215,20 +223,76 @@ public class Incubator{
 	}
 	
 	//Creates a UIElement, only to be used by the incubator's recursive fileread for temporary storage
-	private UIElement createUIElement(Class<?> elementType) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
-		Object newElement = elementType.getConstructor().newInstance();
+	private UIElement createUIElement(int elementID,Class<?> elementType) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
+		Object obj = elementType.getConstructor().newInstance();
 
 		// Check elementType is of instance UIElement
-		if (!(newElement instanceof UIElement)) {
+		if (!(obj instanceof UIElement)) {
 			System.out.println("Error in Incubator-addUIElement:Not a UIElement(" + elementType + ")");
 			return null;
 		}
-
-		int objId = ((UIElement) newElement).getId();
-		objects.put(new Integer(objId), (UIElement) newElement);
-		return (UIElement)newElement;
+		UIElement newElement = (UIElement)obj;
+		if(elementID!=-1){
+			newElement.setId(elementID);
+		}
+		int objId = newElement.getId();
+		
+		fulfillPointerPromise(elementID);
+		
+		objects.put(new Integer(objId), newElement);
+		return newElement;
 	}
-
+	private synchronized void fulfillPointerPromise(int paramID){
+		if(pointerPromises.containsKey(paramID)){
+			//Process them
+			Hashtable<Integer,String> promises = pointerPromises.get(paramID);
+			promises.forEach(
+				(objectID,param) -> {
+					writeParamPointer(objectID,param,paramID);
+				}
+			);
+		}
+		pointerPromises.remove(paramID);
+	}
+	private synchronized void addPointerPromise(int objectID,String param,int paramID){
+		if(!pointerPromises.containsKey(paramID)){
+			pointerPromises.put(paramID, new Hashtable<Integer,String>());
+		}
+		pointerPromises.get(paramID).put(objectID,param);
+	}
+	/**
+	 * 
+	 * @param objectId
+	 * @param param
+	 * @param paramId
+	 */
+	public synchronized void writeParamPointer(int objectID,String param,int paramID){
+		// Check if the thing is contained in either hashtable
+		InteractableObject source = getEither(objectID);
+		if (source == null) {
+			System.out.println("Error in Incubator-writeParamPointer:Invalid ObjectID(" + objectID + ")");
+			return;
+		}
+		
+		InteractableObject paramObject = getEither(paramID);
+		if(paramObject == null){
+			addPointerPromise(objectID,param,paramID);
+			return;
+		}
+		Field superField = findUnderlying(source.getClass(), param);
+		if(InteractableObject.class.isAssignableFrom(superField.getType())){
+			try {
+				superField.set(source, paramObject);
+			} catch (IllegalArgumentException | IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else{
+			System.out.println("Error in Incubator-writeParamPointer:Param(" + param + ") is NOT of type InteractableObject");
+			return;
+		}
+	}
 	/**
 	 * Accepts an objectID and a parameter string and writes the object to the
 	 * parameter
@@ -238,17 +302,12 @@ public class Incubator{
 	 */
 	public synchronized void writeParam(int objectID, String param, Object arg) {
 		// Check if the thing is contained in either hashtable
-		if (!objectExists(objectID)) {
+		InteractableObject io = getEither(objectID);
+		if (io == null) {
 			System.out.println("Error in Incubator-writeParam:Invalid ObjectID(" + objectID + ")");
 			return;
 		}
-
-		InteractableObject io = null;
-		if (objects.containsKey(objectID))
-			io = objects.get(objectID);
-		else
-			io = panels.get(objectID);
-
+		
 		// Let's get the possible params
 		Field superField = findUnderlying(io.getClass(), param);
 		try {
@@ -259,7 +318,7 @@ public class Incubator{
 						superField.set(io, Integer.parseInt(stringArg));
 					} else {
 						System.out.println(
-								stringArg + " failed errorchecking for type " + superField.getType().getSimpleName());
+							stringArg + " failed errorchecking for type " + superField.getType().getSimpleName());
 					}
 					return;
 				}
@@ -290,8 +349,18 @@ public class Incubator{
 				//It's not a valid string input, output an error
 				return;
 			}
-
-			superField.set(io, arg);
+			
+			//If it's an int for the object, assume it's an incubator id
+			if(InteractableObject.class.isAssignableFrom(arg.getClass())){
+				superField.set(io, arg);
+			}
+			else if(int.class == arg.getClass()){
+				writeParamPointer(objectID,param,(int)arg);
+			}
+			else if(String.class == arg.getClass()){
+				writeParamPointer(objectID,param,Integer.parseInt((String)arg));
+			}
+			
 		} catch (IllegalArgumentException | IllegalAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -650,7 +719,7 @@ public class Incubator{
 			System.out.println("Engineering UIElement detected:"+c);
 			System.out.println(""+parentID+"|"+objects.get(parentID).getId());
 			
-			subject = createUIElement(c);
+			subject = createUIElement(-1,c);
 			//subject = getObject(addUIElement(objects.get(parentID).getId(), c));
 			//System.out.println("Checking DATALINK for "+typestr+":"+subject.checkDataLink());
 		}
@@ -660,7 +729,7 @@ public class Incubator{
 			//We need to know if it's paneled or not
 			System.out.println("UIElement detected:"+c);
 			
-			subject = createUIElement(c);
+			subject = createUIElement(-1,c);
 			//Dead code, addUIElement fails since it requires panel id which is not supplied if the parent is not the panel
 			//subject = getObject(addUIElement(objects.get(parentID).getId(), c));
 			//System.out.println("Checking DATALINK for "+typestr+":"+subject.checkDataLink());

@@ -28,9 +28,18 @@ public class TreeUIMultiplayer implements SocketHandler{
 	private static Hashtable<Integer,InetAddress> connectionMap = new Hashtable<Integer,InetAddress>();
 	private static ArrayList<Thread> threads = new ArrayList<Thread>();//Needs to keep all network threads
 	private TreeUIMultiplayer(){};
+	/**
+	 * Gets the current list of TCP connections
+	 * @return
+	 */
 	public static Hashtable<Integer, InetAddress> getConnectionMap(){
 		return connectionMap;
 	}
+	/**
+	 * Adds a new connection to 
+	 * @param connection
+	 * @return
+	 */
 	public static int newConnection(InetAddress connection){
 		connectionInc++;
 		connectionMap.put(connectionInc, connection);
@@ -136,14 +145,13 @@ public class TreeUIMultiplayer implements SocketHandler{
 					TreeUIMultiplayer.tuim.handleClientPacket(address,readObj);
 				}
 				else{
-					
-						TreeUIMultiplayer.tuim.handleServerPacket(address,readObj);
+					TreeUIMultiplayer.tuim.handleServerPacket(address,readObj);
 					
 				}
 				
 				
 			}
-		} catch (IllegalArgumentException | IllegalAccessException e) {
+		} catch (IllegalArgumentException | IllegalAccessException | ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -158,19 +166,17 @@ public class TreeUIMultiplayer implements SocketHandler{
 		
 		//Get a list of all params
 		for(Field f:fields){
-			if(Object.class.isAssignableFrom(f.getType())){
-				continue;
-			}
 			//Put them in the hashtable
-			serializedObj.put(f.getName(),f.get(io).toString());
+			if(InteractableObject.class.isAssignableFrom(f.getType())){
+				serializedObj.put(f.getName(),""+((InteractableObject)f.get(io)).getId());
+			}
+			else{
+				serializedObj.put(f.getName(),f.get(io).toString());
+			}
 		}
 		
 		serializedObj.put("type", io.getClass().getName());
 		
-		if(io.getClass().getName().equals("focusObject.Panel")){
-			Handle panel special logic
-			
-		}
 		//Hopefully hashtables are serializable
 		return serializedObj;
 		
@@ -180,8 +186,9 @@ public class TreeUIMultiplayer implements SocketHandler{
 	 * @param sobj
 	 * @throws IllegalAccessException 
 	 * @throws IllegalArgumentException 
+	 * @throws ClassNotFoundException 
 	 */
-	public static void setSerializedObject(int id,Hashtable<String,String> sobj) throws IllegalArgumentException, IllegalAccessException{
+	public static void setSerializedObject(int id,Hashtable<String,String> sobj) throws IllegalArgumentException, IllegalAccessException, ClassNotFoundException{
 		//Global logic for packets goes here(panel synchronization)
 		//TODO Only create new panels if the type is panel, ignore if the panel is already made
 		
@@ -189,27 +196,25 @@ public class TreeUIMultiplayer implements SocketHandler{
 		//Check if the object exists in the incubator
 		InteractableObject io = inc.getEither(id);
 		//Get the class object
-		
+		Class<?> sobj_type = Class.forName(sobj.get("type"));
 		if(io!=null){
-			String sobj_type = sobj.get("type");
+			
 			//If it exists, check if it's a panel, ignore panels
-			if(sobj_type.equals("focusObject.Panel")){
+			//TODO move this to tcp
+			if(Panel.class.isAssignableFrom(sobj_type)){
 				return;
 			}		
 			
 		}
 		else{
 			//Create the object
-			String sobj_type = sobj.get("type");
+			
 			//If it exists, check if it's a panel, ignore panels
-			if(sobj_type.equals("focusObject.Panel")){
+			if(Panel.class.isAssignableFrom(sobj_type)){
 				//If it's a panel, overwrite the open value and position
 				sobj.remove("open");
 				sobj.remove("rx");
-				sobj.remove("ry");
-				
-				We need to know what object this panel is attached to
-				
+				sobj.remove("ry");				
 			}
 		}
 		inc.updateObjectFromSerial(id,sobj);

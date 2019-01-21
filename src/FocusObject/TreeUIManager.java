@@ -347,7 +347,7 @@ public class TreeUIManager{
 		}
 		
 	}
-	void handleServerPacket(InetAddress source,Object readObj) throws IllegalArgumentException, IllegalAccessException{
+	void handleServerPacket(InetAddress source,Object readObj) throws IllegalArgumentException, IllegalAccessException, ClassNotFoundException{
 		//Gamestate dependent logic goes here("lobby verses playground")
 		ServerPacket temp = (ServerPacket)readObj;
 		String type = temp.type;
