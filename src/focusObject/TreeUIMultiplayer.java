@@ -182,6 +182,7 @@ public class TreeUIMultiplayer implements SocketHandler{
 		
 		serializedObj.put("type", io.getClass().getName());
 		
+		
 		//Hopefully hashtables are serializable
 		return serializedObj;
 		
@@ -207,7 +208,7 @@ public class TreeUIMultiplayer implements SocketHandler{
 			//If it exists, check if it's a panel, ignore panels
 			//TODO move this to tcp
 			if(Panel.class.isAssignableFrom(sobj_type)){
-				return;
+				//return;
 			}		
 			
 		}
@@ -217,9 +218,9 @@ public class TreeUIMultiplayer implements SocketHandler{
 			//If it exists, check if it's a panel, ignore panels
 			if(Panel.class.isAssignableFrom(sobj_type)){
 				//If it's a panel, overwrite the open value and position
-				sobj.remove("open");
-				sobj.remove("rx");
-				sobj.remove("ry");				
+				//sobj.remove("open");
+				//sobj.remove("rx");
+				//sobj.remove("ry");				
 			}
 		}
 		inc.updateObjectFromSerial(id,sobj);

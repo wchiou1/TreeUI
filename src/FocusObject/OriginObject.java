@@ -1,11 +1,9 @@
 package focusObject;
 
-import org.newdawn.slick.Input;
-
 import smallGameObjects.SmallGameObject;
 
 public abstract class OriginObject extends UIElement{
-	protected Panel view;
+	public Panel view;
 	protected boolean highlight;
 	
 	void setView(Panel v){

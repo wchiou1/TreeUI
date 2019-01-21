@@ -446,14 +446,17 @@ public class Incubator{
 	 * Creates a new object if that object doesn't exist yet
 	 * @param id
 	 * @param sobj
+	 * @throws ClassNotFoundException 
 	 */
-	public void updateObjectFromSerial(int id,Hashtable<String,String> sobj){
+	public void updateObjectFromSerial(int id,Hashtable<String,String> sobj) throws ClassNotFoundException{
 		String sobj_type = sobj.get("type");
+		Class<?> c = Class.forName(sobj_type);
 		//System.out.println("Updating object "+id+"("+sobj_type+")");
 		InteractableObject io = getEither(id);
 		if(io!=null){
+			
 			//Object exists, update it
-	
+			
 			String inc_type = io.getClass().getName();
 			
 			//Check if the type is the same, if it's not, report an error
@@ -481,19 +484,11 @@ public class Incubator{
 		else{
 			
 			//Object dne, create it and update it
-			try {
-				System.out.println("Creating object "+id+"("+sobj_type+")");
+			System.out.println("Creating object "+id+"("+sobj_type+")");
 			
-				Class<?> c = Class.forName(sobj_type);
-				
-				addObject(id,c);
-				
-				updateObjectFromSerial(id,sobj);
-				
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			addObject(id,c);
+			
+			updateObjectFromSerial(id,sobj);
 		}
 		
 	}
