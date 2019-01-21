@@ -2,6 +2,7 @@ package focusObject;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -151,7 +152,7 @@ public class TreeUIMultiplayer implements SocketHandler{
 				
 				
 			}
-		} catch (IllegalArgumentException | IllegalAccessException | ClassNotFoundException e) {
+		} catch (IllegalArgumentException | IllegalAccessException | ClassNotFoundException | InstantiationException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -181,7 +182,7 @@ public class TreeUIMultiplayer implements SocketHandler{
 		}
 		
 		serializedObj.put("type", io.getClass().getName());
-		
+		//System.out.println(serializedObj);
 		
 		//Hopefully hashtables are serializable
 		return serializedObj;
@@ -193,8 +194,12 @@ public class TreeUIMultiplayer implements SocketHandler{
 	 * @throws IllegalAccessException 
 	 * @throws IllegalArgumentException 
 	 * @throws ClassNotFoundException 
+	 * @throws SecurityException 
+	 * @throws NoSuchMethodException 
+	 * @throws InvocationTargetException 
+	 * @throws InstantiationException 
 	 */
-	public static void setSerializedObject(int id,Hashtable<String,String> sobj) throws IllegalArgumentException, IllegalAccessException, ClassNotFoundException{
+	public static void setSerializedObject(int id,Hashtable<String,String> sobj) throws IllegalArgumentException, IllegalAccessException, ClassNotFoundException, InstantiationException, InvocationTargetException, NoSuchMethodException, SecurityException{
 		//Global logic for packets goes here(panel synchronization)
 		//TODO Only create new panels if the type is panel, ignore if the panel is already made
 		

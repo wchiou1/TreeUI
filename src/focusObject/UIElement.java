@@ -12,7 +12,7 @@ import org.newdawn.slick.Graphics;
  *
  */
 public abstract class UIElement extends InteractableObject{
-	protected Panel screen;
+	public Panel screen;
 	public int rx=0,ry=0;
 	/**
 	 * Sets the parent panel and thus uses relative x and y instead of hard x and y

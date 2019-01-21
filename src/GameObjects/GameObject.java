@@ -6,9 +6,7 @@ import focusObject.OriginObject;
 import smallGameObjects.SmallGameObject;
 
 public abstract class GameObject extends OriginObject{
-	protected int id;
 	protected GameObject(){
-		this.id=count;
 		dataNode = new AspenNode(this);
 		System.out.println(":"+id+" "+this.getClass());
 	}

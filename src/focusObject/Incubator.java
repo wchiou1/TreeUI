@@ -56,9 +56,16 @@ public class Incubator{
 		return tuim;
 	}
 	public synchronized int addPanel() {
+		return addPanel(-1);
+	}
+	public synchronized int addPanel(int id){
 		Panel p = new Panel();
+		if(id!=-1){
+			p.setId(id);
+		}
 		panels.put(p.getId(), p);
 		tuim.addObject(panels.get(p.getId()));
+		fulfillPointerPromise(id);
 		return p.getId();
 	}
 	public synchronized void removeObject(int objectID){
@@ -447,8 +454,14 @@ public class Incubator{
 	 * @param id
 	 * @param sobj
 	 * @throws ClassNotFoundException 
+	 * @throws SecurityException 
+	 * @throws NoSuchMethodException 
+	 * @throws InvocationTargetException 
+	 * @throws IllegalArgumentException 
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
 	 */
-	public void updateObjectFromSerial(int id,Hashtable<String,String> sobj) throws ClassNotFoundException{
+	public void updateObjectFromSerial(int id,Hashtable<String,String> sobj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
 		String sobj_type = sobj.get("type");
 		Class<?> c = Class.forName(sobj_type);
 		//System.out.println("Updating object "+id+"("+sobj_type+")");
@@ -465,19 +478,14 @@ public class Incubator{
 				return;
 			}
 			
-			try {
-				Field[] fields= getFields(id);
-			
-				for(Field f: fields){
-					String field_name = f.getName();
-					if(sobj.containsKey(field_name)){
-						String value = sobj.get(field_name);
-						writeParam(id,field_name,value);
-					}
+			Field[] fields= getFields(id);
+		
+			for(Field f: fields){
+				String field_name = f.getName();
+				if(sobj.containsKey(field_name)){
+					String value = sobj.get(field_name);
+					writeParam(id,field_name,value);
 				}
-			} catch (IllegalArgumentException | IllegalAccessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
 			
 		}
@@ -485,8 +493,15 @@ public class Incubator{
 			
 			//Object dne, create it and update it
 			System.out.println("Creating object "+id+"("+sobj_type+")");
-			
-			addObject(id,c);
+			if(GameObject.class.isAssignableFrom(c)){
+				addObject(id,c);
+			}
+			else if(Panel.class.isAssignableFrom(c)){
+				addPanel(id);
+			}
+			else{
+				createUIElement(id,c);
+			}
 			
 			updateObjectFromSerial(id,sobj);
 		}

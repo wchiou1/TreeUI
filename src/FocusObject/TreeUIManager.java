@@ -1,6 +1,7 @@
 package focusObject;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -300,7 +301,7 @@ public class TreeUIManager{
 		uiObjectList.remove(io);
 		uiObjectList.addFirst(io);
 	}
-	public void draw(Graphics g) {
+	public synchronized void draw(Graphics g) {
 		//Always draw the gameobjects FIRST
 		Iterator<InteractableObject> it=gameObjectList.descendingIterator();
 		while(it.hasNext()){
@@ -347,7 +348,7 @@ public class TreeUIManager{
 		}
 		
 	}
-	void handleServerPacket(InetAddress source,Object readObj) throws IllegalArgumentException, IllegalAccessException, ClassNotFoundException{
+	void handleServerPacket(InetAddress source,Object readObj) throws IllegalArgumentException, IllegalAccessException, ClassNotFoundException, InstantiationException, InvocationTargetException, NoSuchMethodException, SecurityException{
 		//Gamestate dependent logic goes here("lobby verses playground")
 		ServerPacket temp = (ServerPacket)readObj;
 		String type = temp.type;
