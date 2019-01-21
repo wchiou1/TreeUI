@@ -355,6 +355,11 @@ public class Incubator{
 					return;
 
 				}
+				//If it's a string for an object, try using the incubator ids
+				if(InteractableObject.class.isAssignableFrom(superField.getClass())){
+					writeParamPointer(objectID,param,Integer.parseInt((String)arg));
+					return;
+				}
 				System.out.println("Attempted write \""+stringArg+"\"(String) into "+superField.getType().getSimpleName()+" was rejected");
 				//It's not a valid string input, output an error
 				return;
@@ -364,9 +369,6 @@ public class Incubator{
 			if(InteractableObject.class.isAssignableFrom(superField.getClass())){
 				if(int.class == arg.getClass()){
 					writeParamPointer(objectID,param,(int)arg);
-				}
-				else if(String.class == arg.getClass()){
-					writeParamPointer(objectID,param,Integer.parseInt((String)arg));
 				}
 			}
 			superField.set(io, arg);
