@@ -273,13 +273,23 @@ public class Incubator{
 			System.out.println("Error in Incubator-writeParamPointer:Invalid ObjectID(" + objectID + ")");
 			return;
 		}
+		Field superField = findUnderlying(source.getClass(), param);
+		if(paramID == -1){
+			try {
+				superField.set(source, null);
+			} catch (IllegalArgumentException | IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return;
+		}
 		
 		InteractableObject paramObject = getEither(paramID);
 		if(paramObject == null){
 			addPointerPromise(objectID,param,paramID);
 			return;
 		}
-		Field superField = findUnderlying(source.getClass(), param);
+		
 		if(InteractableObject.class.isAssignableFrom(superField.getType())){
 			try {
 				superField.set(source, paramObject);

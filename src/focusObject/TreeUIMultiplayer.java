@@ -168,7 +168,12 @@ public class TreeUIMultiplayer implements SocketHandler{
 		for(Field f:fields){
 			//Put them in the hashtable
 			if(InteractableObject.class.isAssignableFrom(f.getType())){
-				serializedObj.put(f.getName(),""+((InteractableObject)f.get(io)).getId());
+				InteractableObject temp = ((InteractableObject)f.get(io));
+				String objId = "-1";
+				if(temp!=null){
+					objId = ""+temp.getId();
+				}
+				serializedObj.put(f.getName(),objId);
 			}
 			else{
 				serializedObj.put(f.getName(),f.get(io).toString());
