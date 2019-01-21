@@ -8,7 +8,7 @@ import org.newdawn.slick.SlickException;
 public class ImageLoader{
 	private static  Hashtable<String,Image> images = new Hashtable<String,Image>();
 	
-	public static Image getImage(String url){
+	public static synchronized Image getImage(String url){
 		try {
 		if(!images.containsKey(url))
 			images.put(url, new Image(url));

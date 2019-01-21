@@ -40,6 +40,9 @@ SOLUTION: Mouse click will handle that, simulate mouse click, object is removed 
 ISSUE: Creating objects in the editor needs to work for clients
 [NON-ISSUE]: Saplings and Buds are synced, this is non issue(Mouse clicks will need to be relative to their targets)
 
+ISSUE: UIElements are not actually stored in the tuim object list, they are stored within the panels
+This means that distro needs to sync up panel data somehow
+
 How to keep track of players inventory?
 Socket manager will need to keep track of it
 Use the incubator maybe?
@@ -58,6 +61,8 @@ tuimultiplayer
 Incubator
 	Update object fields[TEST]
 	Create and set object ids when creating new objects from packets[TEST]
+	Incubator will keep a table of objects and their params which still need objects
+	Serialize object will handle pointers by using incubator ids
 TUIM
 	Identify thread(???)(Just check the Tuimulti var!) and block object creation if it is the client(Only server can create objects)[TEST]
 
@@ -66,10 +71,10 @@ InputManager
 	Clicks for clients should send tcp packets with id of object clicked and id of object held
 	Interactions should send udp sync packets for the server and tell the tuim to ignore sync packets for interacted objects
 tuimultiplayer
-	Add specialized panel creation for origin objects
+	Add specialized panel creation for origin objects[TODO, Made panels public]
 	Add nosync interface to identify objects which should be ignored by the server distro(panels go in this category)
-	Serialize object will handle pointers by using incubator ids
 	Objects which don't exist yet will be specifically requested by the client via tcp(this is how panels will be synced)
-	TUIM will keep a table of objects and their params which still need objects
+	
+	
 	
 
