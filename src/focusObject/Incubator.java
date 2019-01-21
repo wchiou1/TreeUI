@@ -356,7 +356,7 @@ public class Incubator{
 
 				}
 				//If it's a string for an object, try using the incubator ids
-				if(InteractableObject.class.isAssignableFrom(superField.getClass())){
+				if(InteractableObject.class.isAssignableFrom(superField.getType())){
 					writeParamPointer(objectID,param,Integer.parseInt((String)arg));
 					return;
 				}
@@ -366,7 +366,7 @@ public class Incubator{
 			}
 			
 			//If it's an int for the object, assume it's an incubator id
-			if(InteractableObject.class.isAssignableFrom(superField.getClass())){
+			if(InteractableObject.class.isAssignableFrom(superField.getType())){
 				if(int.class == arg.getClass()){
 					writeParamPointer(objectID,param,(int)arg);
 				}
