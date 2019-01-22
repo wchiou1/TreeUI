@@ -42,6 +42,7 @@ ISSUE: Creating objects in the editor needs to work for clients
 
 ISSUE: UIElements are not actually stored in the tuim object list, they are stored within the panels
 This means that distro needs to sync up panel data somehow
+SOLUTION: Use inc lists instead, they have the complete object list
 
 How to keep track of players inventory?
 Socket manager will need to keep track of it

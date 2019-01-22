@@ -173,32 +173,39 @@ public class TreeUIManager{
 		}
 	}
 	public void distributeObjectPackets(){
-		try {
 			Hashtable<Integer,Hashtable<String,String>> distributionArray = new Hashtable<Integer,Hashtable<String,String>>();
 			//We want to iterate through all objects and send a packet to all connected users
-			for(InteractableObject io:uiObjectList){
-				//test if it's an editor object?
-				if(io instanceof EditorImmune){
-					continue;
+			inc.objects.forEach(
+				(index,io) -> {
+					//test if it's an editor object?
+					if(io instanceof EditorImmune){
+						return;
+					}
+					try {
+						distributionArray.put(io.getId(),TreeUIMultiplayer.getSerializedObject(io));
+					} catch (IllegalArgumentException | IllegalAccessException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
-				distributionArray.put(io.getId(),TreeUIMultiplayer.getSerializedObject(io));
-				
-			}
+			);
 			
-			for(InteractableObject io:gameObjectList){
-				if(io instanceof EditorImmune){
-					continue;
+			inc.panels.forEach(
+				(index,io) -> {
+					if(io instanceof EditorImmune){
+						return;
+					}
+					try {
+						distributionArray.put(io.getId(),TreeUIMultiplayer.getSerializedObject(io));
+					} catch (IllegalArgumentException | IllegalAccessException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
-				distributionArray.put(io.getId(),TreeUIMultiplayer.getSerializedObject(io));
-			}
+			);
 			
 			//Send it
 			TreeUIMultiplayer.sendUDPPacketAll(new ServerPacket("SYNC",distributionArray));
-			
-		} catch (IllegalArgumentException | IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
 	}
 	public void removeObject(InteractableObject io){
