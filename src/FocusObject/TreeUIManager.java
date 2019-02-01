@@ -308,27 +308,31 @@ public class TreeUIManager{
 		uiObjectList.remove(io);
 		uiObjectList.addFirst(io);
 	}
-	public synchronized void draw(Graphics g) {
+	public void draw(Graphics g) {
 		//Always draw the gameobjects FIRST
-		Iterator<InteractableObject> it=gameObjectList.descendingIterator();
-		while(it.hasNext()){
-			InteractableObject temp=it.next();
-			temp.draw(g);
-		}
-		
-		//Draw all ui objects
-		it=uiObjectList.descendingIterator();
-		while(it.hasNext()){
-			InteractableObject temp=it.next();
-			if(!temp.show)
-				continue;
-			//Check if the object is locked by the mouseManager
-			if(temp.equals(inputManager.llock)&&inputManager.llock instanceof Snappable)
-				drawPanelSnap(g,temp);
-			else
+		Iterator<InteractableObject> it;
+		synchronized(inc){
+			it=gameObjectList.descendingIterator();
+			while(it.hasNext()){
+				InteractableObject temp=it.next();
 				temp.draw(g);
-			
+			}
+		
+		
+			//Draw all ui objects
+			it=uiObjectList.descendingIterator();
+			while(it.hasNext()){
+				InteractableObject temp=it.next();
+				if(!temp.show)
+					continue;
+				//Check if the object is locked by the mouseManager
+				if(temp.equals(inputManager.llock)&&inputManager.llock instanceof Snappable)
+					drawPanelSnap(g,temp);
+				else
+					temp.draw(g);
 				
+					
+			}
 		}
 		
 		//Have the mouseManager draw the "held" item last along with it's overlay

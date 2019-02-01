@@ -461,7 +461,7 @@ public class Incubator{
 	 * @throws IllegalAccessException 
 	 * @throws InstantiationException 
 	 */
-	public void updateObjectFromSerial(int id,Hashtable<String,String> sobj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
+	public synchronized void updateObjectFromSerial(int id,Hashtable<String,String> sobj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
 		String sobj_type = sobj.get("type");
 		Class<?> c = Class.forName(sobj_type);
 		//System.out.println("Updating object "+id+"("+sobj_type+")");
