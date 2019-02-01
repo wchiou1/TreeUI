@@ -6,6 +6,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+import GameLogic.ConfigReader;
 import focusObject.Editor;
 import focusObject.TreeUIMultiplayer;
 
@@ -33,6 +34,8 @@ public class EditorState extends TreeUIGameState{
 			}
 			else{
 				String ip = SuperGlobal.ip;
+				ConfigReader.setConfig("previousIP", ip);
+				ConfigReader.writeConfig("config.txt");
 				TreeUIMultiplayer.startClient(im, ip, 2004);
 			}
 			

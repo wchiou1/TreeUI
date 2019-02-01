@@ -11,6 +11,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import GameLogic.ConfigReader;
 import TreeUI.InputBox;
 import TreeUI.StateChangeButton;
 import TreeUI.StaticText;
@@ -31,6 +32,7 @@ public class MainMenu extends TreeUIGameState{
 			throws SlickException {
 		super.init(container,game);
 		try{
+			ConfigReader.readConfig("config.txt");
 			
 			ArrayList<Integer> keys=new ArrayList<Integer>();
 			keys.add(Input.KEY_E);
@@ -88,7 +90,7 @@ public class MainMenu extends TreeUIGameState{
 			int ip_input = inc.addUIElement(p, InputBox.class);
 			inc.writeParam(ip_input, "rx", 8);
 			inc.writeParam(ip_input, "ry", 64);
-			inc.writeParam(ip_input, "text", "127.0.0.1");
+			inc.writeParam(ip_input, "text", ConfigReader.getConfig("previousIP"));
 			inc.writeParam(ip_input, "allowText", false);
 			inc.writeParam(ip_input, "allowSymbols", true);
 			
