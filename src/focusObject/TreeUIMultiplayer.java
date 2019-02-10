@@ -3,6 +3,7 @@ package focusObject;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.ParameterizedType;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -175,6 +176,25 @@ public class TreeUIMultiplayer implements SocketHandler{
 					objId = ""+temp.getId();
 				}
 				serializedObj.put(f.getName(),objId);
+			}
+			else if(ArrayList.class.isAssignableFrom(f.getType())){
+				//Handle arraylists, for now, just support interactable objects
+				ParameterizedType arrayListType = (ParameterizedType) f.getGenericType();
+		        Class<?> arrayListClass = (Class<?>) arrayListType.getActualTypeArguments()[0];
+		        
+		        //If it's an arraylist of interactable objects
+		        if(InteractableObject.class.isAssignableFrom(arrayListClass)){
+		        	//convert this arraylist to a comma delimited string
+		        	String list = "";
+		        	ArrayList<InteractableObject> temp = (ArrayList<InteractableObject>) f.get(io);
+		        	for(InteractableObject aio:temp){
+		        		list += aio.getId()+",";
+		        	}
+		        	if(list.length()>0){
+		        		list = list.substring(0, list.length()-1);
+		        	}
+		        	serializedObj.put(f.getName(),list);
+		        }
 			}
 			else{
 				serializedObj.put(f.getName(),f.get(io).toString());

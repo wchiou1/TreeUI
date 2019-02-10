@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -281,7 +282,7 @@ public class Incubator{
 			return;
 		}
 		Field superField = findUnderlying(source.getClass(), param);
-		if(paramID == -1){
+		if(paramID == -1){//param pointer id of -1 means NULL
 			try {
 				superField.set(source, null);
 			} catch (IllegalArgumentException | IllegalAccessException e) {
@@ -304,6 +305,24 @@ public class Incubator{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}
+		else if(ArrayList.class.isAssignableFrom(superField.getType())){
+			//Handle arraylists, for now, just support interactable objects
+			ParameterizedType arrayListType = (ParameterizedType) superField.getGenericType();
+	        Class<?> arrayListClass = (Class<?>) arrayListType.getActualTypeArguments()[0];
+	        
+	        //If it's an arraylist of interactable objects
+	        if(InteractableObject.class.isAssignableFrom(arrayListClass)){
+	        	//Add the object to the arraylist
+	        	try {
+					ArrayList<InteractableObject> temp = (ArrayList<InteractableObject>) superField.get(source);
+					temp.add(paramObject);
+				} catch (IllegalArgumentException | IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	        	
+	        }
 		}
 		else{
 			System.out.println("Error in Incubator-writeParamPointer:Param(" + param + ") is NOT of type InteractableObject");
@@ -330,6 +349,8 @@ public class Incubator{
 		try {
 			if (arg instanceof String) {
 				String stringArg = (String) arg;
+				
+				//PARAM IS INTEGER
 				if (superField.getType() == int.class) {
 					if (StringUtils.isInteger(stringArg)) {
 						superField.set(io, Integer.parseInt(stringArg));
@@ -339,6 +360,8 @@ public class Incubator{
 					}
 					return;
 				}
+				
+				//PARAM IS DOUBLE
 				if(superField.getType() == double.class){
 					if (StringUtils.isDouble(stringArg)) {
 						superField.set(io, Double.parseDouble(stringArg));
@@ -348,10 +371,14 @@ public class Incubator{
 					}
 					return;
 				}
+				
+				//PARAM IS STRING(This is easy)
 				if (superField.getType() == String.class) {
 					superField.set(io, stringArg);
 					return;
 				}
+				
+				//PARAM IS BOOLEAN
 				if (superField.getType() == boolean.class) {
 					if (StringUtils.isBoolean(stringArg)) {
 						superField.set(io, Boolean.parseBoolean(stringArg));
@@ -362,22 +389,48 @@ public class Incubator{
 					return;
 
 				}
+				
+				//PARAM IS INTERACTABLE OBJECT
 				//If it's a string for an object, try using the incubator ids
 				if(InteractableObject.class.isAssignableFrom(superField.getType())){
 					writeParamPointer(objectID,param,Integer.parseInt((String)arg));
 					return;
 				}
+				
+				//PARAM IS AN ARRAYLIST
+				if(ArrayList.class.isAssignableFrom(superField.getType())){
+					//Check if it's of type interactable object
+					ParameterizedType arrayListType = (ParameterizedType) superField.getGenericType();
+			        Class<?> arrayListClass = (Class<?>) arrayListType.getActualTypeArguments()[0];
+			        
+			        //If it's an arraylist of interactable objects
+			        if(InteractableObject.class.isAssignableFrom(arrayListClass)){
+			        	//Clear the arraylist first
+			        	ArrayList<InteractableObject> temp = (ArrayList<InteractableObject>) superField.get(io);
+			        	temp.clear();
+			        	//Now parse the string using the commas and call write pointer on all of them
+			        	String[] ids = stringArg.split(",");
+			        	for(String id:ids){
+			        		writeParamPointer(objectID,param,Integer.parseInt(id));
+			        	}
+			        }
+				}
+				
 				System.out.println("Attempted write \""+stringArg+"\"(String) into "+superField.getType().getSimpleName()+" was rejected");
 				//It's not a valid string input, output an error
 				return;
 			}
 			
+			//PARAM IS INTERACTABLE OBJECT, BUT WE DID NOT GET A STRING
 			//If it's an int for the object, assume it's an incubator id
 			if(InteractableObject.class.isAssignableFrom(superField.getType())){
 				if(int.class == arg.getClass()){
 					writeParamPointer(objectID,param,(int)arg);
+					return;
 				}
 			}
+			
+			//Assume it's an object, attempt general object insertion
 			superField.set(io, arg);
 			
 		} catch (IllegalArgumentException | IllegalAccessException e) {

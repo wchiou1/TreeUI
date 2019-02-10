@@ -75,7 +75,7 @@ tuimultiplayer
 	Add specialized panel creation for origin objects[TODO, Made panels public]
 	Add nosync interface to identify objects which should be ignored by the server distro(panels go in this category)
 	Objects which don't exist yet will be specifically requested by the client via tcp(this is how panels will be synced)
-	
+	UIElements don't show up because they are only drawn if they are part of the objectlist in the parent panel
 	
 	
 
