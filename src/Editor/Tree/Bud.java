@@ -29,10 +29,8 @@ public class Bud extends BasicPanelButton implements EditorImmune{
 	private Panel branch;
 	public Bud(int x, int y, TreeUIManager tuim,Panel branch){
 		this.tuim=tuim;
-		this.rx=x-branch.x+branch.offsetX;
-		this.ry=y-branch.y+branch.offsetY;
-		this.x=x;
-		this.y=y;
+		this.x=x-branch.getX()+branch.offsetX;
+		this.y=y-branch.getY()+branch.offsetY;
 		this.width=5;
 		this.height=5;
 		this.branch=branch;
@@ -50,7 +48,7 @@ public class Bud extends BasicPanelButton implements EditorImmune{
 		System.out.println("Morphing to "+objectType);
 		//Time to morph! Let's not fuck this up...
 		//We need to first create the object
-		UIElement product = tuim.createUIElement(objectType, branch, this.rx, this.ry);
+		UIElement product = tuim.createUIElement(objectType, branch, this.x, this.y);
 			
 			
 			//Check if the object is an originObject

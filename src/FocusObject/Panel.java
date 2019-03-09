@@ -46,7 +46,6 @@ public class Panel extends Snappable{
 	//TODO Make uielements function without initialization
 	public void addObjects(ArrayList<UIElement> ios){
 		for(UIElement uie:ios){
-			uie.setDataLink(dataNode);
 			objectList.add(uie);
 		}
 	}
@@ -56,7 +55,6 @@ public class Panel extends Snappable{
 	 * @throws NoOriginObjectException 
 	 */
 	public void addObject(UIElement io){
-		io.setDataLink(dataNode);
 		objectList.add(io);
 	}
 	/**
@@ -230,8 +228,10 @@ public class Panel extends Snappable{
 	}
 	@Override
 	public void update(int x, int y,int delta) {
-		for(InteractableObject io:objectList)
+		for(InteractableObject io:objectList){
+			io.setDataLink(getNode());
 			io.update(x, y,delta);
+		}
 		
 		if(!locked){
 			scrolling = false;

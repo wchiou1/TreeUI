@@ -78,7 +78,7 @@ tuimultiplayer
 	UIElements don't show up because they are only drawn if they are part of the objectlist in the parent panel
 	
 TODO IMMEDIATELY:
-	Refactor uielements to use screen implicitly
-	Refactor uielements to use parent's datanode implicitly
+	Refactor uielements to use screen implicitly[DONE]
+	Refactor uielements to use parent's datanode implicitly[NEEDS TESTING]
 	Refactor uielements to use implicit super constructor
 

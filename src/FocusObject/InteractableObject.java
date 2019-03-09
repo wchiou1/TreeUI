@@ -29,6 +29,7 @@ public abstract class InteractableObject{
 	protected InteractableObject(){
 		id=count;
 		count++;
+		dataNode = new AspenNode(null);
 	}
 	void setId(int new_id){
 		id = new_id;
