@@ -413,7 +413,9 @@ public class Incubator{
 			        	for(String id:ids){
 			        		writeParamPointer(objectID,param,Integer.parseInt(id));
 			        	}
+			        	return;
 			        }
+			        
 				}
 				
 				System.out.println("Attempted write \""+stringArg+"\"(String) into "+superField.getType().getSimpleName()+" was rejected");
