@@ -65,8 +65,8 @@ public class TreeUIManager{
 			return null;
 		}
 		UIElement product = (UIElement) inc.getObject(inc.addUIElement(panel.getId(),type));
-		product.rx=rx;
-		product.ry=ry;
+		product.x=rx;
+		product.y=ry;
 		return (UIElement) product;
 	}
 	public GameObject createGameObject(Class<?> type,int x, int y){

@@ -21,8 +21,8 @@ public class InventorySlot extends ItemStorage{
 		height=20;
 	}
 	public InventorySlot(int x, int y){
-		this.rx=x;
-		this.ry=y;
+		this.x=x;
+		this.y=y;
 		stored=null;
 		width=20;
 		height=20;

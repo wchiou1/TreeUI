@@ -407,11 +407,14 @@ public class Incubator{
 			        if(InteractableObject.class.isAssignableFrom(arrayListClass)){
 			        	//Clear the arraylist first
 			        	ArrayList<InteractableObject> temp = (ArrayList<InteractableObject>) superField.get(io);
+
 			        	temp.clear();
 			        	//Now parse the string using the commas and call write pointer on all of them
 			        	String[] ids = stringArg.split(",");
 			        	for(String id:ids){
-			        		writeParamPointer(objectID,param,Integer.parseInt(id));
+			        		if(StringUtils.isInteger(id)){
+			        			writeParamPointer(objectID,param,Integer.parseInt(id));
+			        		}
 			        	}
 			        	return;
 			        }

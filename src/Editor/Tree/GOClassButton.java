@@ -8,8 +8,8 @@ public class GOClassButton extends TextButton implements EditorImmune{
 	private Class<?> GOClass;
 	private Sapling origin;
 	public GOClassButton(Sapling origin,Class<?> GOClass,int x, int y){
-		this.rx=x;
-		this.ry=y;
+		this.x=x;
+		this.y=y;
 		this.origin=origin;
 		this.GOClass=GOClass;
 		if(GOClass==null)

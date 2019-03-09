@@ -15,8 +15,8 @@ public class SaveEnvironmentButton extends TextButton implements EditorImmune{
 	private Incubator inc;
 	private InputBox fileNameBox;
 	public SaveEnvironmentButton(int x, int y,Incubator inc,InputBox fileNameBox){
-		this.rx=x;
-		this.ry=y;
+		this.x=x;
+		this.y=y;
 		this.inc=inc;
 		this.fileNameBox=fileNameBox;
 		this.width=80;

@@ -43,11 +43,11 @@ public class Panel extends Snappable{
 		boolean result = objectList.remove(io);
 		return result;
 	}
+	//TODO Make uielements function without initialization
 	public void addObjects(ArrayList<UIElement> ios){
 		for(UIElement uie:ios){
 			uie.setDataLink(dataNode);
 			objectList.add(uie);
-			uie.setScreen(this);
 		}
 	}
 	/**
@@ -58,7 +58,6 @@ public class Panel extends Snappable{
 	public void addObject(UIElement io){
 		io.setDataLink(dataNode);
 		objectList.add(io);
-		io.setScreen(this);
 	}
 	/**
 	 * Toggles the panel open and closed using the active boolean
@@ -176,7 +175,7 @@ public class Panel extends Snappable{
 			if(!uie.show)
 				continue;
 			g.setClip(x+2, y+2, width-4, height-4);
-			uie.UDraw(g,drawX,drawY);
+			uie.UDraw(g,x+drawX+uie.getX(),y+drawY+uie.getY());
 		}
 	}
 	public boolean mouseOnScrollBars(int x, int y){
@@ -207,7 +206,7 @@ public class Panel extends Snappable{
 		if(!active)
 			return null;
 		for(InteractableObject io:objectList){
-			if(io.masterIsMouseOver(x, y))
+			if(io.masterIsMouseOver(x-this.x, y-this.y))
 				return io;
 		}
 		return null;
@@ -287,7 +286,7 @@ public class Panel extends Snappable{
 		}
 		setDataLink(oo.getNode());
 		oo.setView(this);
-		move(oo.getX()+oo.rx-width/2,oo.getY()+oo.ry-height);
+		move(oo.getX()-width/2,oo.getY()-height);
 	}
 	public void setOrigin(OriginObject oo,int x, int y){
 		if(!virgin){

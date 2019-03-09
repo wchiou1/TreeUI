@@ -77,5 +77,8 @@ tuimultiplayer
 	Objects which don't exist yet will be specifically requested by the client via tcp(this is how panels will be synced)
 	UIElements don't show up because they are only drawn if they are part of the objectlist in the parent panel
 	
-	
+TODO IMMEDIATELY:
+	Refactor uielements to use screen implicitly
+	Refactor uielements to use parent's datanode implicitly
+	Refactor uielements to use implicit super constructor
 

@@ -29,8 +29,8 @@ public class VariableBox extends InputBox implements EditorImmune{
 	private String type;
 	private boolean error=false;
 	public VariableBox(int x, int y,Incubator inc,Field field,InteractableObject subject){
-		this.rx=x;
-		this.ry=y;
+		this.x=x;
+		this.y=y;
 		this.inc=inc;
 		this.width=180;
 		this.field=field;

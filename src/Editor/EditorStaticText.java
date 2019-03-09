@@ -17,10 +17,8 @@ public class EditorStaticText extends UIElement implements EditorImmune{
 		this.height=20;
 	}
 	public EditorStaticText(int x, int y, int width, int height,String text){
-		this.x=0;
-		this.y=0;
-		this.rx=x;
-		this.ry=y;
+		this.x=x;
+		this.y=y;
 		this.width=width;
 		this.height=height;
 		this.text=text;

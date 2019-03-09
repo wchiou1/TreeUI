@@ -11,8 +11,8 @@ public class FileScannerButton extends OriginObject{
 	private int width;
 	private int height;
 	public FileScannerButton(int x, int y,InputBox fileNameBox){
-		this.rx=x;
-		this.ry=y;
+		this.x=x;
+		this.y=y;
 		this.fileNameBox=fileNameBox;
 		this.width=20;
 		this.height = 20;

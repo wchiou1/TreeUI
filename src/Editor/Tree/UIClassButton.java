@@ -10,8 +10,8 @@ public class UIClassButton extends TextButton implements EditorImmune{
 	private Class<?> UIClass;
 	private Bud origin;
 	public UIClassButton(Bud origin,Class<?> UIClass,int x, int y){
-		this.rx=x;
-		this.ry=y;
+		this.x=x;
+		this.y=y;
 		this.origin=origin;
 		this.UIClass=UIClass;
 		if(UIClass==null)

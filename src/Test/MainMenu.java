@@ -62,54 +62,54 @@ public class MainMenu extends TreeUIGameState{
 		
 			//p.addObject(new StaticText(40,20,"Demo"));
 			int st1 = inc.addUIElement(p, StaticText.class);
-			inc.writeParam(st1, "rx", 30);
-			inc.writeParam(st1, "ry", 20);
+			inc.writeParam(st1, "x", 30);
+			inc.writeParam(st1, "y", 20);
 			inc.writeParam(st1, "text", "Demo");
 			
 			//p.addObject(new StateChangeButton(parent,0,20,20,"Demo"));
 			int scb1 = inc.addUIElement(p, StateChangeButton.class);
-			inc.writeParam(scb1, "rx", 8);
-			inc.writeParam(scb1, "ry", 22);
+			inc.writeParam(scb1, "x", 8);
+			inc.writeParam(scb1, "y", 22);
 			inc.writeParam(scb1, "radius", 15);
 			inc.writeParam(scb1, "targetState", "Demo");
 			
 			//p.addObject(new StaticText(40,38,"Editor"));
 			int st2 = inc.addUIElement(p, StaticText.class);
-			inc.writeParam(st2, "rx", 30);
-			inc.writeParam(st2, "ry", 42);
+			inc.writeParam(st2, "x", 30);
+			inc.writeParam(st2, "y", 42);
 			inc.writeParam(st2, "text", "Editor Server");
 			
 			
 			//p.addObject(new StateChangeButton(parent,0,38,20,"Editor"));
 			int scb2 = inc.addUIElement(p, StateChangeButton.class);
-			inc.writeParam(scb2, "rx", 8);
-			inc.writeParam(scb2, "ry", 44);
+			inc.writeParam(scb2, "x", 8);
+			inc.writeParam(scb2, "y", 44);
 			inc.writeParam(scb2, "radius", 15);
 			inc.writeParam(scb2, "targetState", "Editor Server");
 			
 			int ip_input = inc.addUIElement(p, InputBox.class);
-			inc.writeParam(ip_input, "rx", 8);
-			inc.writeParam(ip_input, "ry", 64);
+			inc.writeParam(ip_input, "x", 8);
+			inc.writeParam(ip_input, "y", 64);
 			inc.writeParam(ip_input, "text", ConfigReader.getConfig("previousIP"));
 			inc.writeParam(ip_input, "allowText", false);
 			inc.writeParam(ip_input, "allowSymbols", true);
 			
 			int port_input = inc.addUIElement(p, InputBox.class);
-			inc.writeParam(port_input, "rx", 8);
-			inc.writeParam(port_input, "ry", 84);
+			inc.writeParam(port_input, "x", 8);
+			inc.writeParam(port_input, "y", 84);
 			inc.writeParam(port_input, "text", "2004");
 			inc.writeParam(port_input, "allowText", false);
 			
 			//p.addObject(new StaticText(40,38,"Editor"));
 			int st3 = inc.addUIElement(p, StaticText.class);
-			inc.writeParam(st3, "rx", 30);
-			inc.writeParam(st3, "ry", 106);
+			inc.writeParam(st3, "x", 30);
+			inc.writeParam(st3, "y", 106);
 			inc.writeParam(st3, "text", "Editor Client");
 			
 			//p.addObject(new StateChangeButton(parent,0,38,20,"Editor"));
 			int scb3 = inc.addUIElement(p, StateChangeButton.class);
-			inc.writeParam(scb3, "rx", 8);
-			inc.writeParam(scb3, "ry", 108);
+			inc.writeParam(scb3, "x", 8);
+			inc.writeParam(scb3, "y", 108);
 			inc.writeParam(scb3, "radius", 15);
 			inc.writeParam(scb3, "targetState", "Editor Client");
 			

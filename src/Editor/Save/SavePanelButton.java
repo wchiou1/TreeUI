@@ -17,8 +17,8 @@ public class SavePanelButton extends TextButton implements EditorImmune{
 	private InputBox fileNameBox;
 	public SavePanelButton(int x, int y,Incubator inc,InteractableObject source,InputBox fileNameBox){
 		this.source=source;
-		this.rx=x;
-		this.ry=y;
+		this.x=x;
+		this.y=y;
 		this.inc=inc;
 		this.fileNameBox=fileNameBox;
 		this.width=80;

@@ -12,8 +12,8 @@ public class SaveTreeButton extends TextButton implements EditorImmune{
 	private String saveType;
 	public SaveTreeButton(int x, int y, String saveType,Incubator inc,Panel source){
 		this.source=source;
-		this.rx=x;
-		this.ry=y;
+		this.x=x;
+		this.y=y;
 		this.inc=inc;
 		this.width=180;
 		this.text="Save Panel";

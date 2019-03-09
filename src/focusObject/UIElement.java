@@ -13,35 +13,9 @@ import org.newdawn.slick.Graphics;
  */
 public abstract class UIElement extends InteractableObject{
 	public Panel screen;
-	public int rx=0,ry=0;
-	/**
-	 * Sets the parent panel and thus uses relative x and y instead of hard x and y
-	 * NOTE: If this is not called, then the object will use the hard x and y for calculations
-	 * @param screen
-	 */
-	void setScreen(Panel screen){
-		if(this.screen!=null){
-			System.out.println(""+this.getClass()+"UIElement Error: Attempted to change screen, operation canceled.");
-			return;
-		}
-		this.screen=screen;
-		x=this.screen.getX()+x+this.screen.offsetX;
-		y=this.screen.getY()+y+this.screen.offsetY;
-		
-	}
-	/**
-	 * Updates the hard x and y based on parent panel and relative coords
-	 */
-	private void snapUpdate(int x, int y){
-		if(screen!=null){
-			this.x=screen.getX()+rx+x;
-			this.y=screen.getY()+ry+y;
-		}
-	}
 	
 	public final void UDraw(Graphics g,int x, int y){
-		snapUpdate(x,y);
-		draw(g);
+		draw(g,x,y);
 	}
 	@Override
 	public boolean isMoveable(){

@@ -30,10 +30,8 @@ public class EditorSearchBox extends EditorInputBox implements EditorImmune{
 		this.height=20;
 	}
 	public EditorSearchBox(int x, int y, int width, int height,ArrayList<UIElement> buttonList){
-		this.x=0;
-		this.y=0;
-		this.rx=x;
-		this.ry=y;
+		this.x=x;
+		this.y=y;
 		this.width=width;
 		this.height=height;
 		this.buttonList = buttonList;
@@ -109,7 +107,7 @@ public class EditorSearchBox extends EditorInputBox implements EditorImmune{
 			}
 		}
 		//Change the ry based on the bottom of the bar
-		int barBottom = this.ry+20;
+		/*int barBottom = this.ry+20;
 		//Get the text and put them in an array hashtable pair
 		
 		Collections.sort(texts);
@@ -118,7 +116,7 @@ public class EditorSearchBox extends EditorInputBox implements EditorImmune{
 			UIElement button = uielements.get(text);
 			button.ry = barBottom + (iteration * 20);
 			iteration++;
-		}
+		}*/
 		
 		
 	}

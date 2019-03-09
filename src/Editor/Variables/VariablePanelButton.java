@@ -17,10 +17,8 @@ public class VariablePanelButton extends OriginObject implements EditorImmune{
 	private int height;
 	private String text;
 	public VariablePanelButton(int x, int y, int width, int height){
-		this.x=0;
-		this.y=0;
-		this.rx=x;
-		this.ry=y;
+		this.x=x;
+		this.y=y;
 		this.width=width;
 		this.height=height;
 		this.text="VM";
