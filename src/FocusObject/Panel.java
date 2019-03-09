@@ -11,7 +11,7 @@ import smallGameObjects.SmallGameObject;
 
 public class Panel extends Snappable{
 	public boolean active = false; //Whether the panel is active(inactive panels are invisible)
-	protected ArrayList<UIElement> objectList = new ArrayList<UIElement>();//List of objects that the panel must render
+	public ArrayList<UIElement> objectList = new ArrayList<UIElement>();//List of objects that the panel must render
 	public int offsetX = 0,offsetY = 0;
 	public boolean scrollX = false, scrollY = false;
 	public int leftBoundX,rightBoundX,topBoundY,bottomBoundY;
