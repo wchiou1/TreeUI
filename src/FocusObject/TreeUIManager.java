@@ -160,16 +160,19 @@ public class TreeUIManager{
 	public void update(int delta){
 		int mouseX = input.getMouseX();
 		int mouseY = input.getMouseY();
-		inputManager.update(delta);
-		for(InteractableObject io:uiObjectList){
-			io.update(mouseX, mouseY,delta);
-		}
-		for(InteractableObject io:gameObjectList){
-			io.update(mouseX, mouseY,delta);
-		}
+		synchronized(inc){
+			inputManager.update(delta);
 		
-		if(TreeUIMultiplayer.isServer()){
-			distributeObjectPackets();
+			for(InteractableObject io:uiObjectList){
+				io.update(mouseX, mouseY,delta);
+			}
+			for(InteractableObject io:gameObjectList){
+				io.update(mouseX, mouseY,delta);
+			}
+			
+			if(TreeUIMultiplayer.isServer()){
+				distributeObjectPackets();
+			}
 		}
 	}
 	public void distributeObjectPackets(){
