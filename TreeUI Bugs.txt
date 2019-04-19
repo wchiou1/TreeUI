@@ -76,6 +76,11 @@ tuimultiplayer
 	Add nosync interface to identify objects which should be ignored by the server distro(panels go in this category)
 	Objects which don't exist yet will be specifically requested by the client via tcp(this is how panels will be synced)
 	UIElements don't show up because they are only drawn if they are part of the objectlist in the parent panel
+thoughts on how datanodes are handled with multiplayer
+	Current issue: datanodes are not tracked by the incubator
+	design philosophy states to have the Aspen Network be hands off except for establishing connections
+	Maybe reverse connections? Have the datanode get the connections from the game object?
+
 	
 TODO IMMEDIATELY:
 	Refactor uielements to use screen implicitly[DONE]

@@ -2,7 +2,7 @@ package GameLogic;
 
 public class StringUtils{
 	public static boolean isInteger(String s) {  
-	    return s != null && s.matches("[-+]?\\d*");  
+	    return s != null && s.matches("[-+]?\\d+");  
 	}
 	public static boolean isDouble(String s) {  
 	    return s != null && s.matches("[-+]?\\d*\\.?\\d+");  
