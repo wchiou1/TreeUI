@@ -224,31 +224,33 @@ public class TreeUIMultiplayer implements SocketHandler{
 		//TODO Only create new panels if the type is panel, ignore if the panel is already made
 		
 		Incubator inc = tuim.getIncubator();
-		//Check if the object exists in the incubator
-		InteractableObject io = inc.getEither(id);
-		//Get the class object
-		Class<?> sobj_type = Class.forName(sobj.get("type"));
-		if(io!=null){
-			
-			//If it exists, check if it's a panel, ignore panels
-			//TODO move this to tcp
-			if(Panel.class.isAssignableFrom(sobj_type)){
-				//return;
-			}		
-			
-		}
-		else{
-			//Create the object
-			
-			//If it exists, check if it's a panel, ignore panels
-			if(Panel.class.isAssignableFrom(sobj_type)){
-				//If it's a panel, overwrite the open value and position
-				//sobj.remove("open");
-				//sobj.remove("rx");
-				//sobj.remove("ry");				
+		synchronized(inc){
+			//Check if the object exists in the incubator
+			InteractableObject io = inc.getEither(id);
+			//Get the class object
+			Class<?> sobj_type = Class.forName(sobj.get("type"));
+			if(io!=null){
+				
+				//If it exists, check if it's a panel, ignore panels
+				//TODO move this to tcp
+				if(Panel.class.isAssignableFrom(sobj_type)){
+					//return;
+				}		
+				
 			}
+			else{
+				//Create the object
+				
+				//If it exists, check if it's a panel, ignore panels
+				if(Panel.class.isAssignableFrom(sobj_type)){
+					//If it's a panel, overwrite the open value and position
+					//sobj.remove("open");
+					//sobj.remove("rx");
+					//sobj.remove("ry");				
+				}
+			}
+			inc.updateObjectFromSerial(id,sobj);
 		}
-		inc.updateObjectFromSerial(id,sobj);
 	}
 	
 }
