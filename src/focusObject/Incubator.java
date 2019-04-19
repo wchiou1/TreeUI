@@ -346,6 +346,10 @@ public class Incubator{
 		
 		// Let's get the possible params
 		Field superField = findUnderlying(io.getClass(), param);
+		if(superField == null){
+			System.out.println("Error in Incubator-writeParam:Got null field for "+io.getClass().getName());
+		}
+		//System.out.println(superField.getName());
 		try {
 			if (arg instanceof String) {
 				String stringArg = (String) arg;
